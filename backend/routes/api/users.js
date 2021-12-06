@@ -26,6 +26,10 @@ const validateSignup = [
         .exists({ checkFalsy: true })
         .isLength({ min: 6 })
         .withMessage('Password must be 6 characters or more.'),
+    check('bakingSkill')
+        .exists({ checkFalsy: true })
+        .isLength({ max: 500 })
+        .withMessage('Baking skill must be under 500 characters'),
     handleValidationErrors
 ];
 

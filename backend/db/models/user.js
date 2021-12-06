@@ -32,6 +32,13 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         len: [60, 60]
       }
+    },
+    bakingSkill: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        len: [1, 500]
+      }
     }
   },
     {
@@ -51,23 +58,24 @@ module.exports = (sequelize, DataTypes) => {
     });
 
   User.associate = function (models) {
-    // associations can be defined here
+    User.hasMany(models.Location, { foreignKey: 'userId' });
+    User.hasMany(models.Booking, { foreignKey: 'userId' });
   };
 
   User.getCurrentUserById = async function (id) {
     return await User.scope('currentUser').findByPk(id);
-   };
+  };
 
-  User.prototype.toSafeObject = function() { // remember, this cannot be an arrow function
+  User.prototype.toSafeObject = function () { // remember, this cannot be an arrow function
     const { id, username, email } = this; // context will be the User instance
     return { id, username, email };
   };
 
   User.prototype.validatePassword = function (password) {
     return bcrypt.compareSync(password, this.hashedPassword.toString());
-   };
+  };
 
-   User.login = async function ({ credential, password }) {
+  User.login = async function ({ credential, password }) {
     const { Op } = require('sequelize');
     const user = await User.scope('loginUser').findOne({
       where: {
