@@ -23,15 +23,20 @@ function Navigation({ isLoaded }) {
 
   return (
     <>
-      <div className='navBar'>
-        <ul>
-          <li>
+      <div className='navContainer'>
+        <div className='navBar'>
+          <div className='home'>
             <NavLink exact to="/">Home</NavLink>
-            {isLoaded && sessionLinks}
-          </li>
-        </ul>
+          </div>
+          <div className='book'>
+            <p>book</p>
+          </div>
+          <div className='userOp'>
+            <p>{isLoaded && sessionLinks}</p>
+          </div>
+        </div>
       </div>
-      <div className='content'>
+      {/* <div className='content'>
         <ul className='pageC'>
           <li>text</li>
           <li>text</li>
@@ -55,7 +60,7 @@ function Navigation({ isLoaded }) {
           <li>text</li>
           <li>text</li>
         </ul>
-      </div>
+      </div> */}
     </>
   );
 }

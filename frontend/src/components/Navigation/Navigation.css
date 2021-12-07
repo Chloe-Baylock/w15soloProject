@@ -1,12 +1,25 @@
-/* .navBar {
+/* html {
+    overflow: hidden;
+} */
+
+/* .navContainer {
+    width: 80vw;
+    left: 10%;
+} */
+
+.navBar {
     position: fixed;
-    display: flex;
-    justify-content: center;
-    width: 100vw;
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+    justify-self: center;
+    width: 80vw;
+    right: 10%;
     z-index: 1;
+    margin: 0px;
 }
 
-.pageC > li {
+/* .pageC > li {
     color: red;
 }
 .content {
