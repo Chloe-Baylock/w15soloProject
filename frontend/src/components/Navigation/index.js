@@ -24,9 +24,9 @@ function Navigation({ isLoaded }) {
   return (
     <>
       <div className='navContainer'>
-        <div className='navBar'>
+        <div className='navBarr'>
           <div className='home'>
-            <NavLink exact to="/">Home</NavLink>
+            <NavLink className='nlink' exact to="/"><i className="fas fa-bread-slice" />BreadnB</NavLink>
           </div>
           <div className='book'>
             <p>book</p>
@@ -36,31 +36,6 @@ function Navigation({ isLoaded }) {
           </div>
         </div>
       </div>
-      {/* <div className='content'>
-        <ul className='pageC'>
-          <li>text</li>
-          <li>text</li>
-          <li>text</li>
-          <li>text</li>
-          <li>text</li>
-          <li>text</li>
-          <li>text</li>
-          <li>text</li>
-          <li>text</li>
-          <li>text</li>
-          <li>text</li>
-          <li>text</li>
-          <li>text</li>
-          <li>text</li>
-          <li>text</li>
-          <li>text</li>
-          <li>text</li>
-          <li>text</li>
-          <li>text</li>
-          <li>text</li>
-          <li>text</li>
-        </ul>
-      </div> */}
     </>
   );
 }

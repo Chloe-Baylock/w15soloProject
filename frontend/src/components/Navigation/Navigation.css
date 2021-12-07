@@ -1,13 +1,20 @@
-/* html {
-    overflow: hidden;
-} */
+.fas {
+    color: black;
+    /* width: 10px; */
+}
 
-/* .navContainer {
-    width: 80vw;
-    left: 10%;
-} */
 
-.navBar {
+.home > a {
+    text-decoration: none;
+    color: black;
+}
+
+.nlink {
+    font-size: 40px;
+}
+
+.navBarr {
+    box-sizing: border-box;
     position: fixed;
     display:flex;
     align-items: center;
@@ -16,15 +23,9 @@
     width: 80vw;
     right: 10%;
     z-index: 1;
-    margin: 0px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: rgb(10, 169, 190);
 }
-
-/* .pageC > li {
-    color: red;
-}
-.content {
-    position: relative;
-    justify-content: center;
-    display: flex;
-    padding-top: 100px;
-} */
