@@ -11,7 +11,7 @@ router.get(
     asyncHandler(async (req, res) => {
         const locations = await Location.findAll();
         return res.json({
-            locations
+            locations //key is locations value is the locations
         })
     })
 )

@@ -25,7 +25,7 @@ export const load = (locations) => {
 export const getLocations = () => async (dispatch) => {
     const response = await fetch('/api/locations');
     const locations = await response.json();
-    dispatch(load(locations));
+    dispatch(load(locations.locations));
     return locations;
 }
 
@@ -35,16 +35,13 @@ const locationsReducer = (state = initialState, action) => {
     switch (action.type) {
         case LOAD_LOCATIONS:
             const newLocations = {};
-            console.log('array of 3 values', ['1','2','4']);
-            console.log('action', [action]);
             console.log('action.locations', [action.locations]);
-            console.log('action.locations.locations', [action.locations.locations]);
-            action.locations.locations.forEach(location => {
+            action.locations.forEach(location => {
                 newLocations[location.id] = location;
             })
             return {
                 ...state,
-                ...newLocations
+                entries: [...action.locations]
             }
         default:
             return state;

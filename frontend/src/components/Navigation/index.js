@@ -24,7 +24,7 @@ function Navigation({ isLoaded }) {
   return (
     <>
       <div className='navContainer'>
-        <div className='navBarr'>
+        <div className='navBar'>
           <div className='home'>
             <NavLink className='nlink' exact to="/"><i className="fas fa-bread-slice" />BreadnB</NavLink>
           </div>

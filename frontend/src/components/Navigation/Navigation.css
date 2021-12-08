@@ -3,6 +3,9 @@
     /* width: 10px; */
 }
 
+.navContainer {
+    height:80px;
+}
 
 .home > a {
     text-decoration: none;
@@ -13,7 +16,7 @@
     font-size: 40px;
 }
 
-.navBarr {
+.navBar {
     box-sizing: border-box;
     position: fixed;
     display:flex;
