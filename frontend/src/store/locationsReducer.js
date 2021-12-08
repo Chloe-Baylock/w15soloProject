@@ -35,8 +35,10 @@ const locationsReducer = (state = initialState, action) => {
     switch (action.type) {
         case LOAD_LOCATIONS:
             const newLocations = {};
-            // console.log('array of 3 values', ['1','2','4']);
-            console.log('action.locations', [action.locations.locations]);
+            console.log('array of 3 values', ['1','2','4']);
+            console.log('action', [action]);
+            console.log('action.locations', [action.locations]);
+            console.log('action.locations.locations', [action.locations.locations]);
             action.locations.locations.forEach(location => {
                 newLocations[location.id] = location;
             })
@@ -49,4 +51,4 @@ const locationsReducer = (state = initialState, action) => {
     }
 }
 
-export default locationsReducer
+export default locationsReducer;
