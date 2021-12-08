@@ -1,22 +1,11 @@
 const router = require('express').Router();
-const sessionRouter = require('./session.js');
-const usersRouter = require('./users.js');
-
-const asyncHandler = require('express-async-handler')
-const { User, Location } = require('../../db/models');
+const sessionRouter = require('./session');
+const usersRouter = require('./users');
+const locationsRouter = require('./locations')
 
 router.use('/session', sessionRouter);
 router.use('/users', usersRouter);
-
-router.get(
-    '/',
-    asyncHandler(async (req, res) => {
-        const location = await Location.findAll();
-        return res.json({
-            location
-        })
-    })
-)
+router.use('/locations', locationsRouter);
 
 
 module.exports = router;
