@@ -1,6 +1,6 @@
 const express = require('express');
 const asyncHandler = require('express-async-handler');
-const { Location } = require('../../db/models');
+const { Location, sequelize } = require('../../db/models');
 
 const router = express.Router();
 
@@ -13,6 +13,25 @@ router.get(
         return res.json({
             locations //key is locations value is the locations
         })
+    })
+)
+
+router.post(
+    '/new',
+    asyncHandler(async (req, res) => {
+        console.log('req.body is', req.body);
+        const newLocation = await Location.build({
+            locationName: req.body.locationName,
+            description: req.body.description,
+            location: req.body.location,
+            userId: 2
+        })
+        await newLocation.save();
+
+        console.log(newLocation.toJSON());
+        console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+
+        await sequelize.close();
     })
 )
 

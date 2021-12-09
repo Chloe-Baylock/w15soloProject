@@ -1,16 +1,17 @@
-// const ADD_LOCATION = "locations/ADD_LOCATION";
+const ADD_LOCATION = "locations/ADD_LOCATION";
 const LOAD_LOCATIONS = "locations/LOAD_LOCATION";
 // const UPDATE_LOCATION = "locations/UPDATE_LOCATION";
 // const REMOVE_LOCATION = "locations/REMOVE_LOCATION";
 
-// export const add = (location) => ({
-//     type: ADD_LOCATION,
-//     location
-// })
-
 export const load = (locations) => {
     return {type: LOAD_LOCATIONS, locations};
 }
+
+export const add = (location) => ({
+    type: ADD_LOCATION,
+    location
+})
+
 
 // export const update = (location) => ({
 //     type: UPDATE_LOCATION,
@@ -27,6 +28,20 @@ export const getLocations = () => async (dispatch) => {
     const locations = await response.json();
     dispatch(load(locations.locations));
     return locations;
+}
+
+export const addLocation = (data) => async (dispatch) => {
+    const response = await fetch('/api/locations/new', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+    });
+    if (response.ok) {
+        const location = await response.json();
+        dispatch(addLocation(data));
+
+        return location;
+    }
 }
 
 const initialState = {};

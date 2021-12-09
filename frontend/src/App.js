@@ -5,6 +5,7 @@ import HomePage from "./components/HomePage";
 import LoginFormPage from "./components/LoginFormPage";
 import SignupFormPage from "./components/SignupFormPage";
 import LocationPage from "./components/LocationPage";
+import LocationFormPage from "./components/LocationFormPage";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 
@@ -31,8 +32,11 @@ function App() {
           <Route path='/signup'>
             <SignupFormPage />
           </Route>
-          <Route path='/locations/:id'>
+          <Route path='/locations/:id(\d+)'>
             <LocationPage />
+          </Route>
+          <Route path='/locations/new'>
+            <LocationFormPage />
           </Route>
         </Switch>
       )}
