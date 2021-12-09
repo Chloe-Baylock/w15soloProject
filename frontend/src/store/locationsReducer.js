@@ -48,16 +48,12 @@ export const addLocation = (data) => async (dispatch) => {
 }
 
 export const removeLocation = (id) => async (dispatch) => {
-    console.log('id is', id);
-    console.log('id type is', typeof id);
 
     await csrfFetch(`/api/locations/${id}`, {
         method: 'DELETE'
     })
 
-    console.log('response is ok');
     dispatch(remove(id));
-    console.log('dispatched remove id');
     return id;
 
 }
@@ -68,7 +64,6 @@ const locationsReducer = (state = initialState, action) => {
     switch (action.type) {
         case LOAD_LOCATIONS:
             const newLocations = {};
-            console.log('action.locations', action.locations)
             action.locations.forEach(location => {
                 newLocations[location.id] = location;
             })
@@ -79,13 +74,10 @@ const locationsReducer = (state = initialState, action) => {
         case ADD_LOCATION:
             return { ...state, entries: [...state.entries, action.newLocation] }
         case REMOVE_LOCATION:
-            console.log('state is', state);
-            console.log('action.locations is', action.locations);
-            const x = state.find(one => one.id === action.locations.id);
-            const newState = state.filter(ele => {
+            const x = state.entries.find(one => one.id === action.locationId);
+            const newState = state.entries.filter(ele => {
                 return ele !== x;
             })
-            console.log('newState is', newState);
             return { ...newState,}
         default:
             return state;

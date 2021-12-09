@@ -20,10 +20,8 @@ function LocationPage() {
     let location = locations?.find(loc => loc.id === +parameter.id)
     
     async function deletePage (e) {
-        console.log('button pressed');
         e.preventDefault();
         await dispatch(removeLocation(parameter.id));
-        console.log('reached up to history');
         history.push('/');
     }
 

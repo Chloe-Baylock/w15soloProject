@@ -27,9 +27,6 @@ router.post(
         })
         await newLocation.save();
 
-        console.log(newLocation.toJSON());
-        console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
-   
         return res.json({
             newLocation
         })
@@ -39,11 +36,12 @@ router.post(
 router.delete(
     '/:id(\\d+)',
     asyncHandler(async (req, res) => {
-        const id = req.path.split('/')[1];
-        const location = await Location.findByPk(+id);
-        await location.destroy();
-        console.log('destroyed');
-        return id;
+        const id = req.params.id
+        const location = await Location.findByPk(id);
+        if (location) {
+            location.destroy();
+        }
+        res.json({ id })
     })
 )
 
