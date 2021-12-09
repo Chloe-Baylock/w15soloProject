@@ -56,7 +56,7 @@ app.use((_req, _res, next) => {
 
 
 
-//Error Stuf
+//Error Stuff
 
 
 // Process sequelize errors

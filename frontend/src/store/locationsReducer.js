@@ -1,3 +1,5 @@
+import Cookies from 'js-cookie';
+
 const ADD_LOCATION = "locations/ADD_LOCATION";
 const LOAD_LOCATIONS = "locations/LOAD_LOCATION";
 // const UPDATE_LOCATION = "locations/UPDATE_LOCATION";
@@ -31,9 +33,13 @@ export const getLocations = () => async (dispatch) => {
 }
 
 export const addLocation = (data) => async (dispatch) => {
+    const XX = Cookies.get('XSRF-TOKEN');
     const response = await fetch('/api/locations/new', {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
+        headers: {
+            'Content-Type': 'application/json',
+            'XSRF-TOKEN': XX
+        },
         body: JSON.stringify(data)
     });
     if (response.ok) {

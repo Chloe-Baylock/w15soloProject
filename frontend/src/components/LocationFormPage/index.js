@@ -1,4 +1,7 @@
 import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { addLocation } from '../../store/locationsReducer';
 
 function LocationFormPage() {
     const [locationName, setLocationName] = useState('');
@@ -6,6 +9,8 @@ function LocationFormPage() {
     const [location, setLocation] = useState('');
     const [errors, setErrors] = useState([]);
 
+    const history = useHistory();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const vErr = [];
@@ -24,10 +29,13 @@ function LocationFormPage() {
         const data = {
             locationName,
             description,
-            location
+            location,
+            userId: '2'
         }
-        console.log(data);
-        // here is where i would dispatch the thing
+        let createdLocation = dispatch(addLocation(data));
+        if (createdLocation) {
+            //history.push(`/locations/${createdLocation.id}`);
+        }
     }
 
     return (
@@ -44,19 +52,18 @@ function LocationFormPage() {
                         <label htmlFor='locationName'>What's your place called? </label>
                         <input
                             id='locationName'
-                            type='textarea'
+                            type='text'
                             value={locationName}
                             onChange={e => setLocationName(e.target.value)}
                         ></input>
                     </div>
                     <div>
                         <label htmlFor='description'>Describe your home. </label>
-                        <input
+                        <textarea
                             id='description'
-                            type='textarea'
                             value={description}
                             onChange={e => setDescription(e.target.value)}
-                        ></input>
+                        ></textarea>
                     </div>
                     <div>
                         <label htmlFor='location'>Where's it located? </label>
