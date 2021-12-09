@@ -23,9 +23,12 @@ function HomePage() {
         <div className='locationsDiv'>
             <ul>
                 {locations?.map(location => (
-                    <NavLink to={`/locations/${location.id}`} key={location.id}>{location.locationName}</NavLink>
+                    <li key={location.id}>
+                        <NavLink to={`/locations/${location.id}`}>{location.locationName}</NavLink>
+                    </li>
                 ))}
             </ul>
+            <NavLink to='/locations/new'>Create New Location</NavLink>
         </div>
     )
 }

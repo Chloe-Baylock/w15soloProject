@@ -34,13 +34,14 @@ function LocationFormPage() {
         }
         let createdLocation = dispatch(addLocation(data));
         if (createdLocation) {
-            history.push(`/locations/${createdLocation.id}`);
+            console.log('createdLocation', createdLocation)
+            //history.push(`/locations/${createdLocation.id}`);
         }
     }
 
     return (
         <div>
-            <h1>Location Form Page</h1>
+            <h1>Edit Location</h1>
             <div>
                 <ul>
                     {errors.map(error => {
@@ -88,4 +89,4 @@ function LocationFormPage() {
     )
 }
 
-export default LocationFormPage;
+export default EditLocationForm;

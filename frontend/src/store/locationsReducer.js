@@ -9,9 +9,9 @@ export const load = (locations) => {
     return {type: LOAD_LOCATIONS, locations};
 }
 
-export const add = (location) => ({
+export const add = (newLocation) => ({
     type: ADD_LOCATION,
-    location
+    newLocation
 })
 
 
@@ -42,6 +42,7 @@ export const addLocation = (data) => async (dispatch) => {
         },
         body: JSON.stringify(data)
     });
+    const location = await response.json
     if (response.ok) {
         const location = await response.json();
         dispatch(addLocation(data));
@@ -56,6 +57,7 @@ const locationsReducer = (state = initialState, action) => {
     switch (action.type) {
         case LOAD_LOCATIONS:
             const newLocations = {};
+            console.log('action.locations', action.locations)
             action.locations.forEach(location => {
                 newLocations[location.id] = location;
             })
@@ -63,6 +65,8 @@ const locationsReducer = (state = initialState, action) => {
                 ...state,
                 entries: [...action.locations]
             }
+        case ADD_LOCATION:
+            return { ...state, entries: [...state.entries, action.newLocation] } 
         default:
             return state;
     }
