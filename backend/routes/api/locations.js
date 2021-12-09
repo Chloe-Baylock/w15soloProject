@@ -33,22 +33,18 @@ router.post(
         return res.json({
             newLocation
         })
-
-
     })
 )
 
 router.delete(
     '/:id(\\d+)',
     asyncHandler(async (req, res) => {
-        console.log('req.path is', req.path);
-        console.log('req.body is', req.body);
         const id = req.path.split('/')[1];
         const location = await Location.findByPk(+id);
-        console.log('location is', location);
         await location.destroy();
+        console.log('destroyed');
+        return id;
     })
-
 )
 
 module.exports = router;

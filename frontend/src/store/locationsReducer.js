@@ -20,10 +20,10 @@ export const add = (newLocation) => ({
 //     location
 // })
 
-// export const remove = (location) => ({
-//     type: REMOVE_LOCATION,
-//     location
-// })
+export const remove = (locationId) => ({
+    type: REMOVE_LOCATION,
+    locationId
+})
 
 export const getLocations = () => async (dispatch) => {
     const response = await fetch('/api/locations');
@@ -47,6 +47,21 @@ export const addLocation = (data) => async (dispatch) => {
     }
 }
 
+export const removeLocation = (id) => async (dispatch) => {
+    console.log('id is', id);
+    console.log('id type is', typeof id);
+
+    await csrfFetch(`/api/locations/${id}`, {
+        method: 'DELETE'
+    })
+
+    console.log('response is ok');
+    dispatch(remove(id));
+    console.log('dispatched remove id');
+    return id;
+
+}
+
 const initialState = {};
     
 const locationsReducer = (state = initialState, action) => {
@@ -62,7 +77,16 @@ const locationsReducer = (state = initialState, action) => {
                 entries: [...action.locations]
             }
         case ADD_LOCATION:
-            return { ...state, entries: [...state.entries, action.newLocation] } 
+            return { ...state, entries: [...state.entries, action.newLocation] }
+        case REMOVE_LOCATION:
+            console.log('state is', state);
+            console.log('action.locations is', action.locations);
+            const x = state.find(one => one.id === action.locations.id);
+            const newState = state.filter(ele => {
+                return ele !== x;
+            })
+            console.log('newState is', newState);
+            return { ...newState,}
         default:
             return state;
     }
