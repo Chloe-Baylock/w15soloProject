@@ -19,7 +19,6 @@ router.get(
 router.post(
     '/',
     asyncHandler(async (req, res) => {
-        console.log('req.body is', req.body);
         const newLocation = await Location.build({
             locationName: req.body.locationName,
             description: req.body.description,
@@ -30,11 +29,26 @@ router.post(
 
         console.log(newLocation.toJSON());
         console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
-
+   
         return res.json({
             newLocation
         })
+
+
     })
+)
+
+router.delete(
+    '/:id(\\d+)',
+    asyncHandler(async (req, res) => {
+        console.log('req.path is', req.path);
+        console.log('req.body is', req.body);
+        const id = req.path.split('/')[1];
+        const location = await Location.findByPk(+id);
+        console.log('location is', location);
+        await location.destroy();
+    })
+
 )
 
 module.exports = router;

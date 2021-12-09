@@ -1,9 +1,9 @@
 import { csrfFetch } from './csrf';
 
-const ADD_LOCATION = "locations/ADD_LOCATION";
 const LOAD_LOCATIONS = "locations/LOAD_LOCATION";
+const ADD_LOCATION = "locations/ADD_LOCATION";
 // const UPDATE_LOCATION = "locations/UPDATE_LOCATION";
-// const REMOVE_LOCATION = "locations/REMOVE_LOCATION";
+const REMOVE_LOCATION = "locations/REMOVE_LOCATION";
 
 export const load = (locations) => {
     return {type: LOAD_LOCATIONS, locations};
