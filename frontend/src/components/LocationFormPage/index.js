@@ -24,7 +24,8 @@ function LocationFormPage() {
     }, [location, description, locationName])
 
 
-    const submitForm = (e) => {
+    async function submitForm (e) {
+        console.log('createdLocation submitting form');
         e.preventDefault();
         const data = {
             locationName,
@@ -32,11 +33,14 @@ function LocationFormPage() {
             location,
             userId: '2'
         }
-        let createdLocation = dispatch(addLocation(data));
+        console.log('log 2');
+        let createdLocation = await dispatch(addLocation(data));
+        console.log('log 3');
+        console.log('createdLocation', createdLocation);
+        console.log('createdLocation.newLocation', createdLocation.newLocation);
         if (createdLocation) {
-            // history.push(`/locations/${createdLocation.id}`);
-            history.push(`/locations/23`);
-
+            history.push(`/locations/${createdLocation.newLocation.id}`);
+            // history.push(`/locations/24`);
         }
     }
 

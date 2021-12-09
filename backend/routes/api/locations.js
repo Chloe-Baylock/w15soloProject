@@ -30,6 +30,10 @@ router.post(
 
         console.log(newLocation.toJSON());
         console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+
+        return res.json({
+            newLocation
+        })
     })
 )
 

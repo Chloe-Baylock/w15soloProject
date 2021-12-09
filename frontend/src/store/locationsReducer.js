@@ -1,4 +1,4 @@
-import Cookies from 'js-cookie';
+import { csrfFetch } from './csrf';
 
 const ADD_LOCATION = "locations/ADD_LOCATION";
 const LOAD_LOCATIONS = "locations/LOAD_LOCATION";
@@ -33,18 +33,16 @@ export const getLocations = () => async (dispatch) => {
 }
 
 export const addLocation = (data) => async (dispatch) => {
-    const XX = Cookies.get('XSRF-TOKEN');
-    const response = await fetch('/api/locations', {
+    const response = await csrfFetch('/api/locations', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'XSRF-TOKEN': XX
         },
         body: JSON.stringify(data)
     });
     const location = await response.json();
     if (response.ok) {
-        dispatch(addLocation(data));
+        dispatch(add(data));
         return location;
     }
 }
