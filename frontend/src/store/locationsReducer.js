@@ -34,7 +34,7 @@ export const getLocations = () => async (dispatch) => {
 
 export const addLocation = (data) => async (dispatch) => {
     const XX = Cookies.get('XSRF-TOKEN');
-    const response = await fetch('/api/locations/new', {
+    const response = await fetch('/api/locations', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -42,11 +42,9 @@ export const addLocation = (data) => async (dispatch) => {
         },
         body: JSON.stringify(data)
     });
-    const location = await response.json
+    const location = await response.json();
     if (response.ok) {
-        const location = await response.json();
         dispatch(addLocation(data));
-
         return location;
     }
 }

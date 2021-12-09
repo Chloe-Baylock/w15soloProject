@@ -17,7 +17,7 @@ router.get(
 )
 
 router.post(
-    '/new',
+    '/',
     asyncHandler(async (req, res) => {
         console.log('req.body is', req.body);
         const newLocation = await Location.build({
@@ -30,8 +30,6 @@ router.post(
 
         console.log(newLocation.toJSON());
         console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
-
-        await sequelize.close();
     })
 )
 

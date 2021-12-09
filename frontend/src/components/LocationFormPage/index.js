@@ -34,7 +34,9 @@ function LocationFormPage() {
         }
         let createdLocation = dispatch(addLocation(data));
         if (createdLocation) {
-            history.push(`/locations/${createdLocation.id}`);
+            // history.push(`/locations/${createdLocation.id}`);
+            history.push(`/locations/23`);
+
         }
     }
 
