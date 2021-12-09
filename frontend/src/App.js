@@ -6,6 +6,7 @@ import LoginFormPage from "./components/LoginFormPage";
 import SignupFormPage from "./components/SignupFormPage";
 import LocationPage from "./components/LocationPage";
 import LocationFormPage from "./components/LocationFormPage";
+import EditLocationForm from "./components/EditLocationForm";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 
@@ -32,11 +33,14 @@ function App() {
           <Route path='/signup'>
             <SignupFormPage />
           </Route>
-          <Route path='/locations/:id(\d+)'>
+          <Route exact path='/locations/:id(\d+)'>
             <LocationPage />
           </Route>
           <Route path='/locations/new'>
             <LocationFormPage />
+          </Route>
+          <Route path='/locations/:id(\d+)/edit'>
+            <EditLocationForm />
           </Route>
         </Switch>
       )}

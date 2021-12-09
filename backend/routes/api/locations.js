@@ -33,15 +33,39 @@ router.post(
     })
 )
 
+router.put(
+    '/:id(\\d+)',
+    asyncHandler(async (req, res) => {
+        const id = req.params.id;
+        const oldLocation = await Location.findByPk(id);
+
+        oldLocation.locationName = req.body.locationName;
+        oldLocation.description = req.body.description;
+        oldLocation.location = req.body.location;
+        oldLocation.userId = 2;
+
+        await oldLocation.save();
+
+        console.log(oldLocation);
+        return res.json({
+            oldLocation,
+            id
+        })
+
+    })
+)
+
 router.delete(
     '/:id(\\d+)',
     asyncHandler(async (req, res) => {
-        const id = req.params.id
+        const id = req.params.id;
         const location = await Location.findByPk(id);
         if (location) {
             location.destroy();
         }
-        res.json({ id })
+        return res.json({
+            id 
+        })
     })
 )
 

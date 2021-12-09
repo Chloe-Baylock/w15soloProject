@@ -19,6 +19,11 @@ function LocationPage() {
 
     let location = locations?.find(loc => loc.id === +parameter.id)
     
+    async function editPage (e) {
+        e.preventDefault();
+        history.push(`/locations/${parameter.id}/edit`);
+    }
+
     async function deletePage (e) {
         e.preventDefault();
         await dispatch(removeLocation(parameter.id));
@@ -32,6 +37,9 @@ function LocationPage() {
             <p>description: {location && location.description}</p>
             <p>host: {location && location.userId}</p>
             <p>id: {location && location.id}</p>
+            <form onSubmit={editPage}>
+                <button type='edit'>Edit</button>
+            </form>
             <form onSubmit={deletePage}>
                 <button type='submit'>Delete</button>
             </form>

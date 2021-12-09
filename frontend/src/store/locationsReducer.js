@@ -2,7 +2,7 @@ import { csrfFetch } from './csrf';
 
 const LOAD_LOCATIONS = "locations/LOAD_LOCATION";
 const ADD_LOCATION = "locations/ADD_LOCATION";
-// const UPDATE_LOCATION = "locations/UPDATE_LOCATION";
+const UPDATE_LOCATION = "locations/UPDATE_LOCATION";
 const REMOVE_LOCATION = "locations/REMOVE_LOCATION";
 
 export const load = (locations) => {
@@ -15,10 +15,10 @@ export const add = (newLocation) => ({
 })
 
 
-// export const update = (location) => ({
-//     type: UPDATE_LOCATION,
-//     location
-// })
+export const update = (location) => ({
+    type: UPDATE_LOCATION,
+    location
+})
 
 export const remove = (locationId) => ({
     type: REMOVE_LOCATION,
@@ -47,16 +47,38 @@ export const addLocation = (data) => async (dispatch) => {
     }
 }
 
-export const removeLocation = (id) => async (dispatch) => {
 
-    await csrfFetch(`/api/locations/${id}`, {
-        method: 'DELETE'
-    })
-
-    dispatch(remove(id));
-    return id;
+export const updateLocation = (obj) => async (dispatch) => {
+    
+    console.log('obj.data', obj.data);
+    console.log('obj.id', obj.id);
+    console.log('typeof obj.id', typeof obj.id);
+    const response = await csrfFetch(`/api/locations/${obj.id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(obj.data)
+    });
+    const location = await response.json();
+    if (response.ok) {
+        dispatch(update(obj.data));
+        return location;
+    }
 
 }
+
+    export const removeLocation = (id) => async (dispatch) => {
+    
+        await csrfFetch(`/api/locations/${id}`, {
+            method: 'DELETE'
+        })
+    
+        dispatch(remove(id));
+        return id;
+    
+    }
+
 
 const initialState = {};
     
