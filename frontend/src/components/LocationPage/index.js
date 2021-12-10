@@ -1,12 +1,24 @@
 import { useParams, useHistory } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
+import { restoreUser, getUser } from '../../store/session';
 import { getLocations, removeLocation } from '../../store/locationsReducer'
 
 function LocationPage() {
     
+    
     const dispatch = useDispatch();
+
+    async function findUser () {
+
+        const response = await dispatch(getUser())
+        
+        console.log('response is', response);
+    }
+
+    findUser();
+
+
     const history = useHistory();
 
     
@@ -19,7 +31,7 @@ function LocationPage() {
     
     useEffect(() => {
         (dispatch(getLocations()));
-    }, [dispatch, location])
+    }, [dispatch])
     
     async function editPage (e) {
         e.preventDefault();
@@ -43,7 +55,7 @@ function LocationPage() {
                 <button type='edit'>Edit</button>
             </form>
             <form onSubmit={deletePage}>
-                <button type='submit'>Delete</button>
+                <button type='submit' hidden={restoreUser() === 'nodemo'}>Delete</button>
             </form>
         </div>
     )

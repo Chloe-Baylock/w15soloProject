@@ -6,7 +6,7 @@ const ADD_LOCATION = "locations/ADD_LOCATION";
 const REMOVE_LOCATION = "locations/REMOVE_LOCATION";
 
 export const load = (locations) => {
-    return {type: LOAD_LOCATIONS, locations};
+    return { type: LOAD_LOCATIONS, locations };
 }
 
 export const add = (newLocation) => ({
@@ -49,10 +49,7 @@ export const addLocation = (data) => async (dispatch) => {
 
 
 export const updateLocation = (obj) => async (dispatch) => {
-    
-    console.log('obj.data', obj.data);
-    console.log('obj.id', obj.id);
-    console.log('typeof obj.id', typeof obj.id);
+
     const response = await csrfFetch(`/api/locations/${obj.id}`, {
         method: 'PUT',
         headers: {
@@ -60,28 +57,26 @@ export const updateLocation = (obj) => async (dispatch) => {
         },
         body: JSON.stringify(obj.data)
     });
-    const location = await response.json();
-    // if (response.ok) {
-    //     dispatch(update(obj.data));
-    //     return location;
-    // }
+    // const location = await response.json();
+    // dispatch(update(obj.data));
+    // return location;
 
 }
 
-    export const removeLocation = (id) => async (dispatch) => {
-    
-        await csrfFetch(`/api/locations/${id}`, {
-            method: 'DELETE'
-        })
-    
-        dispatch(remove(id));
-        return id;
-    
-    }
+export const removeLocation = (id) => async (dispatch) => {
+
+    await csrfFetch(`/api/locations/${id}`, {
+        method: 'DELETE'
+    })
+
+    dispatch(remove(id));
+    return id;
+
+}
 
 
 const initialState = {};
-    
+
 const locationsReducer = (state = initialState, action) => {
     switch (action.type) {
         case LOAD_LOCATIONS:
@@ -95,12 +90,22 @@ const locationsReducer = (state = initialState, action) => {
             }
         case ADD_LOCATION:
             return { ...state, entries: [...state.entries, action.newLocation] }
+        // case UPDATE_LOCATION:
+        //     console.log('state', state);
+        //     console.log('action', action);
+        //     let oldEntry = state.entries.find(one => one.id === action.locationId);
+        //     const noOldEntry = state.entries.filter(ele => {
+        //         return ele !== oldEntry;
+        //     })
+        //     console.log('noOldEntry', noOldEntry);
+        //     console.log('action.location', action.location);
+        //     return { ...noOldEntry, entries: [action.locations] }
         case REMOVE_LOCATION:
             const x = state.entries.find(one => one.id === action.locationId);
             const newState = state.entries.filter(ele => {
                 return ele !== x;
             })
-            return { ...newState,}
+            return { ...newState }
         default:
             return state;
     }
