@@ -37,7 +37,7 @@ function LocationPage() {
             <p>location: {location && location.location}</p>
             <p>named: {location && location.locationName}</p>
             <p>description: {location && location.description}</p>
-            <p>host: {location && location.userId}</p>
+            <p>host id: {location && location.userId}</p>
             <p>id: {location && location.id}</p>
             <form onSubmit={editPage}>
                 <button type='edit'>Edit</button>

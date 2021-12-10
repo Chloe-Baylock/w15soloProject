@@ -2,7 +2,7 @@ import { csrfFetch } from './csrf';
 
 const LOAD_LOCATIONS = "locations/LOAD_LOCATION";
 const ADD_LOCATION = "locations/ADD_LOCATION";
-const UPDATE_LOCATION = "locations/UPDATE_LOCATION";
+// const UPDATE_LOCATION = "locations/UPDATE_LOCATION";
 const REMOVE_LOCATION = "locations/REMOVE_LOCATION";
 
 export const load = (locations) => {
@@ -15,10 +15,10 @@ export const add = (newLocation) => ({
 })
 
 
-export const update = (location) => ({
-    type: UPDATE_LOCATION,
-    location
-})
+// export const update = (location) => ({
+//     type: UPDATE_LOCATION,
+//     location
+// })
 
 export const remove = (locationId) => ({
     type: REMOVE_LOCATION,
@@ -61,10 +61,10 @@ export const updateLocation = (obj) => async (dispatch) => {
         body: JSON.stringify(obj.data)
     });
     const location = await response.json();
-    if (response.ok) {
-        dispatch(update(obj.data));
-        return location;
-    }
+    // if (response.ok) {
+    //     dispatch(update(obj.data));
+    //     return location;
+    // }
 
 }
 
