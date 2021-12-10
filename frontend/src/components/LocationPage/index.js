@@ -9,15 +9,17 @@ function LocationPage() {
     const dispatch = useDispatch();
     const history = useHistory();
 
-    useEffect(() => {
-        (dispatch(getLocations()));
-    }, [dispatch])
-
+    
     const locations = useSelector(state => state.locations.entries);
 
     const parameter = useParams();
 
     let location = locations?.find(loc => loc.id === +parameter.id)
+    
+    
+    useEffect(() => {
+        (dispatch(getLocations()));
+    }, [dispatch, location])
     
     async function editPage (e) {
         e.preventDefault();
