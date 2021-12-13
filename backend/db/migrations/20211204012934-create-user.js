@@ -24,7 +24,7 @@ module.exports = {
       },
       bakingSkill: {
         type: Sequelize.STRING(500),
-        allowNull: false,
+        allowNull: true,
       },
       createdAt: {
         allowNull: false,
