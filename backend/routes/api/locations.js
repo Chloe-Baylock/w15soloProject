@@ -46,7 +46,6 @@ router.put(
 
         await oldLocation.save();
 
-        console.log(oldLocation);
         return res.json({
             oldLocation,
             id

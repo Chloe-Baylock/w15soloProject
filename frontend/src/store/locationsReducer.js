@@ -50,9 +50,7 @@ export const addLocation = (data) => async (dispatch) => {
 
 export const updateLocation = (obj) => async (dispatch) => {
     
-    console.log('obj.data', obj.data);
-    console.log('obj.id', obj.id);
-    console.log('typeof obj.id', typeof obj.id);
+
     const response = await csrfFetch(`/api/locations/${obj.id}`, {
         method: 'PUT',
         headers: {
