@@ -9,7 +9,7 @@
     display: flex;
     justify-content: center;
     height: 80px;
-    width: 99vw;
+    width: 100%;
     box-sizing: border-box;
     background-color: gray;
 }

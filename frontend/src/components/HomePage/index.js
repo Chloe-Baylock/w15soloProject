@@ -2,13 +2,14 @@ import React, { useEffect } from 'react';
 // import * as sessionActions from '../../store/session';
 // import * as locationActions from '../../store/locationsReducer';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import './Home.css';
 
 import { getLocations } from '../../store/locationsReducer';
 
 function HomePage() {
 
+  const history = useHistory();
   const locations = useSelector(state => state.locations.entries);
 
   const dispatch = useDispatch();
@@ -29,9 +30,14 @@ function HomePage() {
         <ul className='home-card-container'>
           {locations?.map(location => (
             <div className='home-card' key={location.id}>
-              <li className='home-card-title'>
-                <NavLink to={`/locations/${location.id}`}>{location.locationName}</NavLink>
-              </li>
+              <div className='home-card-title-area'>
+                <li
+                  className='home-card-title-text'
+                  onClick={() => history.push(`/locations/${location.id}`)}
+                >
+                  {location.locationName}
+                </li>
+              </div>
             </div>
           ))}
         </ul>

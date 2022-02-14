@@ -20,19 +20,20 @@
 
 
 
+/* .home-below-main {
+} */
+
 .home-card-container {
   display: flex;
-  justify-content: center;
+  flex-wrap: wrap;
 
   margin: 0;
+  padding: 0 calc(100vw - 1450px);
 
   background-color: lightslategray;
 }
 
 .home-card {
-  display: flex;
-  justify-content: center;
-
   margin: 20px 10px;
   width: 300px;
   height: 400px;
@@ -40,7 +41,28 @@
   background-color: rgb(224, 152, 16);
 }
 
-.home-card-title {
+.home-card:hover {
+  cursor: pointer;
+
+  animation: card-animation 0.75s cubic-bezier(0, 0, 0, 1) forwards;
+  /* animation: name duration timing-function delay iteration-count direction fill-mode; */
+  /* animation:cubic-bezier(0.075, 0.82, 0.165, 1); */
+}
+
+@keyframes card-animation {
+  from {transform: translate(0px, 0px)}
+  to {transform: translate(0px, -20px)}
+}
+
+
+.home-card-title-area {
   padding-top: 10px;
+}
+
+.home-card-title-text {
+  padding-left: 15px;
+  padding-right: 15px;
   list-style-type: none;
+  font-weight: bold;
+  font-size: 2rem;
 }
