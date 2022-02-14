@@ -24,12 +24,15 @@ function HomePage() {
       <div className='home-main-bg'>
         <h1>Scroll To Find Places To Stay</h1>
       </div>
-      <div className='locationsDiv'>
-        <ul>
+
+      <div className='home-below-main'>
+        <ul className='home-card-container'>
           {locations?.map(location => (
-            <li key={location.id}>
-              <NavLink to={`/locations/${location.id}`}>{location.locationName}</NavLink>
-            </li>
+            <div className='home-card' key={location.id}>
+              <li className='home-card-title'>
+                <NavLink to={`/locations/${location.id}`}>{location.locationName}</NavLink>
+              </li>
+            </div>
           ))}
         </ul>
         <NavLink to='/locations/new'>Create New Location</NavLink>
