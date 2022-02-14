@@ -4,9 +4,23 @@
 
 .home-main-bg {
   height: calc(100vh - 80px);
-  background-color: pink;
+  background: url(bgmaybe.png);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.home-main-bg h1 {
+  margin: 0;
+  font-size: 8rem;
+  color: rgb(238, 238, 238);
+  background-color: rgb(39, 39, 255);
+  padding: 0px 5px 2px 5px;
+  font-family:Arial, Helvetica, sans-serif
 }
 
 ul {
-  margin: 0px;
+  margin: 0;
 }

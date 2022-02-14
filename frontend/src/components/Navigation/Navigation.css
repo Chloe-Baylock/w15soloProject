@@ -9,7 +9,8 @@
     display: flex;
     justify-content: center;
     height: 80px;
-    width: 100vw;
+    width: 99vw;
+    box-sizing: border-box;
     background-color: gray;
 }
 
@@ -30,7 +31,6 @@
     justify-self: center;
     width: 80vw;
     height: 80px;
-    right: 10%;
     z-index: 1;
     padding-left: 10px;
     padding-right: 10px;

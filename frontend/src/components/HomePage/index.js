@@ -20,7 +20,10 @@ function HomePage() {
 
 
   return (
-    <div className='home-main-bg'>
+    <>
+      <div className='home-main-bg'>
+        <h1>Scroll To Find Places To Stay</h1>
+      </div>
       <div className='locationsDiv'>
         <ul>
           {locations?.map(location => (
@@ -31,7 +34,7 @@ function HomePage() {
         </ul>
         <NavLink to='/locations/new'>Create New Location</NavLink>
       </div>
-    </div>
+    </>
   )
 }
 
