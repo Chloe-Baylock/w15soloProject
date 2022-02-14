@@ -1,0 +1,12 @@
+/* 100 vh background;
+  scroll down to see some image cards below
+*/
+
+.home-main-bg {
+  height: calc(100vh - 80px);
+  background-color: pink;
+}
+
+ul {
+  margin: 0px;
+}

@@ -26,12 +26,12 @@ function LoginFormPage() {
     }
 
     return (
-        <div className='container'>
+        <div className='login-container'>
             <form onSubmit={handleSubmit}>
                 <ul>
                     {errors.map((error, i) => <li key={i}>{error}</li>)}
                 </ul>
-                <div className='eleBelow'>
+                <div className='login-eleBelow'>
                     <label>
                         Username or Email:
                         <input
@@ -42,7 +42,7 @@ function LoginFormPage() {
                         />
                     </label>
                 </div>
-                <div className='eleBelow'>
+                <div className='login-eleBelow'>
                     <label>
                         Password:
                         <input
@@ -53,7 +53,7 @@ function LoginFormPage() {
                         />
                     </label>
                 </div>
-                <div className='eleBelow' id='but'>
+                <div className='login-eleBelow' id='but'>
                     <button type="submit">Log In</button>
                 </div>
             </form>

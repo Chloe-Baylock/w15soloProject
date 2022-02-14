@@ -20,7 +20,7 @@ function App() {
   }, [dispatch]);
 
   return (
-    <>
+    <div className="global-top-left">
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
@@ -44,7 +44,7 @@ function App() {
           </Route>
         </Switch>
       )}
-    </>
+    </div>
   );
 }
 

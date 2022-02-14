@@ -22,21 +22,19 @@ function Navigation({ isLoaded }) {
   }
 
   return (
-    <>
-      <div className='navContainer'>
-        <div className='navBar'>
-          <div className='home'>
-            <NavLink className='nlink' exact to="/"><i className="fas fa-bread-slice" />BreadnB</NavLink>
-          </div>
-          <div className='book'>
-            <p>book</p>
-          </div>
-          <div className='userOp'>
-            <p>{isLoaded && sessionLinks}</p>
-          </div>
+    <div className='nav-container'>
+      <div className='nav-bar'>
+        <div className='nav-home'>
+          <NavLink className='nav-navlink' exact to="/"><i className="fas fa-bread-slice" />BreadnB</NavLink>
+        </div>
+        <div className='nav-book'>
+          <p>book</p>
+        </div>
+        <div className='nav-user-op'>
+          <p>{isLoaded && sessionLinks}</p>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

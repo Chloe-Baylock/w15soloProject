@@ -3,27 +3,33 @@
     /* width: 10px; */
 }
 
-.navContainer {
-    height:80px;
+.nav-container {
+    position: sticky;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    height: 80px;
+    width: 100vw;
+    background-color: gray;
 }
 
-.home > a {
+.nav-home a {
     text-decoration: none;
     color: black;
 }
 
-.nlink {
+.nav-navlink {
     font-size: 40px;
 }
 
-.navBar {
+.nav-bar {
     box-sizing: border-box;
-    position: fixed;
     display:flex;
     align-items: center;
     justify-content: space-between;
     justify-self: center;
     width: 80vw;
+    height: 80px;
     right: 10%;
     z-index: 1;
     padding-left: 10px;

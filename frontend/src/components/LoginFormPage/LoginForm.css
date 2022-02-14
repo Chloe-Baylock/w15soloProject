@@ -1,8 +1,8 @@
-html {
+/* .login html {
     background-color: rgb(84, 192, 192);
-}
+} */
 
-.container {
+.login-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -10,7 +10,7 @@ html {
     
 }
 
-.eleBelow {
+.login-eleBelow {
     background-color: aqua;
     padding: 10px;
 }
