@@ -30,11 +30,13 @@ function HomePage() {
         <div className='home-card-area'>
           <ul className='home-card-container'>
             {locations?.map(location => (
-              <div className='home-card' key={location.id}>
+              <div
+                className='home-card' key={location.id}
+                onClick={() => history.push(`/locations/${location.id}`)}
+                >
                 <div className='home-card-title-area'>
                   <li
                     className='home-card-title-text'
-                    onClick={() => history.push(`/locations/${location.id}`)}
                   >
                     {location.locationName}
                   </li>
