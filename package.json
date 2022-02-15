@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/Chloe-Baylock/w15soloProject/issues"
   },
-  "homepage": "https://github.com/Chloe-Baylock/w15soloProject#readme"
+  "homepage": "https://github.com/Chloe-Baylock/w15soloProject#readme",
+  "dependencies": {
+    "@heroicons/react": "^1.0.5"
+  }
 }

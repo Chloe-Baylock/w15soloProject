@@ -44,6 +44,8 @@
 }
 
 .nav-dropdown-button {
+  display: flex;
+  align-items: center;
   background-color: white;
   user-select: none;
   padding: 5px 10px;
@@ -58,6 +60,10 @@
 @keyframes button-shade {
   /* from {background-color: white;} */
   to {background-color: rgb(187, 187, 187);}
+}
+
+.nav-chevron-down-icon {
+  width: 24px;
 }
 
 .nav-dropdown-ul {

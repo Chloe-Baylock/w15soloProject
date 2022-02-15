@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from 'react-redux';
-// import { ChevronDownIcon} from "@heroicons/react/solid"
+import { ChevronDownIcon } from "@heroicons/react/solid"
 import * as sessionActions from '../../store/session';
 
 function ProfileButton({ user }) {
@@ -41,7 +41,9 @@ function ProfileButton({ user }) {
         id='nav-dropdown-button'
         className='nav-dropdown-button'
         onClick={e => openMenu(e)}
-      ><i className="fas fa-user-circle" /> {user.username}
+      >
+        {user.username}
+        <ChevronDownIcon className="nav-chevron-down-icon" />
       </div>
       {showMenu && (
         <ul className="nav-dropdown-ul">
