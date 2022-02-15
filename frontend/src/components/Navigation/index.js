@@ -35,7 +35,7 @@ function Navigation({ isLoaded }) {
             <NavLink to='/locations/new'>Create New Location</NavLink>
           </div>
           <div className='nav-user-op'>
-            <p>{isLoaded && sessionLinks}</p>
+            <div>{isLoaded && sessionLinks}</div>
           </div>
         </div>
       </div>

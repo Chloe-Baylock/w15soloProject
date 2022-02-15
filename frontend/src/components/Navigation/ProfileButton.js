@@ -1,25 +1,32 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from 'react-redux';
+// import { ChevronDownIcon} from "@heroicons/react/solid"
 import * as sessionActions from '../../store/session';
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
-  
-  const openMenu = () => {
+
+  const openMenu = e => {
     if (showMenu) return;
-    setShowMenu(true);
+    else {
+      console.log(e.currentTarget)
+      e.currentTarget.style.backgroundColor = "rgb(187, 187, 187)";
+      setShowMenu(true);
+    }
   };
-  
+
   useEffect(() => {
     if (!showMenu) return;
 
     const closeMenu = () => {
       setShowMenu(false);
+      let dropB = document.getElementById('nav-dropdown-button');
+      dropB.style.backgroundColor = 'white';
     };
 
     document.addEventListener('click', closeMenu);
-  
+
     return () => document.removeEventListener("click", closeMenu);
   }, [showMenu]);
 
@@ -30,15 +37,20 @@ function ProfileButton({ user }) {
 
   return (
     <>
-      <button className='nlink' onClick={openMenu}>
-        <i className="fas fa-user-circle" />
-      </button>
+      <div
+        id='nav-dropdown-button'
+        className='nav-dropdown-button'
+        onClick={e => openMenu(e)}
+      ><i className="fas fa-user-circle" /> {user.username}
+      </div>
       {showMenu && (
-        <ul className="profile-dropdown">
-          <li>{user.username}</li>
-          <li>{user.email}</li>
-          <li>
-            <button onClick={logout}>Log Out</button>
+        <ul className="nav-dropdown-ul">
+          <li className="nav-dropdown-li">{user.email}</li>
+          <li className="nav-dropdown-li">
+            <button
+              className="global-button-style"
+              onClick={logout}
+            >Log Out</button>
           </li>
         </ul>
       )}
