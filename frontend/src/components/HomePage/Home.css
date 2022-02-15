@@ -20,17 +20,18 @@
 
 
 
-/* .home-below-main {
-} */
+.home-card-area {
+  display: flex;
+  justify-content: center;
+  background-color: lightslategray;
+}
 
 .home-card-container {
   display: flex;
   flex-wrap: wrap;
-
+  width: 1000px;
   margin: 0;
-  padding: 0 calc(100vw - 1450px);
 
-  background-color: lightslategray;
 }
 
 .home-card {

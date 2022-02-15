@@ -1,5 +1,6 @@
 .global-top-left {
   position: absolute;
+  width: calc(100vw - 17px);
   top: 0;
   left: 0;
   font-family: Arial, Helvetica, sans-serif;

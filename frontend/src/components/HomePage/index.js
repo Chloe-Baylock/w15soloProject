@@ -27,21 +27,22 @@ function HomePage() {
       </div>
 
       <div className='home-below-main'>
-        <ul className='home-card-container'>
-          {locations?.map(location => (
-            <div className='home-card' key={location.id}>
-              <div className='home-card-title-area'>
-                <li
-                  className='home-card-title-text'
-                  onClick={() => history.push(`/locations/${location.id}`)}
-                >
-                  {location.locationName}
-                </li>
+        <div className='home-card-area'>
+          <ul className='home-card-container'>
+            {locations?.map(location => (
+              <div className='home-card' key={location.id}>
+                <div className='home-card-title-area'>
+                  <li
+                    className='home-card-title-text'
+                    onClick={() => history.push(`/locations/${location.id}`)}
+                  >
+                    {location.locationName}
+                  </li>
+                </div>
               </div>
-            </div>
-          ))}
-        </ul>
-        <NavLink to='/locations/new'>Create New Location</NavLink>
+            ))}
+          </ul>
+        </div>
       </div>
     </>
   )
