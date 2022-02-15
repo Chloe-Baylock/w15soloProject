@@ -2,7 +2,9 @@
   display: inline-block;
   width: 100%;
   text-align: end;
-  background: linear-gradient(to right, lightslategray, rgb(116, 116, 116))
+  background: linear-gradient(to right, lightslategray, rgb(116, 116, 116));
+  position: absolute;
+  bottom: 0px;
 }
 
 .footer-text {

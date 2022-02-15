@@ -1,10 +1,11 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
 
 function Navigation({ isLoaded }) {
+  const history = useHistory();
   const sessionUser = useSelector(state => state.session.user);
 
   let sessionLinks;
@@ -32,7 +33,10 @@ function Navigation({ isLoaded }) {
             <p>book</p>
           </div>
           <div className='nav-new-location'>
-            <NavLink to='/locations/new'>Create New Location</NavLink>
+            <button
+              className='global-button-style'
+              onClick={() => history.push('/locations/new')}
+            >Create New Location</button>
           </div>
           <div className='nav-user-op'>
             <div>{isLoaded && sessionLinks}</div>
