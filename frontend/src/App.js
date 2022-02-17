@@ -9,6 +9,7 @@ import LocationFormPage from "./components/LocationFormPage";
 import EditLocationForm from "./components/EditLocationForm";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
+import Footer from "./components/Footer";
 
 function App() {
   const dispatch = useDispatch();
@@ -20,7 +21,7 @@ function App() {
   }, [dispatch]);
 
   return (
-    <>
+    <div className="global-top-left">
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
@@ -40,11 +41,12 @@ function App() {
             <LocationFormPage />
           </Route>
           <Route path='/locations/:id(\d+)/edit'>
-            <EditLocationForm />
+            <EditLocationForm isLoaded={isLoaded} />
           </Route>
         </Switch>
       )}
-    </>
+      <Footer />
+    </div>
   );
 }
 

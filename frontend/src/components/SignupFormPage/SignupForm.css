@@ -1,25 +1,26 @@
-html {
+/* html {
     background-color: rgb(84, 192, 192);
-}
+} */
 
-.container {
+.signup-container {
     display: flex;
     justify-content: center;
     align-items: center;
     height:33vh;
+    margin-top: 50px;
     
 }
 
-.eleBelow {
+.signup-eleBelow {
     background-color: aqua;
     padding: 10px;
 }
 
-input {
+.signup-input {
     margin-left: 10px;
 }
 
-label {
+.signup-label {
     font-weight: bold;
     font-size: 24px;
 }

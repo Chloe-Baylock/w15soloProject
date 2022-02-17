@@ -1,25 +1,24 @@
-html {
+/* .login html {
     background-color: rgb(84, 192, 192);
-}
+} */
 
-.container {
+.login-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height:33vh;
-    
+    height:33vh; 
 }
 
-.eleBelow {
+.login-eleBelow {
     background-color: aqua;
     padding: 10px;
 }
 
-input {
-    margin-left: 10px;
+.login-label {
+  font-weight: bold;
+  font-size: 24px;
 }
 
-label {
-    font-weight: bold;
-    font-size: 24px;
+.login-input {
+    margin-left: 10px;
 }

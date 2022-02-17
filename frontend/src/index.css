@@ -1,1 +1,25 @@
-/* TODO Add site wide styles */
+.global-top-left {
+  position: absolute;
+  min-height: 100vh;
+  width: calc(100vw - 17px);
+  top: 0;
+  left: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.global-button-style {
+  background-color: rgb(211, 211, 211);
+  border-radius: .5rem;
+  box-shadow: 0px 0 3px black;
+}
+
+.global-button-style:hover {
+  cursor: pointer;
+  animation: button-hover ease-out .125s forwards;
+}
+
+@keyframes button-hover {
+  from {background-color: rgb(211, 211, 211);}
+  to {background-color: rgb(177, 177, 177);}
+}
+

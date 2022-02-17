@@ -1,0 +1,14 @@
+.footer-div {
+  display: inline-block;
+  width: 100%;
+  text-align: end;
+  background: linear-gradient(to right, lightslategray, rgb(116, 116, 116));
+  position: absolute;
+  bottom: 0px;
+}
+
+.footer-text {
+  margin: 0;
+  padding: 1px 5px;
+  font-weight: bold;
+}
