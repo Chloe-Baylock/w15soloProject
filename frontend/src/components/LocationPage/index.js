@@ -41,6 +41,7 @@ function LocationPage() {
   const submitForm = (e) => {
     e.preventDefault();
     console.log('that is a submission')
+    console.log(date1);
     return false;
   }
 
@@ -80,25 +81,33 @@ function LocationPage() {
       </div>
       {booking && (
         <div className='location-page-booking-modal'>
-          <p>hello</p>
           <form onSubmit={submitForm} className='location-page-booking-form'>
-            <label>
-              start date
-            </label>
-            <input
-              type='date'
-              value={date1 || todayFn()}
-              onChange={e => setDate1(e.target.value)}
-            />
+            <div className='location-page-form-div'>
+              <label>
+                start date
+              </label>
+              <input
+                type='date'
+                value={date1 || todayFn()}
+                onChange={e => setDate1(e.target.value)}
+              />
+            </div>
             <br />
-            <label>
-              end date
-            </label>
-            <input
-              type='date'
-              value={date2 || todayFn()}
-              onChange={e => setDate2(e.target.value)}
-            />
+            <div className='location-page-form-div'>
+              <label>
+                end date
+              </label>
+              <input
+                type='date'
+                value={date2 || todayFn()}
+                onChange={e => setDate2(e.target.value)}
+              />
+            </div>
+            <div>
+              <button className='global-button-style'>
+                Book
+              </button>
+            </div>
           </form>
         </div>
       )}
