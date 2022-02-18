@@ -1,5 +1,6 @@
 const express = require('express');
 const asyncHandler = require('express-async-handler');
+const { Booking } = require('../../db/models')
 // const { }
 
 const router = express.Router();
@@ -17,13 +18,15 @@ const router = express.Router();
 router.post(
   '/',
   asyncHandler(async (req, res) => {
-    const newBooking = await Booking.build({
+    const booking = await Booking.build({
       userId: req.body.userId,
       locationId: req.body.locationId,
-      timeSpan: req.body.timeSpan,
+      timespan: req.body.timespan,
     })
-    await newBooking.save();
-    return {booking: req.body.booking};
+    await booking.save();
+    return res.json({
+      booking,
+    });
   })
 )
 

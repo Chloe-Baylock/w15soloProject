@@ -23,15 +23,15 @@ export const loadBookings = () => async dispatch => {
 }
 
 export const addBooking = data => async dispatch => {
-  const response = await csrfFetch('/api/bookigns', {
+  const response = await csrfFetch('/api/bookings', {
     method: "POST",
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
   })
   const booking = await response.json();
   if (response.ok) {
-    await dispatch(add(booking));
-    return booking;
+    await dispatch(add(booking.booking));
+    return booking.booking;
   }
   else return "error written by chloe";
 }
@@ -40,9 +40,11 @@ export const addBooking = data => async dispatch => {
 const bookingsReducer = (state = {}, action) => {
   switch (action.type) {
     case LOAD_BOOKINGS:
-      return {"bookings": action.payload};
+      return {"bookings": action.bookings};
     case ADD_BOOKING:
-      return {"bookings": [...state.bookings, action.payload]}
+      console.log('state is', state)
+      console.log('action.booking is', action.booking)
+      return {"entries": action.booking, ...state}
     default:
       return state;
   }

@@ -8,7 +8,7 @@ import { useState } from 'react';
 
 function LocationPage() {
 
-  const sessionUser = useSelector(state => state.session.userId)
+  const sessionUserId = useSelector(state => state.session.user.id)
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -104,9 +104,11 @@ function LocationPage() {
     console.log('date1 is', date1 || todayFn());
     console.log('date2 is', date2 || todayFn());
     console.log('totalDays() is', totalDays());
+    console.log('sessionUserId is', sessionUserId)
     let booking = `${date1 || todayFn()}X${date2 || todayFn()}X${totalDays()}`;
+    console.log('booking is', booking)
     let data = {
-      userId: sessionUser.id,
+      userId: sessionUserId,
       locationId: params.id,
       timespan: booking,
     }
