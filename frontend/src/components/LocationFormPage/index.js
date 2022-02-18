@@ -1,17 +1,21 @@
 import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { addLocation } from '../../store/locationsReducer';
 import './LocationFormPage.css'
 
 function LocationFormPage() {
+
+  const sessionUser = useSelector(state => state.session.user);
+
+  const history = useHistory();
+  const dispatch = useDispatch();
+
   const [locationName, setLocationName] = useState('');
   const [description, setDescription] = useState('');
   const [location, setLocation] = useState('');
   const [errors, setErrors] = useState([]);
 
-  const history = useHistory();
-  const dispatch = useDispatch();
 
   useEffect(() => {
     const vErr = [];
@@ -31,7 +35,7 @@ function LocationFormPage() {
       locationName,
       description,
       location,
-      userId: '2'
+      userId: sessionUser.id
     }
     let createdLocation = await dispatch(addLocation(data));
     if (createdLocation) {

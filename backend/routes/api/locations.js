@@ -23,7 +23,7 @@ router.post(
             locationName: req.body.locationName,
             description: req.body.description,
             location: req.body.location,
-            userId: 2
+            userId: req.body.userId
         })
         await newLocation.save();
 
