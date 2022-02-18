@@ -42,7 +42,7 @@ export const addLocation = (data) => async (dispatch) => {
     });
     const location = await response.json();
     if (response.ok) {
-        dispatch(add(data));
+        await dispatch(add(data));
         return location;
     }
 }

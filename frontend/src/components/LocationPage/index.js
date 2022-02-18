@@ -38,11 +38,75 @@ function LocationPage() {
     return `${year}-${month}-${day}`;
   }
 
-  const submitForm = (e) => {
+  const totalDays = () => {
+    // assumes you cannot rent for more than 1 year.
+    // assumes you cannot rent in the past.
+    // assuems if both same day, it is 1 day long.
+
+    let d1 = date1 || todayFn();
+    let d2 = date2 || todayFn()
+
+    let month1 = parseInt(d1.slice(5, 7));
+    let month2 = parseInt(d2.slice(5, 7));
+
+    const feb = () => {
+      let year = d1.slice(0, 4);
+      if (month1 > month2) {
+        year = d2.slice(5, 7);
+      }
+      if (year % 400 === 0) return 29
+      else if (year % 100 === 0) return 28
+      else if (year % 4 === 0) return 29
+      else return 28;
+    }
+
+    let monthDays = [31, feb(), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+
+    let count = 0;
+
+    let day1 = parseInt(d1.slice(8, 10));
+    let day2 = parseInt(d2.slice(8, 10));
+
+    if (month1 === month2) {
+      if (day1 > day2) {
+        for (let i = 0; i < 12; i++) {
+          if (i + 1 !== month1) count += monthDays[i];
+        }
+        count += day2;
+        count += monthDays[month1 - 1] - day1 + 1
+      }
+      else count += day2 - day1 + 1;
+    } else if (month1 < month2) {
+      for (let i = month1; i < month2 - 1; i++) {
+        count += monthDays[i];
+      }
+      count += day2;
+      count += monthDays[month1 - 1] - day1 + 1;
+    } else {
+      for (let i = month1; i < 12; i++) {
+        count += monthDays[i];
+      }
+      for (let i = 0; i < month2 - 1; i++) {
+        count += monthDays[i];
+      }
+      count += day2;
+      count += monthDays[month1 - 1] - day1 + 1
+    }
+
+    let sum = count.toString();
+
+    if (sum.length === 1) return `00${sum}`
+    else if (sum.length === 2) return `0${sum}`;
+    else if (sum.length === 3) return sum;
+    else return false;
+  }
+
+  const submitDates = async e => {
     e.preventDefault();
     console.log('that is a submission')
-    console.log(date1);
-    return false;
+    console.log('date1 is', date1 || todayFn());
+    console.log('date2 is', date2 || todayFn());
+    return `${date1 || todayFn()}X${date2 || todayFn()}X${totalDays()}`
   }
 
   async function editPage(e) {
@@ -81,7 +145,7 @@ function LocationPage() {
       </div>
       {booking && (
         <div className='location-page-booking-modal'>
-          <form onSubmit={submitForm} className='location-page-booking-form'>
+          <form onSubmit={submitDates} className='location-page-booking-form'>
             <div className='location-page-form-div'>
               <label>
                 start date
