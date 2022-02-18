@@ -14,16 +14,17 @@ const router = express.Router();
 //   })
 // )
 
-// router.post(
-  // '/',
-  // asyncHandler(async (req, res) => {
-    // const newBooking = await Booking.build({
-      // userId:
-      // locationId:
-      // dateStart:
-      // dateEnd:
-    // })
-  // })
-// )
+router.post(
+  '/',
+  asyncHandler(async (req, res) => {
+    const newBooking = await Booking.build({
+      userId: req.body.userId,
+      locationId: req.body.locationId,
+      timeSpan: req.body.timeSpan,
+    })
+    await newBooking.save();
+    return {booking: req.body.booking};
+  })
+)
 
 module.exports = router;

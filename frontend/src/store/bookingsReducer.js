@@ -22,12 +22,11 @@ export const loadBookings = () => async dispatch => {
   return bookings;
 }
 
-export const addBooking = booking => async dispatch => {
-  console.log('booking is', booking);
+export const addBooking = data => async dispatch => {
   const response = await csrfFetch('/api/bookigns', {
     method: "POST",
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(booking),
+    body: JSON.stringify(data),
   })
   const booking = await response.json();
   if (response.ok) {

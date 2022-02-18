@@ -3,12 +3,18 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './LocationPage.css'
 import { getLocations, removeLocation } from '../../store/locationsReducer'
+import { addBooking } from '../../store/bookingsReducer';
 import { useState } from 'react';
 
 function LocationPage() {
 
+  const sessionUser = useSelector(state => state.session.userId)
   const dispatch = useDispatch();
   const history = useHistory();
+
+  const locations = useSelector(state => state.locations.entries);
+
+  const params = useParams();
 
   const [booking, setBooking] = useState(false);
   const [date1, setDate1] = useState('');
@@ -18,11 +24,7 @@ function LocationPage() {
     (dispatch(getLocations()));
   }, [dispatch])
 
-  const locations = useSelector(state => state.locations.entries);
-
-  const parameter = useParams();
-
-  let location = locations?.find(loc => loc.id === +parameter.id)
+  let location = locations?.find(loc => loc.id === +params.id)
 
   const triggerBookModal = () => {
     setBooking(!booking);
@@ -93,12 +95,7 @@ function LocationPage() {
       count += monthDays[month1 - 1] - day1 + 1
     }
 
-    let sum = count.toString();
-
-    if (sum.length === 1) return `00${sum}`
-    else if (sum.length === 2) return `0${sum}`;
-    else if (sum.length === 3) return sum;
-    else return false;
+    return count;
   }
 
   const submitDates = async e => {
@@ -106,17 +103,24 @@ function LocationPage() {
     console.log('that is a submission')
     console.log('date1 is', date1 || todayFn());
     console.log('date2 is', date2 || todayFn());
-    return `${date1 || todayFn()}X${date2 || todayFn()}X${totalDays()}`
+    console.log('totalDays() is', totalDays());
+    let booking = `${date1 || todayFn()}X${date2 || todayFn()}X${totalDays()}`;
+    let data = {
+      userId: sessionUser.id,
+      locationId: params.id,
+      timespan: booking,
+    }
+    await dispatch(addBooking(data));
   }
 
   async function editPage(e) {
     e.preventDefault();
-    history.push(`/locations/${parameter.id}/edit`);
+    history.push(`/locations/${params.id}/edit`);
   }
 
   async function deletePage(e) {
     e.preventDefault();
-    await dispatch(removeLocation(parameter.id));
+    await dispatch(removeLocation(params.id));
     history.push('/');
   }
 

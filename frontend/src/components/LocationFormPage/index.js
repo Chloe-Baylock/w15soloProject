@@ -6,7 +6,7 @@ import './LocationFormPage.css'
 
 function LocationFormPage() {
 
-  const sessionUser = useSelector(state => state.session.user);
+  const sessionUser = useSelector(state => state.session.userId);
 
   const history = useHistory();
   const dispatch = useDispatch();
