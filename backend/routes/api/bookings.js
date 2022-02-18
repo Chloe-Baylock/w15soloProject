@@ -5,15 +5,15 @@ const { Booking } = require('../../db/models')
 
 const router = express.Router();
 
-// router.get(
-//   '/',
-//   asyncHandler(async (req, res) => {
-//     // const bookings = await Booking.findAll()
-//     return res.json({
-//       bookings
-//     })
-//   })
-// )
+router.get(
+  '/',
+  asyncHandler(async (req, res) => {
+    const bookings = await Booking.findAll()
+    return res.json({
+      bookings
+    })
+  })
+)
 
 router.post(
   '/',

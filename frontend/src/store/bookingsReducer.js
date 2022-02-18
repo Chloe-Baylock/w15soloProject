@@ -18,8 +18,8 @@ export const loadBookings = () => async dispatch => {
   const response = await fetch('/api/bookings');
   const bookings = await response.json();
   console.log('getAllBookings bookings is', bookings);
-  dispatch(load(bookings));
-  return bookings;
+  dispatch(load(bookings.bookings));
+  return bookings.bookings;
 }
 
 export const addBooking = data => async dispatch => {
@@ -40,7 +40,7 @@ export const addBooking = data => async dispatch => {
 const bookingsReducer = (state = {}, action) => {
   switch (action.type) {
     case LOAD_BOOKINGS:
-      return {"bookings": action.bookings};
+      return {"entries": action.bookings};
     case ADD_BOOKING:
       console.log('state is', state)
       console.log('action.booking is', action.booking)
