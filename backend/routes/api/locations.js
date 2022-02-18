@@ -42,7 +42,7 @@ router.put(
         oldLocation.locationName = req.body.locationName;
         oldLocation.description = req.body.description;
         oldLocation.location = req.body.location;
-        oldLocation.userId = 2;
+        oldLocation.userId = req.body.userId;
 
         await oldLocation.save();
 
