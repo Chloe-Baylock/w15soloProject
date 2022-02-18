@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 import './Home.css';
 
 import { getLocations } from '../../store/locationsReducer';
-import { loadBookings } from '../../store/bookingsReducer';
+import { loadBookings, removeBooking } from '../../store/bookingsReducer';
 
 function HomePage() {
 
@@ -21,6 +21,10 @@ function HomePage() {
     dispatch(loadBookings())
   }, [dispatch])
 
+  const handleDeleteBooking = async (id) => {
+    await dispatch(removeBooking(id));
+
+  }
 
 
   return (
@@ -48,13 +52,22 @@ function HomePage() {
             ))}
           </ul>
         </div>
-        {bookings?.map(booking => (
-          <li
-            key={booking.id}
-            className='home-bookings-list'
-          >{booking.id}
-          </li>
-        ))}
+        <div className='home-map-bookings'>
+          {bookings?.map(booking => (
+            <div
+              key={booking.id}
+              className='home-bookings-div'
+            >
+              <li className='home-bookings-list'>{booking.id}</li>
+              <button
+                className='global-button-style'
+                onClick={() => handleDeleteBooking(booking.id)}
+              >
+                Delete Booking
+              </button>
+            </div>
+          ))}
+        </div>
       </div>
     </>
   )
