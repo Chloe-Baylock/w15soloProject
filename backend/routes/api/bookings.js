@@ -1,14 +1,13 @@
 const express = require('express');
 const asyncHandler = require('express-async-handler');
 const { Booking } = require('../../db/models')
-// const { }
 
 const router = express.Router();
 
 router.get(
   '/',
   asyncHandler(async (req, res) => {
-    const bookings = await Booking.findAll()
+    const bookings = await Booking.findAll();
     return res.json({
       bookings
     })
@@ -16,7 +15,7 @@ router.get(
 )
 
 router.post(
-  '/',
+  '/new',
   asyncHandler(async (req, res) => {
     const booking = await Booking.build({
       userId: req.body.userId,
@@ -31,7 +30,7 @@ router.post(
 )
 
 router.put(
-  '/:id(\\d+)',
+  '/:id(\\d+)/edit',
   asyncHandler(async (req, res) => {
     const id = req.params.id;
     const booking = await Booking.findByPk(id);
@@ -49,7 +48,7 @@ router.put(
 )
 
 router.delete(
-  '/:id(\\d+)',
+  '/:id(\\d+)/delete',
   asyncHandler(async (req, res) => {
     const id = req.params.id;
     const booking = await Booking.findByPk(id);

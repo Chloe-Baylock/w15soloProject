@@ -29,7 +29,6 @@ export const remove = booking => ({
 export const loadBookings = () => async dispatch => {
   const response = await fetch('/api/bookings');
   const bookings = await response.json();
-  console.log('getAllBookings bookings is', bookings);
   dispatch(load(bookings.bookings));
   return bookings.bookings;
 }
@@ -49,7 +48,7 @@ export const addBooking = data => async dispatch => {
 }
 
 export const updateBooking = (id, data) => async dispatch => {
-  const response = await csrfFetch(`/api/bookings/${id}`, {
+  const response = await csrfFetch(`/api/bookings/${id}/edit`, {
     method: "PUT",
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
@@ -63,7 +62,7 @@ export const updateBooking = (id, data) => async dispatch => {
 }
 
 export const removeBooking = id => async dispatch => {
-  const response = await csrfFetch(`/api/bookings/${id}`, {
+  const response = await csrfFetch(`/api/bookings/${id}/delete`, {
     method: "DELETE",
   })
   const booking = await response.json();

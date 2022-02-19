@@ -29,10 +29,10 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
   }, {});
-  Location.associate = function(models) {
+  Location.associate = function (models) {
     Location.belongsTo(models.User, { foreignKey: 'userId' });
-
     Location.hasMany(models.Booking, { foreignKey: 'locationId' });
+    Location.hasMany(models.Review, { foreignKey: 'locationId' })
   };
   return Location;
 };
