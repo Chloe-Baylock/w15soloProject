@@ -1,4 +1,4 @@
-.location-page-container {
+.location-page-info-container {
   margin-left: 30px; 
   margin-top: 30px;
   padding: 50px;
@@ -23,5 +23,9 @@
   display: flex;
   justify-content: space-around;
   margin-top: 25px;
+}
 
+.location-page-reviews-container {
+  margin-left: 10px;
+  margin-top: 5px;
 }

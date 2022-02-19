@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import './LocationPage.css'
+import './LocationPage.css';
 import { getLocations, removeLocation } from '../../store/locationsReducer'
 import { addBooking } from '../../store/bookingsReducer';
+import { addReview } from '../../store/reviewsReducer';
 import { useState } from 'react';
 
 function LocationPage() {
@@ -17,6 +18,8 @@ function LocationPage() {
   const params = useParams();
 
   const [booking, setBooking] = useState(false);
+  const [revModal, setRevModal] = useState(false);
+  const [reviewContent, setReviewContent] = useState('');
   const [date1, setDate1] = useState('');
   const [date2, setDate2] = useState('');
 
@@ -29,6 +32,19 @@ function LocationPage() {
   const triggerBookModal = () => {
     setBooking(!booking);
   }
+
+  const writeReview = () => {
+    setRevModal(!revModal);
+  }
+
+  // const writeReview = async () => {
+  //   let data = {
+  //     locationId = location.id,
+  //     userId = sessionUserId,
+  //     reviewContent,
+  //   }
+  //   await dispatch(addReview(data));
+  // }
 
   const todayFn = () => {
     const date = new Date()
@@ -101,7 +117,6 @@ function LocationPage() {
   const submitDates = async e => {
     e.preventDefault();
     let booking = `${date1 || todayFn()}X${date2 || todayFn()}X${totalDays()}`;
-    console.log('booking is', booking)
     let data = {
       userId: sessionUserId,
       locationId: params.id,
@@ -123,61 +138,98 @@ function LocationPage() {
     history.push('/');
   }
 
+  async function submitReview(e) {
+    e.preventDefault();
+    console.log("reviewContent is", reviewContent)
+    let data = {
+      userId: sessionUserId,
+      locationId: params.id,
+      reviewContent,
+    }
+    await dispatch(addReview(data))
+  }
+
   return (
     <>
-      <div className='location-page-container'>
+      <div className='location-page-top'>
+        <div className='location-page-info-container'>
+          <button
+            className='global-button-style'
+            onClick={() => triggerBookModal()}
+          >book</button>
+          <h1>{location && location.locationName}</h1>
+          <div>
+            <div className='location-page-div'>
+              <p>location: {location && location.location}</p>
+              <p>description: {location && location.description}</p>
+              <p>host: {location && location.userId}</p>
+              <p>id: {location && location.id}</p>
+            </div>
+            <form onSubmit={editPage}>
+              <button type='edit'>Edit</button>
+            </form>
+            <form onSubmit={deletePage}>
+              <button type='submit'>Delete</button>
+            </form>
+          </div>
+        </div>
+        {booking && (
+          <div className='location-page-booking-modal'>
+            <form onSubmit={submitDates} className='location-page-booking-form'>
+              <div className='location-page-form-div'>
+                <label>
+                  start date
+                </label>
+                <input
+                  type='date'
+                  value={date1 || todayFn()}
+                  onChange={e => setDate1(e.target.value)}
+                />
+              </div>
+              <br />
+              <div className='location-page-form-div'>
+                <label>
+                  end date
+                </label>
+                <input
+                  type='date'
+                  value={date2 || todayFn()}
+                  onChange={e => setDate2(e.target.value)}
+                />
+              </div>
+              <div>
+                <button className='global-button-style'>
+                  Book
+                </button>
+              </div>
+            </form>
+          </div>
+        )}
+      </div>
+      <div className='location-page-reviews-container'>
         <button
           className='global-button-style'
-          onClick={() => triggerBookModal()}
-        >book</button>
-        <h1>{location && location.locationName}</h1>
-        <div>
-          <div className='location-page-div'>
-            <p>location: {location && location.location}</p>
-            <p>description: {location && location.description}</p>
-            <p>host: {location && location.userId}</p>
-            <p>id: {location && location.id}</p>
+          onClick={() => writeReview()}
+        >
+          {revModal === true ? (
+            <>Cancel</>
+          ) : (
+            <>Add Review</>
+          )}
+        </button>
+        {revModal && (
+          <div>
+            <form onSubmit={submitReview}>
+              <textarea 
+                name='reviewContent'
+                value={reviewContent}
+                onChange={e => setReviewContent(e.target.value)}
+              />
+              <button>Submit Review</button>
+            </form>
           </div>
-          <form onSubmit={editPage}>
-            <button type='edit'>Edit</button>
-          </form>
-          <form onSubmit={deletePage}>
-            <button type='submit'>Delete</button>
-          </form>
-        </div>
+        )}
       </div>
-      {booking && (
-        <div className='location-page-booking-modal'>
-          <form onSubmit={submitDates} className='location-page-booking-form'>
-            <div className='location-page-form-div'>
-              <label>
-                start date
-              </label>
-              <input
-                type='date'
-                value={date1 || todayFn()}
-                onChange={e => setDate1(e.target.value)}
-              />
-            </div>
-            <br />
-            <div className='location-page-form-div'>
-              <label>
-                end date
-              </label>
-              <input
-                type='date'
-                value={date2 || todayFn()}
-                onChange={e => setDate2(e.target.value)}
-              />
-            </div>
-            <div>
-              <button className='global-button-style'>
-                Book
-              </button>
-            </div>
-          </form>
-        </div>
-      )}
     </>
   )
 }
