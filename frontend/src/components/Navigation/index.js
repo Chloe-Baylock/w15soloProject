@@ -29,9 +29,6 @@ function Navigation({ isLoaded }) {
           <div className='nav-home'>
             <NavLink className='nav-navlink' exact to="/"><i className="fas fa-bread-slice" />BreadnB</NavLink>
           </div>
-          <div className='nav-book'>
-            <p>book</p>
-          </div>
           <div className='nav-new-location'>
             <button
               className='global-button-style'

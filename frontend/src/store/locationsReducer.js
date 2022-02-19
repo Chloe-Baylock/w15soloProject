@@ -29,7 +29,7 @@ export const getLocations = () => async (dispatch) => {
     const response = await fetch('/api/locations');
     const locations = await response.json();
     dispatch(load(locations.locations));
-    return locations;
+    return locations.locations;
 }
 
 export const addLocation = (data) => async (dispatch) => {
@@ -42,15 +42,13 @@ export const addLocation = (data) => async (dispatch) => {
     });
     const location = await response.json();
     if (response.ok) {
-        dispatch(add(data));
+        await dispatch(add(data));
         return location;
     }
 }
 
 
 export const updateLocation = (obj) => async (dispatch) => {
-    
-
     const response = await csrfFetch(`/api/locations/${obj.id}`, {
         method: 'PUT',
         headers: {

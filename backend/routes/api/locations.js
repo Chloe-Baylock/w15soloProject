@@ -23,7 +23,7 @@ router.post(
             locationName: req.body.locationName,
             description: req.body.description,
             location: req.body.location,
-            userId: 2
+            userId: req.body.userId
         })
         await newLocation.save();
 
@@ -42,7 +42,7 @@ router.put(
         oldLocation.locationName = req.body.locationName;
         oldLocation.description = req.body.description;
         oldLocation.location = req.body.location;
-        oldLocation.userId = 2;
+        oldLocation.userId = req.body.userId;
 
         await oldLocation.save();
 

@@ -4,3 +4,24 @@
   padding: 50px;
   width: fit-content;
 }
+
+.location-page-booking-modal {
+  position: absolute;
+  top: 100px;
+  left: 500px;
+
+  /* display: flex; */
+  /* flex-direction:column; */
+
+  background-color: lightgray;
+  width: 600px;
+  height: 600px;
+  border-radius: .5rem;
+}
+
+.location-page-booking-form {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 25px;
+
+}

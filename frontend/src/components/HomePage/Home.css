@@ -20,6 +20,10 @@
 
 
 
+.home-below-main {
+  background-color: lightslategray;
+}
+
 .home-card-area {
   display: flex;
   justify-content: center;
@@ -66,4 +70,29 @@
   list-style-type: none;
   font-weight: bold;
   font-size: 2rem;
+}
+
+.home-map-bookings {
+  padding-bottom: 25px;
+}
+
+.home-bookings-div {
+  display: flex;
+  align-items: center;
+}
+
+.home-bookings-list {
+  margin-left: 10px;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.home-edit-booking-button {
+  height: 22px;
+}
+
+.home-delete-booking-button {
+  margin: 5px;
+  height: 22px;
 }
