@@ -30,6 +30,24 @@ router.post(
   })
 )
 
+router.put(
+  '/:id(\\d+)',
+  asyncHandler(async (req, res) => {
+    const id = req.params.id;
+    const booking = await Booking.findByPk(id);
+    
+    booking.userId = req.body.userId;
+    booking.locationId = req.body.locationId;
+    booking.timespan = req.body.timespan;
+
+    await booking.save();
+
+    return res.json({
+      booking,
+    })
+  })
+)
+
 router.delete(
   '/:id(\\d+)',
   asyncHandler(async (req, res) => {

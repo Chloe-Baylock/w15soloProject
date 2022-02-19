@@ -1,5 +1,5 @@
-import { useParams, useHistory } from 'react-router-dom';
 import { useEffect } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import './LocationPage.css'
 import { getLocations, removeLocation } from '../../store/locationsReducer'
@@ -21,7 +21,7 @@ function LocationPage() {
   const [date2, setDate2] = useState('');
 
   useEffect(() => {
-    (dispatch(getLocations()));
+    dispatch(getLocations());
   }, [dispatch])
 
   let location = locations?.find(loc => loc.id === +params.id)
@@ -100,11 +100,6 @@ function LocationPage() {
 
   const submitDates = async e => {
     e.preventDefault();
-    console.log('that is a submission')
-    console.log('date1 is', date1 || todayFn());
-    console.log('date2 is', date2 || todayFn());
-    console.log('totalDays() is', totalDays());
-    console.log('sessionUserId is', sessionUserId)
     let booking = `${date1 || todayFn()}X${date2 || todayFn()}X${totalDays()}`;
     console.log('booking is', booking)
     let data = {
@@ -113,6 +108,8 @@ function LocationPage() {
       timespan: booking,
     }
     await dispatch(addBooking(data));
+    setBooking(false);
+    history.push('/')
   }
 
   async function editPage(e) {

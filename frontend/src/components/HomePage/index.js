@@ -1,27 +1,29 @@
-import React, { useEffect } from 'react';
-// import * as sessionActions from '../../store/session';
-// import * as locationActions from '../../store/locationsReducer';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import './Home.css';
 
 import { getLocations } from '../../store/locationsReducer';
-import { loadBookings, removeBooking } from '../../store/bookingsReducer';
+import { loadBookings, updateBooking, removeBooking } from '../../store/bookingsReducer';
+import BookingForm from '../BookingForm';
 
 function HomePage() {
 
   const history = useHistory();
+  const sessionUserId = useSelector(state => state.session.user.id);
   const locations = useSelector(state => state.locations.entries);
   const bookings = useSelector(state => state.bookings.entries);
-
+  
   const dispatch = useDispatch();
+
+  const [bookModal, setBookModal] = useState(-2);
 
   useEffect(() => {
     dispatch(getLocations());
     dispatch(loadBookings())
   }, [dispatch])
 
-  const handleDeleteBooking = async (id) => {
+  const handleDeleteBooking = async id => {
     await dispatch(removeBooking(id));
 
   }
@@ -59,8 +61,30 @@ function HomePage() {
               className='home-bookings-div'
             >
               <li className='home-bookings-list'>{booking.id}</li>
+              {bookModal === booking.id && (
+                <BookingForm
+                  bookingLocation = {booking.locationId}
+                  bookingStart = {booking.timespan.split('X')[0]}
+                  bookingEnd = {booking.timespan.split('X')[1]}
+                  bookingId = {booking.id}
+                />
+              )}
               <button
-                className='global-button-style'
+                className='global-button-style home-edit-booking-button'
+                onClick={() => {
+                  if (bookModal === booking.id) setBookModal(-3); 
+                  else setBookModal(booking.id)
+                }}
+              >
+                {bookModal === booking.id ? (
+                  <>Cancel Edit</>
+                  ) : (
+                    <>Edit Booking</>
+                  )
+                }
+              </button>
+              <button
+                className='global-button-style home-delete-booking-button'
                 onClick={() => handleDeleteBooking(booking.id)}
               >
                 Delete Booking

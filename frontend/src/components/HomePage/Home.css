@@ -78,9 +78,21 @@
 
 .home-bookings-div {
   display: flex;
+  align-items: center;
 }
 
 .home-bookings-list {
   margin-left: 10px;
   margin-right: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.home-edit-booking-button {
+  height: 22px;
+}
+
+.home-delete-booking-button {
+  margin: 5px;
+  height: 22px;
 }
