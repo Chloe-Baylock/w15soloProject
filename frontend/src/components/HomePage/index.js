@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import './Home.css';
 
 import { getLocations } from '../../store/locationsReducer';
-import { loadBookings, updateBooking, removeBooking } from '../../store/bookingsReducer';
+import { loadBookings, removeBooking } from '../../store/bookingsReducer';
 import BookingForm from '../BookingForm';
 
 function HomePage() {

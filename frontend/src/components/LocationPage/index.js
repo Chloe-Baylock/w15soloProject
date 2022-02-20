@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import './LocationPage.css';
 import { getLocations, removeLocation } from '../../store/locationsReducer'
 import { addBooking } from '../../store/bookingsReducer';
-import { addReview } from '../../store/reviewsReducer';
+import { addReview, editReview, loadReviews } from '../../store/reviewsReducer';
 import { useState } from 'react';
 
 function LocationPage() {
@@ -14,17 +14,23 @@ function LocationPage() {
   const history = useHistory();
 
   const locations = useSelector(state => state.locations.entries);
+  const reviews = useSelector(state => state.reviews.entries);
 
   const params = useParams();
 
   const [booking, setBooking] = useState(false);
   const [revModal, setRevModal] = useState(false);
   const [reviewContent, setReviewContent] = useState('');
+  const [showUpdateReview, setShowUpdateReview] = useState(-2)
   const [date1, setDate1] = useState('');
   const [date2, setDate2] = useState('');
 
   useEffect(() => {
     dispatch(getLocations());
+  }, [dispatch])
+
+  useEffect(() => {
+    dispatch((loadReviews()));
   }, [dispatch])
 
   let location = locations?.find(loc => loc.id === +params.id)
@@ -33,18 +39,9 @@ function LocationPage() {
     setBooking(!booking);
   }
 
-  const writeReview = () => {
+  const showRevModal = () => {
     setRevModal(!revModal);
   }
-
-  // const writeReview = async () => {
-  //   let data = {
-  //     locationId = location.id,
-  //     userId = sessionUserId,
-  //     reviewContent,
-  //   }
-  //   await dispatch(addReview(data));
-  // }
 
   const todayFn = () => {
     const date = new Date()
@@ -140,13 +137,25 @@ function LocationPage() {
 
   async function submitReview(e) {
     e.preventDefault();
-    console.log("reviewContent is", reviewContent)
     let data = {
       userId: sessionUserId,
-      locationId: params.id,
+      locationId: +params.id,
       reviewContent,
     }
-    await dispatch(addReview(data))
+    await dispatch(addReview(data));
+    setRevModal(false);
+  }
+
+  async function changeReview(e, revId) {
+    e.preventDefault();
+    let data = {
+      userId: sessionUserId,
+      locationId: +params.id,
+      reviewContent,
+    }
+    await dispatch(editReview(data, revId));
+    // await dispatch(loadReviews());
+    setShowUpdateReview(-5);
   }
 
   return (
@@ -207,9 +216,29 @@ function LocationPage() {
         )}
       </div>
       <div className='location-page-reviews-container'>
+        <ul>
+          {reviews?.filter(review => review.locationId === +params.id).map(review => (
+            <div key={review.id}>
+              <li>{review.reviewContent}, by {review.userId}</li>
+              <button onClick={() => setShowUpdateReview(review.id)}>Edit</button>
+              {showUpdateReview === review.id && (
+                <>
+                  <form onSubmit={e => changeReview(e, review.id)}>
+                    <textarea
+                      name='reviewContent'
+                      value={reviewContent}
+                      onChange={e => setReviewContent(e.target.value)}
+                    />
+                    <button>Submit Review</button>
+                  </form>
+                </>
+              )}
+            </div>
+          ))}
+        </ul>
         <button
           className='global-button-style'
-          onClick={() => writeReview()}
+          onClick={() => showRevModal()}
         >
           {revModal === true ? (
             <>Cancel</>
@@ -220,7 +249,7 @@ function LocationPage() {
         {revModal && (
           <div>
             <form onSubmit={submitReview}>
-              <textarea 
+              <textarea
                 name='reviewContent'
                 value={reviewContent}
                 onChange={e => setReviewContent(e.target.value)}
@@ -230,6 +259,7 @@ function LocationPage() {
           </div>
         )}
       </div>
+      <div className='global-margin-bottom' />
     </>
   )
 }

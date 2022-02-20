@@ -29,7 +29,7 @@ export const remove = booking => ({
 export const loadBookings = () => async dispatch => {
   const response = await fetch('/api/bookings');
   const bookings = await response.json();
-  dispatch(load(bookings.bookings));
+  await dispatch(load(bookings.bookings));
   return bookings.bookings;
 }
 
@@ -53,9 +53,8 @@ export const updateBooking = (id, data) => async dispatch => {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
   })
-  const booking = await response.json();
   if (response.ok) {
-    console.log('booking is', booking)
+    const booking = await response.json();
     await dispatch(update(booking.booking));
     return booking.booking;
   }
@@ -79,9 +78,6 @@ const bookingsReducer = (state = {}, action) => {
     case ADD_BOOKING:
       return { "entries": action.booking, ...state }
     case UPDATE_BOOKING:
-      console.log('action.booking is', action.booking)
-      console.log('state is', state);
-      state.entries[0] = action.booking;
       for (let i = 0; i < state.entries.length; i++) {
         if (state.entries[i].id === action.booking.id) state.entries[i] = action.booking;
       }
