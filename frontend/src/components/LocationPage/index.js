@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import './LocationPage.css';
 import { getLocations, removeLocation } from '../../store/locationsReducer'
 import { addBooking } from '../../store/bookingsReducer';
-import { addReview, editReview, loadReviews } from '../../store/reviewsReducer';
+import { addReview, destroyReview, editReview, loadReviews } from '../../store/reviewsReducer';
 import { useState } from 'react';
 
 function LocationPage() {
@@ -158,6 +158,12 @@ function LocationPage() {
     setShowUpdateReview(-5);
   }
 
+  
+  const handleDeleteReview = async (revId) => {
+    await dispatch(destroyReview(revId));
+    setShowUpdateReview(-7);
+  }
+
   return (
     <>
       <div className='location-page-top'>
@@ -221,6 +227,7 @@ function LocationPage() {
             <div key={review.id}>
               <li>{review.reviewContent}, by {review.userId}</li>
               <button onClick={() => setShowUpdateReview(review.id)}>Edit</button>
+              <button onClick={() => handleDeleteReview(review.id)}>Delete</button>
               {showUpdateReview === review.id && (
                 <>
                   <form onSubmit={e => changeReview(e, review.id)}>

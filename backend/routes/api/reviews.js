@@ -22,11 +22,8 @@ router.post('/new', asyncHandler(async (req, res) => {
 }))
 
 router.put('/:id(\\d+)/edit', asyncHandler(async (req, res) => {
-  console.log('got in here');
   const id = req.params.id;
-  console.log('id is', id)
   const review = await Review.findByPk(+id);
-  console.log('review is', review);
   review.userId = req.body.userId;
   review.locationId = req.body.locationId; 
   review.reviewContent = req.body.reviewContent;
@@ -34,6 +31,15 @@ router.put('/:id(\\d+)/edit', asyncHandler(async (req, res) => {
   await review.save();
   return res.json({
     review,
+  })
+}))
+
+router.delete('/:id(\\d+)/delete', asyncHandler(async (req, res) => {
+  const id = +req.params.id;
+  const review = await Review.findByPk(id);
+  if (review) await review.destroy();
+  return res.json({
+    id,
   })
 }))
 
