@@ -64,7 +64,7 @@ function Navigation({ isLoaded }) {
         </div>
       </div>
       {searchModal && (
-        <div>
+        <div className='nav-search-modal-div'>
           <form onSubmit={e => submitSearch(e)}>
             <label>Search</label>
             <input

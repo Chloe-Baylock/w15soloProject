@@ -30,6 +30,12 @@
   background-color: rgb(10, 169, 190);
 }
 
+.nav-search-modal-div {
+  position: absolute;
+  background-color: rgb(255, 210, 210);
+  padding: 10px;
+}
+
 .nav-search-icon {
   width: 24px;
 }
