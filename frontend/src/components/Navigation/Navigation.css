@@ -30,6 +30,27 @@
   background-color: rgb(10, 169, 190);
 }
 
+.nav-search-modal-div {
+  position: absolute;
+  background-color: rgb(255, 210, 210);
+  padding: 10px;
+}
+
+.nav-search-icon {
+  width: 24px;
+}
+
+.nav-search-results-li {
+  width: fit-content;
+  color: rgb(85, 201, 255);
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.nav-search-results-li:hover {
+  cursor: pointer;
+}
+
 .nav-home a {
     text-decoration: none;
     color: black;
