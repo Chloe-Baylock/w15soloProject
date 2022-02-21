@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
@@ -7,6 +7,11 @@ import './Navigation.css';
 function Navigation({ isLoaded }) {
   const history = useHistory();
   const sessionUser = useSelector(state => state.session.user);
+
+  const [searchModal, setSearchModal] = useState(false);
+  const searchFn = () => {
+
+  }
 
   let sessionLinks;
   if (sessionUser) {
@@ -23,11 +28,18 @@ function Navigation({ isLoaded }) {
   }
 
   return (
-    <>
+    <div className='nav-outside'>
       <div className='nav-container'>
         <div className='nav-bar'>
           <div className='nav-home'>
             <NavLink className='nav-navlink' exact to="/"><i className="fas fa-bread-slice" />BreadnB</NavLink>
+          </div>
+          <div className='nav-search'>
+            <button
+              className='global-button-style'
+              onClick={() => setSearchModal(!searchModal)}
+            >search
+            </button>
           </div>
           <div className='nav-new-location'>
             <button
@@ -40,7 +52,12 @@ function Navigation({ isLoaded }) {
           </div>
         </div>
       </div>
-    </>
+      {searchModal && (
+        <div>
+          <p>hello!</p>
+        </div>
+      )}
+    </div>
   );
 }
 
