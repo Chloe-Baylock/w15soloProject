@@ -23,22 +23,22 @@ export const post = search => ({
 //   return results.results;
 // }
 
+    
 export const postSearch = (data) => async dispatch => {
-  const response = await csrfFetch('/api/search/post', {
+  const response = await csrfFetch('/api/search', {
     method: "POST",
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data),
+    body: JSON.stringify({data}),
   });
-  const search = await response.json();
-  console.log('search returned is', search)
-  // await dispatch(post(search.search));
-  // return results.results;
+  const results = await response.json();
+  await dispatch(post(results.results));
+  return results.results;
 }
 
 export const searchReducer = (state = {}, action) => {
   switch (action.type) {
     case POST_SEARCH:
-      return { "entries": [...state.entries, action.search] };
+      return { "entries": action.search };
     default:
       return state;
   }
