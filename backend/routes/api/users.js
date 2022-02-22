@@ -35,7 +35,6 @@ const validateSignup = [
 //get all users
 router.get('/', asyncHandler(async (req, res) => {
   const allUsers = await User.findAll();
-  console.log('all Users', allUsers)
   return res.json({
     allUsers,
   });

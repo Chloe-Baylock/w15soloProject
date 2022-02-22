@@ -81,7 +81,6 @@ const bookingsReducer = (state = {}, action) => {
       for (let i = 0; i < state.entries.length; i++) {
         if (state.entries[i].id === action.booking.id) state.entries[i] = action.booking;
       }
-      console.log('state is', state);
       return state
     case REMOVE_BOOKING:
       const deleting = { ...state };

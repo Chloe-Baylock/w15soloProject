@@ -58,7 +58,6 @@ function Navigation({ isLoaded }) {
             className='global-button-style'
             onClick={() => {
               let eleToScrollTo = document.getElementById('home-bookings-scroll');
-              console.log('eleToScrollTo is', eleToScrollTo);
               if (eleToScrollTo) eleToScrollTo.scrollIntoView({behavior: "smooth"});
             }}
             >View Your Bookings

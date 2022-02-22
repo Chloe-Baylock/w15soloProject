@@ -106,8 +106,6 @@ function BookingForm(props) {
       locationId,
       timespan,
     }
-    console.log('data is', data);
-    console.log('props.bookingId is', props.bookingId);
     await dispatch(updateBooking(props.bookingId, data));
   }
 

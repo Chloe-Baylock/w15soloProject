@@ -31,8 +31,6 @@ function EditLocationForm() {
 
   useEffect(() => {
     const vErr = [];
-    // console.log('locationIs.name is', locationIs.name);
-    // console.log('locationIs[+params.id] is', locationIs[+params.id - 1])
 
     locationName || vErr.push('Your place must have a name.')
     location || vErr.push('There must be a location.')

@@ -12,7 +12,6 @@ function ProfileButton({ user }) {
   const openMenu = e => {
     if (showMenu) return;
     else {
-      console.log(e.currentTarget)
       e.currentTarget.style.backgroundColor = "rgb(187, 187, 187)";
       setShowMenu(true);
     }
