@@ -10,7 +10,6 @@ function ProfileButton({ user }) {
   const openMenu = e => {
     if (showMenu) return;
     else {
-      console.log(e.currentTarget)
       e.currentTarget.style.backgroundColor = "rgb(187, 187, 187)";
       setShowMenu(true);
     }
@@ -30,9 +29,9 @@ function ProfileButton({ user }) {
     return () => document.removeEventListener("click", closeMenu);
   }, [showMenu]);
 
-  const logout = (e) => {
+  const logout = async (e) => {
     e.preventDefault();
-    dispatch(sessionActions.logout());
+    await dispatch(sessionActions.logout());
   };
 
   return (

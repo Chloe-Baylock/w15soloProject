@@ -29,8 +29,9 @@ function Navigation({ isLoaded }) {
   } else {
     sessionLinks = (
       <>
-        <NavLink to="/login">Log In</NavLink>
-        <NavLink to="/signup">Sign Up</NavLink>
+        <button className='global-button-style' onClick={() => history.push('/login')}>Log In</button>
+        <button className='global-button-style' onClick={() => history.push('/signup')}>Sign Un</button>
+
       </>
     );
   }
@@ -50,6 +51,16 @@ function Navigation({ isLoaded }) {
                 setHideResults(true);
               }}
             >search
+            </button>
+          </div>
+          <div className='nav-bookings'>
+            <button
+            className='global-button-style'
+            onClick={() => {
+              let eleToScrollTo = document.getElementById('home-bookings-scroll');
+              if (eleToScrollTo) eleToScrollTo.scrollIntoView({behavior: "smooth"});
+            }}
+            >View Your Bookings
             </button>
           </div>
           <div className='nav-new-location'>

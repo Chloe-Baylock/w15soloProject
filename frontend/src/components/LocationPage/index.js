@@ -5,16 +5,18 @@ import './LocationPage.css';
 import { getLocations, removeLocation } from '../../store/locationsReducer'
 import { addBooking } from '../../store/bookingsReducer';
 import { addReview, destroyReview, editReview, loadReviews } from '../../store/reviewsReducer';
+import { getUsers } from '../../store/session';
 import { useState } from 'react';
-
 function LocationPage() {
 
-  const sessionUserId = useSelector(state => state.session.user.id)
+  // const sessionUserId = useSelector(state => state.session.user.id)
+  const sessionUser = useSelector(state => state.session.user)
   const dispatch = useDispatch();
   const history = useHistory();
 
   const locations = useSelector(state => state.locations.entries);
   const reviews = useSelector(state => state.reviews.entries);
+  const users = useSelector(state => state.session.users);
 
   const params = useParams();
 
@@ -22,15 +24,18 @@ function LocationPage() {
   const [revModal, setRevModal] = useState(false);
   const [reviewContent, setReviewContent] = useState('');
   const [showUpdateReview, setShowUpdateReview] = useState(-2)
+  const [showError, setShowError] = useState(false);  // not related with *errors*
+  const [errors, setErrors] = useState([]);
   const [date1, setDate1] = useState('');
   const [date2, setDate2] = useState('');
 
   useEffect(() => {
-    dispatch(getLocations());
-  }, [dispatch])
-
-  useEffect(() => {
-    dispatch((loadReviews()));
+    const fetchData = async () => {
+      await dispatch(getLocations());
+      await dispatch(loadReviews());
+      await dispatch(getUsers());
+    }
+    fetchData();
   }, [dispatch])
 
   let location = locations?.find(loc => loc.id === +params.id)
@@ -53,10 +58,31 @@ function LocationPage() {
     return `${year}-${month}-${day}`;
   }
 
+  const validDate = (da1, da2) => {
+    let today = todayFn();
+    let errArr = [];
+
+    // check booking date1 is made in the future
+    if (parseInt(da1.slice(0, 4)) < parseInt(today.slice(0, 4))) errArr.push('The booking should be today or later.');
+    else if (da1.slice(0, 4) === today.slice(0, 4) && parseInt(da1.slice(5, 7)) < parseInt(today.slice(5, 7))) errArr.push('The booking should be today or later.');
+    else if (da1.slice(0, 4) === today.slice(0, 4) && da1.slice(5, 7) === today.slice(5, 7) && da1.slice(8, 10) < today.slice(8, 10)) errArr.push('The booking should be today or later.');
+
+    
+    // check booking date2 is made in the future
+    if (parseInt(da2.slice(0, 4)) < parseInt(today.slice(0, 4))) errArr.push('The booking should be today or later!');
+    else if (da2.slice(0, 4) === today.slice(0, 4) && parseInt(da2.slice(5, 7)) < parseInt(today.slice(5, 7))) errArr.push('The booking should be today or later!');
+    else if (da2.slice(0, 4) === today.slice(0, 4) && da2.slice(5, 7) === today.slice(5, 7) && da2.slice(8, 10) < today.slice(8, 10)) errArr.push('The booking should be today or later!');
+
+    // check date2 >= date1
+    if (parseInt(da1.slice(0, 4)) > parseInt(da2.slice(0, 4)) ||
+      (parseInt(da1.slice(0, 4)) === parseInt(da2.slice(0, 4)) && parseInt(da1.slice(5, 7)) > parseInt(da2.slice(5, 7))) ||
+      (parseInt(da1.slice(0, 4)) === parseInt(da2.slice(0, 4)) && parseInt(da1.slice(5, 7)) === parseInt(da2.slice(5, 7)) && parseInt(da1.slice(8, 10)) > parseInt(da2.slice(8, 10)))) errArr.push('Please make sure the second date is not before the first date.');
+
+    setErrors(errArr);
+  }
+
   const totalDays = () => {
-    // assumes you cannot rent for more than 1 year.
-    // assumes you cannot rent in the past.
-    // assuems if both same day, it is 1 day long.
+    // assumes you cannot rent for more than 1 year. **** errors here.
 
     let d1 = date1 || todayFn();
     let d2 = date2 || todayFn()
@@ -115,13 +141,12 @@ function LocationPage() {
     e.preventDefault();
     let booking = `${date1 || todayFn()}X${date2 || todayFn()}X${totalDays()}`;
     let data = {
-      userId: sessionUserId,
+      userId: sessionUser.id,
       locationId: params.id,
       timespan: booking,
     }
     await dispatch(addBooking(data));
     setBooking(false);
-    history.push('/')
   }
 
   async function editPage(e) {
@@ -131,14 +156,14 @@ function LocationPage() {
 
   async function deletePage(e) {
     e.preventDefault();
-    await dispatch(removeLocation(params.id));
     history.push('/');
+    await dispatch(removeLocation(params.id));
   }
 
   async function submitReview(e) {
     e.preventDefault();
     let data = {
-      userId: sessionUserId,
+      userId: sessionUser.id,
       locationId: +params.id,
       reviewContent,
     }
@@ -149,16 +174,15 @@ function LocationPage() {
   async function changeReview(e, revId) {
     e.preventDefault();
     let data = {
-      userId: sessionUserId,
+      userId: sessionUser.id,
       locationId: +params.id,
       reviewContent,
     }
     await dispatch(editReview(data, revId));
-    // await dispatch(loadReviews());
     setShowUpdateReview(-5);
   }
 
-  
+
   const handleDeleteReview = async (revId) => {
     await dispatch(destroyReview(revId));
     setShowUpdateReview(-7);
@@ -168,24 +192,39 @@ function LocationPage() {
     <>
       <div className='location-page-top'>
         <div className='location-page-info-container'>
-          <button
-            className='global-button-style'
-            onClick={() => triggerBookModal()}
-          >book</button>
-          <h1>{location && location.locationName}</h1>
+          {sessionUser ? (
+            <button
+              className={'global-button-style'}
+              onClick={() => triggerBookModal()}
+            >book
+            </button>
+          ) : (
+            <>
+              <button
+                className={'global-button-style'}
+                disabled
+              >book
+              </button>
+              <p>You must be logged in to book places!</p>
+            </>
+          )}
+          <h1>{location?.locationName}</h1>
           <div>
             <div className='location-page-div'>
-              <p>location: {location && location.location}</p>
-              <p>description: {location && location.description}</p>
-              <p>host: {location && location.userId}</p>
-              <p>id: {location && location.id}</p>
+              <p>location: {location?.location}</p>
+              <p>description: {location?.description}</p>
+              <p>host: {users?.filter(user => user.id === location?.userId)[0]?.username}</p>
             </div>
-            <form onSubmit={editPage}>
-              <button type='edit'>Edit</button>
-            </form>
-            <form onSubmit={deletePage}>
-              <button type='submit'>Delete</button>
-            </form>
+            {sessionUser?.id === location?.userId && (
+              <>
+                <form onSubmit={editPage}>
+                  <button type='edit'>Edit</button>
+                </form>
+                <form onSubmit={deletePage}>
+                  <button type='submit'>Delete</button>
+                </form>
+              </>
+            )}
           </div>
         </div>
         {booking && (
@@ -198,7 +237,10 @@ function LocationPage() {
                 <input
                   type='date'
                   value={date1 || todayFn()}
-                  onChange={e => setDate1(e.target.value)}
+                  onChange={e => {
+                    setDate1(e.target.value)
+                    return validDate(e.target.value, date2 || todayFn());
+                  }}
                 />
               </div>
               <br />
@@ -209,11 +251,21 @@ function LocationPage() {
                 <input
                   type='date'
                   value={date2 || todayFn()}
-                  onChange={e => setDate2(e.target.value)}
+                  onChange={e => {
+                    setDate2(e.target.value);
+                    return validDate(date1 || todayFn(), e.target.value);
+                  }}
                 />
               </div>
               <div>
-                <button className='global-button-style'>
+                <ul>
+                  {errors.length > 0 && errors.map(error => (
+                    <li key={error}>{error}</li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <button className='global-button-style' disabled={errors.length > 0}>
                   Book
                 </button>
               </div>
@@ -222,12 +274,17 @@ function LocationPage() {
         )}
       </div>
       <div className='location-page-reviews-container'>
+        <h1>Reviews</h1>
         <ul>
           {reviews?.filter(review => review.locationId === +params.id).map(review => (
             <div key={review.id}>
-              <li>{review.reviewContent}, by {review.userId}</li>
-              <button onClick={() => setShowUpdateReview(review.id)}>Edit</button>
-              <button onClick={() => handleDeleteReview(review.id)}>Delete</button>
+              <li>{review.reviewContent}, by {users?.filter(user => user.id === review.userId)[0].username}</li>
+              {review.userId === sessionUser?.id && (
+                <div>
+                  <button onClick={() => setShowUpdateReview(review.id)}>Edit</button>
+                  <button onClick={() => handleDeleteReview(review.id)}>Delete</button>
+                </div>
+              )}
               {showUpdateReview === review.id && (
                 <>
                   <form onSubmit={e => changeReview(e, review.id)}>
@@ -243,25 +300,37 @@ function LocationPage() {
             </div>
           ))}
         </ul>
-        <button
-          className='global-button-style'
-          onClick={() => showRevModal()}
-        >
-          {revModal === true ? (
-            <>Cancel</>
-          ) : (
-            <>Add Review</>
-          )}
-        </button>
+        {reviews?.filter(review => review.userId === sessionUser?.id && review.locationId === +params.id).length === 0 && sessionUser && (
+          <button
+            className='global-button-style'
+            onClick={() => showRevModal()}
+          >
+            {revModal === true ? (
+              <>Cancel</>
+            ) : (
+              <>Add Review</>
+            )}
+          </button>
+        )}
         {revModal && (
           <div>
             <form onSubmit={submitReview}>
               <textarea
                 name='reviewContent'
                 value={reviewContent}
-                onChange={e => setReviewContent(e.target.value)}
+                onChange={e => {
+                  if (e.target.value.length >= 500) setShowError(true);
+                  else {
+                    setShowError(false);
+                    setReviewContent(e.target.value);
+                  }
+                }}
               />
-              <button>Submit Review</button>
+              {showError ? (
+                <p>Review Must Be Under 500 Characters.</p>
+              ) : (
+                <button>Submit Review</button>
+              )}
             </form>
           </div>
         )}

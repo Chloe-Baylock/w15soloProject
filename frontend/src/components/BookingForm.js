@@ -13,6 +13,7 @@ function BookingForm(props) {
   const [booking, setBooking] = useState(false);
   const [date1, setDate1] = useState(props.bookingStart);
   const [date2, setDate2] = useState(props.bookingEnd);
+  const [errors, setErrors] = useState([]);
 
   const todayFn = () => {
     const date = new Date()
@@ -24,11 +25,32 @@ function BookingForm(props) {
     return `${year}-${month}-${day}`;
   }
 
-  const totalDays = () => {
-    // assumes you cannot rent for more than 1 year.
-    // assumes you cannot rent in the past.
-    // assuems if both same day, it is 1 day long.
+  const validDate = (da1, da2) => {
+    let today = todayFn();
 
+    let errArr = [];
+
+    // check booking date1 is made in the future
+    if (parseInt(da1.slice(0, 4)) < parseInt(today.slice(0, 4))) errArr.push('The booking should be today or later.');
+    else if (da1.slice(0, 4) === today.slice(0, 4) && parseInt(da1.slice(5, 7)) < parseInt(today.slice(5, 7))) errArr.push('The booking should be today or later.');
+    else if (da1.slice(0, 4) === today.slice(0, 4) && da1.slice(5, 7) === today.slice(5, 7) && da1.slice(8, 10) < today.slice(8, 10)) errArr.push('The booking should be today or later.');
+
+
+    // check booking date2 is made in the future
+    if (parseInt(da2.slice(0, 4)) < parseInt(today.slice(0, 4))) errArr.push('The booking should be today or later!');
+    else if (da2.slice(0, 4) === today.slice(0, 4) && parseInt(da2.slice(5, 7)) < parseInt(today.slice(5, 7))) errArr.push('The booking should be today or later!');
+    else if (da2.slice(0, 4) === today.slice(0, 4) && da2.slice(5, 7) === today.slice(5, 7) && da2.slice(8, 10) < today.slice(8, 10)) errArr.push('The booking should be today or later!');
+
+    // check date2 >= date1
+    if (parseInt(da1.slice(0, 4)) > parseInt(da2.slice(0, 4)) ||
+      (parseInt(da1.slice(0, 4)) === parseInt(da2.slice(0, 4)) && parseInt(da1.slice(5, 7)) > parseInt(da2.slice(5, 7))) ||
+      (parseInt(da1.slice(0, 4)) === parseInt(da2.slice(0, 4)) && parseInt(da1.slice(5, 7)) === parseInt(da2.slice(5, 7)) && parseInt(da1.slice(8, 10)) > parseInt(da2.slice(8, 10)))) errArr.push('Please make sure the second date is not before the first date.');
+
+    setErrors(errArr);
+  }
+
+  const totalDays = () => {
+    // **** error to adress later. assumes you cannot rent for more than 1 year.
     let d1 = date1 || todayFn();
     let d2 = date2 || todayFn()
 
@@ -92,7 +114,7 @@ function BookingForm(props) {
       timespan,
     }
     await dispatch(addBooking(data));
-    setBooking(false);
+    setBooking(!booking); //not sure if this is doing anything
     history.push('/')
   }
 
@@ -106,8 +128,6 @@ function BookingForm(props) {
       locationId,
       timespan,
     }
-    console.log('data is', data);
-    console.log('props.bookingId is', props.bookingId);
     await dispatch(updateBooking(props.bookingId, data));
   }
 
@@ -126,7 +146,10 @@ function BookingForm(props) {
           <input
             type='date'
             value={date1 || todayFn()}
-            onChange={e => setDate1(e.target.value)}
+            onChange={async e => {
+              setDate1(e.target.value);
+              return validDate(e.target.value, date2);
+            }}
           />
         </div>
         <br />
@@ -137,11 +160,21 @@ function BookingForm(props) {
           <input
             type='date'
             value={date2 || todayFn()}
-            onChange={e => setDate2(e.target.value)}
+            onChange={e => {
+              setDate2(e.target.value);
+              return validDate(date1, e.target.value);
+            }}
           />
         </div>
         <div>
-          <button className='global-button-style'>
+          <ul>
+            {errors.map(error => (
+              <li key={error}>{error}</li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <button className='global-button-style' disabled={errors.length > 0}>
             Book
           </button>
         </div>

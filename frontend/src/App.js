@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Route, Switch } from "react-router-dom";
+import ProtectedRoute from './components/ProtectedRoute';
 import HomePage from "./components/HomePage";
 import LoginFormPage from "./components/LoginFormPage";
 import SignupFormPage from "./components/SignupFormPage";
@@ -25,7 +26,7 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
-          <Route exact path='/'>
+          <Route  exact path='/'>
             <HomePage isLoaded={isLoaded} />
           </Route>
           <Route path='/login'>
@@ -37,12 +38,12 @@ function App() {
           <Route exact path='/locations/:id(\d+)'>
             <LocationPage />
           </Route>
-          <Route path='/locations/new'>
+          <ProtectedRoute path='/locations/new'>
             <LocationFormPage />
-          </Route>
-          <Route path='/locations/:id(\d+)/edit'>
+          </ProtectedRoute>
+          <ProtectedRoute path='/locations/:id(\d+)/edit'>
             <EditLocationForm isLoaded={isLoaded} />
-          </Route>
+          </ProtectedRoute>
         </Switch>
       )}
       <Footer />

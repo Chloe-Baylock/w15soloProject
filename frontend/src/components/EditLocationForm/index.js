@@ -7,7 +7,6 @@ function EditLocationForm() {
 
   const params = useParams();
   const sessionUser = useSelector(state => state.session.user)
-  const locationIs = useSelector(state => state.locations.entries);
 
 
   const history = useHistory();
@@ -27,12 +26,10 @@ function EditLocationForm() {
       setLocation(thisLocation.location);
     }
     fetchLocations();
-  }, [dispatch])
+  }, [dispatch, params])
 
   useEffect(() => {
     const vErr = [];
-    // console.log('locationIs.name is', locationIs.name);
-    // console.log('locationIs[+params.id] is', locationIs[+params.id - 1])
 
     locationName || vErr.push('Your place must have a name.')
     location || vErr.push('There must be a location.')
