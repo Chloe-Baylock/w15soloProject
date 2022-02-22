@@ -5,16 +5,18 @@ import './LocationPage.css';
 import { getLocations, removeLocation } from '../../store/locationsReducer'
 import { addBooking } from '../../store/bookingsReducer';
 import { addReview, destroyReview, editReview, loadReviews } from '../../store/reviewsReducer';
+import { getUsers } from '../../store/session';
 import { useState } from 'react';
-
 function LocationPage() {
 
-  const sessionUserId = useSelector(state => state.session.user.id)
+  // const sessionUserId = useSelector(state => state.session.user.id)
+  const sessionUser = useSelector(state => state.session.user)
   const dispatch = useDispatch();
   const history = useHistory();
 
   const locations = useSelector(state => state.locations.entries);
   const reviews = useSelector(state => state.reviews.entries);
+  const users = useSelector(state => state.session.users);
 
   const params = useParams();
 
@@ -27,10 +29,8 @@ function LocationPage() {
 
   useEffect(() => {
     dispatch(getLocations());
-  }, [dispatch])
-
-  useEffect(() => {
     dispatch((loadReviews()));
+    dispatch(getUsers());
   }, [dispatch])
 
   let location = locations?.find(loc => loc.id === +params.id)
@@ -115,7 +115,7 @@ function LocationPage() {
     e.preventDefault();
     let booking = `${date1 || todayFn()}X${date2 || todayFn()}X${totalDays()}`;
     let data = {
-      userId: sessionUserId,
+      userId: sessionUser.id,
       locationId: params.id,
       timespan: booking,
     }
@@ -138,7 +138,7 @@ function LocationPage() {
   async function submitReview(e) {
     e.preventDefault();
     let data = {
-      userId: sessionUserId,
+      userId: sessionUser.id,
       locationId: +params.id,
       reviewContent,
     }
@@ -149,16 +149,15 @@ function LocationPage() {
   async function changeReview(e, revId) {
     e.preventDefault();
     let data = {
-      userId: sessionUserId,
+      userId: sessionUser.id,
       locationId: +params.id,
       reviewContent,
     }
     await dispatch(editReview(data, revId));
-    // await dispatch(loadReviews());
     setShowUpdateReview(-5);
   }
 
-  
+
   const handleDeleteReview = async (revId) => {
     await dispatch(destroyReview(revId));
     setShowUpdateReview(-7);
@@ -225,9 +224,13 @@ function LocationPage() {
         <ul>
           {reviews?.filter(review => review.locationId === +params.id).map(review => (
             <div key={review.id}>
-              <li>{review.reviewContent}, by {review.userId}</li>
-              <button onClick={() => setShowUpdateReview(review.id)}>Edit</button>
-              <button onClick={() => handleDeleteReview(review.id)}>Delete</button>
+              <li>{review.reviewContent}, by {users?.filter(user => user.id === review.userId)[0].username}</li>
+              {review.userId === sessionUser.id && (
+                <div>
+                  <button onClick={() => setShowUpdateReview(review.id)}>Edit</button>
+                  <button onClick={() => handleDeleteReview(review.id)}>Delete</button>
+                </div>
+              )}
               {showUpdateReview === review.id && (
                 <>
                   <form onSubmit={e => changeReview(e, review.id)}>
@@ -243,16 +246,18 @@ function LocationPage() {
             </div>
           ))}
         </ul>
-        <button
-          className='global-button-style'
-          onClick={() => showRevModal()}
-        >
-          {revModal === true ? (
-            <>Cancel</>
-          ) : (
-            <>Add Review</>
-          )}
-        </button>
+        {reviews?.filter(review => review.userId === sessionUser.id).length === 0 && (
+          <button
+            className='global-button-style'
+            onClick={() => showRevModal()}
+          >
+            {revModal === true ? (
+              <>Cancel</>
+            ) : (
+              <>Add Review</>
+            )}
+          </button>
+        )}
         {revModal && (
           <div>
             <form onSubmit={submitReview}>

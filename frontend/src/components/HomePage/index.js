@@ -8,7 +8,7 @@ import { loadBookings, removeBooking } from '../../store/bookingsReducer';
 import BookingForm from '../BookingForm';
 
 function HomePage() {
-
+  
   const history = useHistory();
   const sessionUserId = useSelector(state => state.session.user.id);
   const locations = useSelector(state => state.locations.entries);
@@ -54,8 +54,9 @@ function HomePage() {
             ))}
           </ul>
         </div>
-        <div className='home-map-bookings'>
-          {bookings?.map(booking => (
+        <div className='home-map-bookings' id='home-bookings-scroll'>
+          <h1>Your Bookings:</h1>
+          {bookings?.map(booking => booking.userId === sessionUserId && (
             <div
               key={booking.id}
               className='home-bookings-div'
