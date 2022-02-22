@@ -171,13 +171,12 @@ function LocationPage() {
             className='global-button-style'
             onClick={() => triggerBookModal()}
           >book</button>
-          <h1>{location && location.locationName}</h1>
+          <h1>{location?.locationName}</h1>
           <div>
             <div className='location-page-div'>
-              <p>location: {location && location.location}</p>
-              <p>description: {location && location.description}</p>
-              <p>host: {location && location.userId}</p>
-              <p>id: {location && location.id}</p>
+              <p>location: {location?.location}</p>
+              <p>description: {location?.description}</p>
+              <p>host: {users?.filter(user => user.id === location.userId)[0].username}</p>
             </div>
             <form onSubmit={editPage}>
               <button type='edit'>Edit</button>
