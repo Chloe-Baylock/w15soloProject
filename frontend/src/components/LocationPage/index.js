@@ -60,23 +60,23 @@ function LocationPage() {
 
   const validDate = (da1, da2) => {
     let today = todayFn();
-
     let errArr = [];
 
     // check booking date1 is made in the future
-    if (parseInt(da1.slice(0, 4)) < parseInt(today.slice(0, 4))) errArr.push('date1 before year error');
-    else if (da1.slice(0, 4) === today.slice(0, 4) && parseInt(da1.slice(5, 7)) < parseInt(today.slice(5, 7))) errArr.push('date1 before month error');
-    else if (da1.slice(0, 4) === today.slice(0, 4) && da1.slice(5, 7) === today.slice(5, 7) && da1.slice(8, 10) < today.slice(8, 10)) errArr.push('date1 before month error');
+    if (parseInt(da1.slice(0, 4)) < parseInt(today.slice(0, 4))) errArr.push('The booking should be today or later.');
+    else if (da1.slice(0, 4) === today.slice(0, 4) && parseInt(da1.slice(5, 7)) < parseInt(today.slice(5, 7))) errArr.push('The booking should be today or later.');
+    else if (da1.slice(0, 4) === today.slice(0, 4) && da1.slice(5, 7) === today.slice(5, 7) && da1.slice(8, 10) < today.slice(8, 10)) errArr.push('The booking should be today or later.');
 
+    
     // check booking date2 is made in the future
-    if (parseInt(da2.slice(0, 4)) < parseInt(today.slice(0, 4))) errArr.push('date2 before year error');
-    else if (da2.slice(0, 4) === today.slice(0, 4) && parseInt(da2.slice(5, 7)) < parseInt(today.slice(5, 7))) errArr.push('date2 before month error');
-    else if (da2.slice(0, 4) === today.slice(0, 4) && da2.slice(5, 7) === today.slice(5, 7) && da2.slice(8, 10) < today.slice(8, 10)) errArr.push('date2 before month error');
+    if (parseInt(da2.slice(0, 4)) < parseInt(today.slice(0, 4))) errArr.push('The booking should be today or later!');
+    else if (da2.slice(0, 4) === today.slice(0, 4) && parseInt(da2.slice(5, 7)) < parseInt(today.slice(5, 7))) errArr.push('The booking should be today or later!');
+    else if (da2.slice(0, 4) === today.slice(0, 4) && da2.slice(5, 7) === today.slice(5, 7) && da2.slice(8, 10) < today.slice(8, 10)) errArr.push('The booking should be today or later!');
 
     // check date2 >= date1
     if (parseInt(da1.slice(0, 4)) > parseInt(da2.slice(0, 4)) ||
-      parseInt(da1.slice(5, 7)) > parseInt(da2.slice(5, 7)) ||
-      parseInt(da1.slice(8, 10)) > parseInt(da2.slice(8, 10))) errArr.push('second date should be after the first date.');
+      (parseInt(da1.slice(0, 4)) === parseInt(da2.slice(0, 4)) && parseInt(da1.slice(5, 7)) > parseInt(da2.slice(5, 7))) ||
+      (parseInt(da1.slice(0, 4)) === parseInt(da2.slice(0, 4)) && parseInt(da1.slice(5, 7)) === parseInt(da2.slice(5, 7)) && parseInt(da1.slice(8, 10)) > parseInt(da2.slice(8, 10)))) errArr.push('Please make sure the second date is not before the first date.');
 
     setErrors(errArr);
   }
@@ -239,7 +239,7 @@ function LocationPage() {
                   value={date1 || todayFn()}
                   onChange={e => {
                     setDate1(e.target.value)
-                    return validDate(e.target.value, date2);
+                    return validDate(e.target.value, date2 || todayFn());
                   }}
                 />
               </div>
@@ -253,13 +253,13 @@ function LocationPage() {
                   value={date2 || todayFn()}
                   onChange={e => {
                     setDate2(e.target.value);
-                    return validDate(date1, e.target.value);
+                    return validDate(date1 || todayFn(), e.target.value);
                   }}
                 />
               </div>
               <div>
                 <ul>
-                  {errors.map(error => (
+                  {errors.length > 0 && errors.map(error => (
                     <li key={error}>{error}</li>
                   ))}
                 </ul>
