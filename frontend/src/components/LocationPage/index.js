@@ -24,7 +24,8 @@ function LocationPage() {
   const [revModal, setRevModal] = useState(false);
   const [reviewContent, setReviewContent] = useState('');
   const [showUpdateReview, setShowUpdateReview] = useState(-2)
-  const [showError, setShowError] = useState(false);
+  const [showError, setShowError] = useState(false);  // not related with *errors*
+  const [errors, setErrors] = useState([]);
   const [date1, setDate1] = useState('');
   const [date2, setDate2] = useState('');
 
@@ -57,10 +58,31 @@ function LocationPage() {
     return `${year}-${month}-${day}`;
   }
 
+  const validDate = (da1, da2) => {
+    let today = todayFn();
+
+    let errArr = [];
+
+    // check booking date1 is made in the future
+    if (parseInt(da1.slice(0, 4)) < parseInt(today.slice(0, 4))) errArr.push('date1 before year error');
+    else if (da1.slice(0, 4) === today.slice(0, 4) && parseInt(da1.slice(5, 7)) < parseInt(today.slice(5, 7))) errArr.push('date1 before month error');
+    else if (da1.slice(0, 4) === today.slice(0, 4) && da1.slice(5, 7) === today.slice(5, 7) && da1.slice(8, 10) < today.slice(8, 10)) errArr.push('date1 before month error');
+
+    // check booking date2 is made in the future
+    if (parseInt(da2.slice(0, 4)) < parseInt(today.slice(0, 4))) errArr.push('date2 before year error');
+    else if (da2.slice(0, 4) === today.slice(0, 4) && parseInt(da2.slice(5, 7)) < parseInt(today.slice(5, 7))) errArr.push('date2 before month error');
+    else if (da2.slice(0, 4) === today.slice(0, 4) && da2.slice(5, 7) === today.slice(5, 7) && da2.slice(8, 10) < today.slice(8, 10)) errArr.push('date2 before month error');
+
+    // check date2 >= date1
+    if (parseInt(da1.slice(0, 4)) > parseInt(da2.slice(0, 4)) ||
+      parseInt(da1.slice(5, 7)) > parseInt(da2.slice(5, 7)) ||
+      parseInt(da1.slice(8, 10)) > parseInt(da2.slice(8, 10))) errArr.push('second date should be after the first date.');
+
+    setErrors(errArr);
+  }
+
   const totalDays = () => {
-    // assumes you cannot rent for more than 1 year.
-    // assumes you cannot rent in the past.
-    // assuems if both same day, it is 1 day long.
+    // assumes you cannot rent for more than 1 year. **** errors here.
 
     let d1 = date1 || todayFn();
     let d2 = date2 || todayFn()
@@ -215,7 +237,10 @@ function LocationPage() {
                 <input
                   type='date'
                   value={date1 || todayFn()}
-                  onChange={e => setDate1(e.target.value)}
+                  onChange={e => {
+                    setDate1(e.target.value)
+                    return validDate(e.target.value, date2);
+                  }}
                 />
               </div>
               <br />
@@ -226,11 +251,21 @@ function LocationPage() {
                 <input
                   type='date'
                   value={date2 || todayFn()}
-                  onChange={e => setDate2(e.target.value)}
+                  onChange={e => {
+                    setDate2(e.target.value);
+                    return validDate(date1, e.target.value);
+                  }}
                 />
               </div>
               <div>
-                <button className='global-button-style'>
+                <ul>
+                  {errors.map(error => (
+                    <li key={error}>{error}</li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <button className='global-button-style' disabled={errors.length > 0}>
                   Book
                 </button>
               </div>
