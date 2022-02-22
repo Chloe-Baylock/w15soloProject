@@ -1,4 +1,3 @@
-import { Redirect } from 'react-router-dom';
 import { csrfFetch } from './csrf';
 
 const GET_USERS = 'session/getUsers'
@@ -89,7 +88,7 @@ export const signup = (user) => async (dispatch) => {
 };
 
 export const logout = () => async (dispatch) => {
-  const response = await csrfFetch('/api/session', {
+  await csrfFetch('/api/session', {
     method: 'DELETE',
   });
   await dispatch(removeUser());

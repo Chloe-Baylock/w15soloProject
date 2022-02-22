@@ -24,13 +24,17 @@ function LocationPage() {
   const [revModal, setRevModal] = useState(false);
   const [reviewContent, setReviewContent] = useState('');
   const [showUpdateReview, setShowUpdateReview] = useState(-2)
+  const [showError, setShowError] = useState(false);
   const [date1, setDate1] = useState('');
   const [date2, setDate2] = useState('');
 
   useEffect(() => {
-    dispatch(getLocations());
-    dispatch((loadReviews()));
-    dispatch(getUsers());
+    const fetchData = async () => {
+      await dispatch(getLocations());
+      await dispatch(loadReviews());
+      await dispatch(getUsers());
+    }
+    fetchData();
   }, [dispatch])
 
   let location = locations?.find(loc => loc.id === +params.id)
@@ -121,7 +125,6 @@ function LocationPage() {
     }
     await dispatch(addBooking(data));
     setBooking(false);
-    history.push('/')
   }
 
   async function editPage(e) {
@@ -131,8 +134,8 @@ function LocationPage() {
 
   async function deletePage(e) {
     e.preventDefault();
-    await dispatch(removeLocation(params.id));
     history.push('/');
+    await dispatch(removeLocation(params.id));
   }
 
   async function submitReview(e) {
@@ -188,9 +191,9 @@ function LocationPage() {
             <div className='location-page-div'>
               <p>location: {location?.location}</p>
               <p>description: {location?.description}</p>
-              <p>host: {users?.filter(user => user.id === location.userId)[0].username}</p>
+              <p>host: {users?.filter(user => user.id === location?.userId)[0]?.username}</p>
             </div>
-            {sessionUser?.id === locations?.filter(location => location.id === +params.id)[0].id && (
+            {sessionUser?.id === location?.userId && (
               <>
                 <form onSubmit={editPage}>
                   <button type='edit'>Edit</button>
@@ -262,7 +265,7 @@ function LocationPage() {
             </div>
           ))}
         </ul>
-        {reviews?.filter(review => review.userId === sessionUser?.id).length === 0 && (
+        {reviews?.filter(review => review.userId === sessionUser?.id && review.locationId === +params.id).length === 0 && sessionUser && (
           <button
             className='global-button-style'
             onClick={() => showRevModal()}
@@ -280,9 +283,19 @@ function LocationPage() {
               <textarea
                 name='reviewContent'
                 value={reviewContent}
-                onChange={e => setReviewContent(e.target.value)}
+                onChange={e => {
+                  if (e.target.value.length >= 500) setShowError(true);
+                  else {
+                    setShowError(false);
+                    setReviewContent(e.target.value);
+                  }
+                }}
               />
-              <button>Submit Review</button>
+              {showError ? (
+                <p>Review Must Be Under 500 Characters.</p>
+              ) : (
+                <button>Submit Review</button>
+              )}
             </form>
           </div>
         )}

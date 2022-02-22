@@ -61,7 +61,7 @@ function HomePage() {
               key={booking.id}
               className='home-bookings-div'
             >
-              <li className='home-bookings-list'>{locations.filter(location => location.id === booking.locationId)[0].locationName}
+              <li className='home-bookings-list'>{locations?.filter(location => location.id === booking?.locationId)[0].locationName}
                 {' from ' + booking.timespan.slice(0, 10) + ' to ' + booking.timespan.slice(11, 21)}
               </li>
               {bookModal === booking.id && (

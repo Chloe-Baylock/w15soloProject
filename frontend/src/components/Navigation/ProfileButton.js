@@ -2,11 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from 'react-redux';
 import { ChevronDownIcon } from "@heroicons/react/solid"
 import * as sessionActions from '../../store/session';
-import { useHistory } from "react-router-dom";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
-  const history = useHistory();
   const [showMenu, setShowMenu] = useState(false);
 
   const openMenu = e => {

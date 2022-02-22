@@ -7,7 +7,6 @@ function EditLocationForm() {
 
   const params = useParams();
   const sessionUser = useSelector(state => state.session.user)
-  const locationIs = useSelector(state => state.locations.entries);
 
 
   const history = useHistory();
@@ -27,7 +26,7 @@ function EditLocationForm() {
       setLocation(thisLocation.location);
     }
     fetchLocations();
-  }, [dispatch])
+  }, [dispatch, params])
 
   useEffect(() => {
     const vErr = [];

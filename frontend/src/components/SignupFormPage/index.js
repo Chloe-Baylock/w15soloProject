@@ -29,6 +29,23 @@ function SignupFormPage() {
     return setErrors(['Confirm Password field must be the same as the Password field']);
   };
 
+  const demoLogin = e => {
+    e.preventDefault();
+    return dispatch(sessionActions.login({
+      credential: 'Demo',
+      password: 'nwag2tfd52j!gu4hba+%sdf3k.',
+    }
+    ))
+      .catch(async (res) => {
+        const data = await res.json();
+        if (data && data.errors) return dispatch(sessionActions.signup({
+          'email': "demo@aa.io",
+          'username': 'Demo',
+          'password': 'nwag2tfd52j!gu4hba+%sdf3k.',
+        }));
+      });
+  }
+
   return (
     <div className='signup-container'>
       <form onSubmit={handleSubmit}>
@@ -85,6 +102,7 @@ function SignupFormPage() {
         </div>
         <div className='signup-eleBelow'>
           <button type="submit">Sign Up</button>
+          <button onClick={e => demoLogin(e)}>Demo Login</button>
         </div>
       </form>
     </div>
