@@ -8,12 +8,12 @@ import { loadBookings, removeBooking } from '../../store/bookingsReducer';
 import BookingForm from '../BookingForm';
 
 function HomePage() {
-  
+
   const history = useHistory();
   const sessionUserId = useSelector(state => state.session.user?.id);
   const locations = useSelector(state => state.locations.entries);
   const bookings = useSelector(state => state.bookings.entries);
-  
+
   const dispatch = useDispatch();
 
   const [bookModal, setBookModal] = useState(-2);
@@ -60,30 +60,35 @@ function HomePage() {
             <div
               key={booking.id}
               className='home-bookings-div'
-            >
-              <li className='home-bookings-list'>{locations?.filter(location => location.id === booking?.locationId)[0].locationName}
+              >
+              <li
+                className='home-bookings-list'
+                onClick={() => history.push(`/locations/${booking.locationId}`)}
+              >{locations?.filter(location => location.id === booking?.locationId)[0].locationName}
+              </li>
+              <li>
                 {' from ' + booking.timespan.slice(0, 10) + ' to ' + booking.timespan.slice(11, 21)}
               </li>
               {bookModal === booking.id && (
                 <BookingForm
-                  bookingLocation = {booking.locationId}
-                  bookingStart = {booking.timespan.split('X')[0]}
-                  bookingEnd = {booking.timespan.split('X')[1]}
-                  bookingId = {booking.id}
+                  bookingLocation={booking.locationId}
+                  bookingStart={booking.timespan.split('X')[0]}
+                  bookingEnd={booking.timespan.split('X')[1]}
+                  bookingId={booking.id}
                 />
               )}
               <button
                 className='global-button-style home-edit-booking-button'
                 onClick={() => {
-                  if (bookModal === booking.id) setBookModal(-3); 
+                  if (bookModal === booking.id) setBookModal(-3);
                   else setBookModal(booking.id)
                 }}
               >
                 {bookModal === booking.id ? (
                   <>Cancel Edit</>
-                  ) : (
-                    <>Edit Booking</>
-                  )
+                ) : (
+                  <>Edit Booking</>
+                )
                 }
               </button>
               <button

@@ -92,6 +92,13 @@
   margin-right: 10px;
   display: flex;
   align-items: center;
+  color: blue;
+}
+
+.home-bookings-list:hover {
+  cursor: pointer;
+  text-decoration: underline;
+  color: rgb(0, 0, 224);
 }
 
 .home-edit-booking-button {
