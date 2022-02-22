@@ -10,7 +10,7 @@ import BookingForm from '../BookingForm';
 function HomePage() {
   
   const history = useHistory();
-  const sessionUserId = useSelector(state => state.session.user.id);
+  const sessionUserId = useSelector(state => state.session.user?.id);
   const locations = useSelector(state => state.locations.entries);
   const bookings = useSelector(state => state.bookings.entries);
   
@@ -61,7 +61,9 @@ function HomePage() {
               key={booking.id}
               className='home-bookings-div'
             >
-              <li className='home-bookings-list'>{booking.id}</li>
+              <li className='home-bookings-list'>{locations.filter(location => location.id === booking.locationId)[0].locationName}
+                {' from ' + booking.timespan.slice(0, 10) + ' to ' + booking.timespan.slice(11, 21)}
+              </li>
               {bookModal === booking.id && (
                 <BookingForm
                   bookingLocation = {booking.locationId}

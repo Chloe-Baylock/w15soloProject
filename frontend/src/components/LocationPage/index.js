@@ -167,10 +167,22 @@ function LocationPage() {
     <>
       <div className='location-page-top'>
         <div className='location-page-info-container'>
-          <button
-            className='global-button-style'
-            onClick={() => triggerBookModal()}
-          >book</button>
+          {sessionUser ? (
+            <button
+              className={'global-button-style'}
+              onClick={() => triggerBookModal()}
+            >book
+            </button>
+          ) : (
+            <>
+              <button
+                className={'global-button-style'}
+                disabled
+              >book
+              </button>
+              <p>You must be logged in to book places!</p>
+            </>
+          )}
           <h1>{location?.locationName}</h1>
           <div>
             <div className='location-page-div'>
@@ -178,12 +190,16 @@ function LocationPage() {
               <p>description: {location?.description}</p>
               <p>host: {users?.filter(user => user.id === location.userId)[0].username}</p>
             </div>
-            <form onSubmit={editPage}>
-              <button type='edit'>Edit</button>
-            </form>
-            <form onSubmit={deletePage}>
-              <button type='submit'>Delete</button>
-            </form>
+            {sessionUser?.id === locations?.filter(location => location.id === +params.id)[0].id && (
+              <>
+                <form onSubmit={editPage}>
+                  <button type='edit'>Edit</button>
+                </form>
+                <form onSubmit={deletePage}>
+                  <button type='submit'>Delete</button>
+                </form>
+              </>
+            )}
           </div>
         </div>
         {booking && (
@@ -220,11 +236,12 @@ function LocationPage() {
         )}
       </div>
       <div className='location-page-reviews-container'>
+        <h1>Reviews</h1>
         <ul>
           {reviews?.filter(review => review.locationId === +params.id).map(review => (
             <div key={review.id}>
               <li>{review.reviewContent}, by {users?.filter(user => user.id === review.userId)[0].username}</li>
-              {review.userId === sessionUser.id && (
+              {review.userId === sessionUser?.id && (
                 <div>
                   <button onClick={() => setShowUpdateReview(review.id)}>Edit</button>
                   <button onClick={() => handleDeleteReview(review.id)}>Delete</button>
@@ -245,7 +262,7 @@ function LocationPage() {
             </div>
           ))}
         </ul>
-        {reviews?.filter(review => review.userId === sessionUser.id).length === 0 && (
+        {reviews?.filter(review => review.userId === sessionUser?.id).length === 0 && (
           <button
             className='global-button-style'
             onClick={() => showRevModal()}

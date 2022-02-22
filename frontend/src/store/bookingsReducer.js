@@ -34,7 +34,7 @@ export const loadBookings = () => async dispatch => {
 }
 
 export const addBooking = data => async dispatch => {
-  const response = await csrfFetch('/api/bookings', {
+  const response = await csrfFetch('/api/bookings/new', {
     method: "POST",
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),

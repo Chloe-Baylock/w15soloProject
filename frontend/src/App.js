@@ -26,18 +26,18 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
-          <ProtectedRoute  exact path='/'>
+          <Route  exact path='/'>
             <HomePage isLoaded={isLoaded} />
-          </ProtectedRoute>
+          </Route>
           <Route path='/login'>
             <LoginFormPage />
           </Route>
           <Route path='/signup'>
             <SignupFormPage />
           </Route>
-          <ProtectedRoute exact path='/locations/:id(\d+)'>
+          <Route exact path='/locations/:id(\d+)'>
             <LocationPage />
-          </ProtectedRoute>
+          </Route>
           <ProtectedRoute path='/locations/new'>
             <LocationFormPage />
           </ProtectedRoute>
