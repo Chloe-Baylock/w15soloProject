@@ -56,7 +56,8 @@ function Navigation({ isLoaded }) {
           <div className='nav-bookings'>
             <button
             className='global-button-style'
-            onClick={() => {
+            onClick={async () => {
+              await history.push('/')
               let eleToScrollTo = document.getElementById('home-bookings-scroll');
               if (eleToScrollTo) eleToScrollTo.scrollIntoView({behavior: "smooth"});
             }}
