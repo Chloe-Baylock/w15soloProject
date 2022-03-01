@@ -1,6 +1,7 @@
 .home-main-bg {
   height: calc(100vh - 80px);
-  background: url(bgmaybe.png);
+  background: url(house.png);
+  /* background: url(bgmaybe.png); */
 
   display: flex;
   justify-content: center;
