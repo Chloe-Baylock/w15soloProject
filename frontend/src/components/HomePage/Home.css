@@ -12,7 +12,8 @@
 .home-main-bg {
   height: calc(100vh - 80px);
   width: 1525px;
-  background: url(house.png);
+  background: url(house.png)
+  no-repeat;
   border-radius: 1rem;
   display: flex;
   justify-content: center;
