@@ -47,7 +47,7 @@ function SignupFormPage(props) {
   }
 
   return (
-    <div className='signup-container' onClick={() => props.setSignUpModal(false)}>
+    <div className='signup-container' onClick={() => props.setSignupModal(false)}>
       <div className="signup-container-form" onClick={e => e.stopPropagation()}>
         <form onSubmit={handleSubmit}>
           <ul>

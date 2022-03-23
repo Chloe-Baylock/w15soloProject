@@ -18,7 +18,7 @@ function Navigation({ isLoaded }) {
   const [searchVal, setSearchVal] = useState('');
   const [hideResults, setHideResults] = useState(false);
   const [loginModal, setLoginModal] = useState(false);
-  const [signUpModal, setSignUpModal] = useState(false);
+  const [signupModal, setSignupModal] = useState(false);
 
   const submitSearch = async e => {
     e.preventDefault();
@@ -34,15 +34,20 @@ function Navigation({ isLoaded }) {
   } else {
     sessionLinks = (
       <>
-        <button className='global-button-style nav-login-button' onClick={() => setLoginModal(true)}>Log In</button>
-        <button className='global-button-style' onClick={() => setSignUpModal(true)}>Sign Up</button>
+        <button className='global-button-style nav-login-button' onClick={() => setLoginModal(!loginModal)}>Log In</button>
+        <button className='global-button-style' onClick={() => setSignupModal(!signupModal)}>Sign Up</button>
       </>
     );
   }
 
   return (
     <div className='nav-outside'>
-      <div className='nav-container'>
+      <div
+        className='nav-container'
+        onClick={() => {
+          if (loginModal) setLoginModal(false);
+          if (signupModal) setSignupModal(false);
+        }}>
         <div className='nav-bar'>
           <div className='nav-home'>
             <NavLink className='nav-navlink' exact to="/"><i className="fas fa-bread-slice" />BreadnB</NavLink>
@@ -109,7 +114,7 @@ function Navigation({ isLoaded }) {
         </div>
       )}
       {loginModal && (<LoginFormPage setLoginModal={setLoginModal} />)}
-      {signUpModal && (<SignUpFormPage setSignUpModal={setSignUpModal} />)}
+      {signupModal && (<SignUpFormPage setSignupModal={setSignupModal} />)}
     </div>
   );
 }
