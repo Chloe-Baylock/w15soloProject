@@ -5,6 +5,7 @@ import { SearchIcon } from '@heroicons/react/solid';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
 import { postSearch } from '../../store/searchReducer';
+import LoginFormPage from '../LoginFormPage';
 
 function Navigation({ isLoaded }) {
   const history = useHistory();
@@ -15,6 +16,8 @@ function Navigation({ isLoaded }) {
   const [searchModal, setSearchModal] = useState(false);
   const [searchVal, setSearchVal] = useState('');
   const [hideResults, setHideResults] = useState(false);
+  const [loginModal, setLoginModal] = useState(false);
+
   const submitSearch = async e => {
     e.preventDefault();
     await dispatch(postSearch(searchVal));
@@ -29,9 +32,8 @@ function Navigation({ isLoaded }) {
   } else {
     sessionLinks = (
       <>
-        <button className='global-button-style' onClick={() => history.push('/login')}>Log In</button>
+        <button className='global-button-style' onClick={() => setLoginModal(!loginModal)}>Log In</button>
         <button className='global-button-style' onClick={() => history.push('/signup')}>Sign Un</button>
-
       </>
     );
   }
@@ -55,12 +57,12 @@ function Navigation({ isLoaded }) {
           </div>
           <div className='nav-bookings'>
             <button
-            className='global-button-style'
-            onClick={async () => {
-              await history.push('/')
-              let eleToScrollTo = document.getElementById('home-bookings-scroll');
-              if (eleToScrollTo) eleToScrollTo.scrollIntoView({behavior: "smooth"});
-            }}
+              className='global-button-style'
+              onClick={async () => {
+                await history.push('/')
+                let eleToScrollTo = document.getElementById('home-bookings-scroll');
+                if (eleToScrollTo) eleToScrollTo.scrollIntoView({ behavior: "smooth" });
+              }}
             >View Your Bookings
             </button>
           </div>
@@ -103,6 +105,9 @@ function Navigation({ isLoaded }) {
             </ul>
           </form>
         </div>
+      )}
+      {loginModal && (
+        <LoginFormPage setLoginModal={setLoginModal} />
       )}
     </div>
   );

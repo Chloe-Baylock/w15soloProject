@@ -4,16 +4,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import './LoginForm.css';
 
-function LoginFormPage() {
+function LoginFormPage(props) {
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
   const [credential, setCredential] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState([]);
 
-  if (sessionUser) return (
-    <Redirect to="/" />
-  );
+  // if (sessionUser) return (
+  //   <Redirect to="/" />
+  // );
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -43,40 +43,45 @@ function LoginFormPage() {
   }
 
   return (
-    <div className='login-container'>
-      <form onSubmit={handleSubmit}>
-        <ul>
-          {errors.map((error, i) => <li key={i}>{error}</li>)}
-        </ul>
-        <div className='login-eleBelow'>
-          <label className='login-label'>
-            Username or Email:
-            <input
-              className='login-input'
-              type="text"
-              value={credential}
-              onChange={(e) => setCredential(e.target.value)}
-              required
-            />
-          </label>
-        </div>
-        <div className='login-eleBelow'>
-          <label className='login-label'>
-            Password:
-            <input
-              className='login-input'
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </label>
-        </div>
-        <div className='login-eleBelow' id='but'>
-          <button type="submit">Log In</button>
-          <button onClick={e => demoLogin(e)}>Demo Login</button>
-        </div>
-      </form>
+    <div
+      className='login-container'
+      onClick={() => props.setLoginModal(false)}
+    >
+      <div onClick={(e) => e.stopPropagation()} className='login-form-container'>
+        <form className='login-form' onSubmit={handleSubmit}>
+          <ul>
+            {errors.map((error, i) => <li key={i}>{error}</li>)}
+          </ul>
+          <div className='login-eleBelow'>
+            <label className='login-label'>
+              Username or Email:
+              <input
+                className='login-input'
+                type="text"
+                value={credential}
+                onChange={(e) => setCredential(e.target.value)}
+                required
+              />
+            </label>
+          </div>
+          <div className='login-eleBelow'>
+            <label className='login-label'>
+              Password:
+              <input
+                className='login-input'
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </label>
+          </div>
+          <div className='login-eleBelow' id='but'>
+            <button type="submit">Log In</button>
+            <button onClick={e => demoLogin(e)}>Demo Login</button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
