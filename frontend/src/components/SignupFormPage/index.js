@@ -16,6 +16,11 @@ function SignupFormPage(props) {
 
   // if (sessionUser) return <Redirect to="/" />;
 
+  if (sessionUser) {
+    props.setSignupModal(false);
+    document.body.style.overflowY='scroll';
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (password === confirmPassword) {
@@ -47,7 +52,10 @@ function SignupFormPage(props) {
   }
 
   return (
-    <div className='signup-container' onClick={() => props.setSignupModal(false)}>
+    <div className='signup-container' onClick={() => {
+      props.setSignupModal(false);
+      document.body.style.overflowY = 'scroll';
+    }}>
       <div className="signup-container-form" onClick={e => e.stopPropagation()}>
         <form onSubmit={handleSubmit}>
           <ul>

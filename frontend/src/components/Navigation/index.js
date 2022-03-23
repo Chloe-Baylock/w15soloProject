@@ -34,8 +34,22 @@ function Navigation({ isLoaded }) {
   } else {
     sessionLinks = (
       <>
-        <button className='global-button-style nav-login-button' onClick={() => setLoginModal(!loginModal)}>Log In</button>
-        <button className='global-button-style' onClick={() => setSignupModal(!signupModal)}>Sign Up</button>
+        <button className='global-button-style nav-login-button' onClick={(e) => {
+          if (loginModal) document.body.style.overflowY = "scroll";
+          else document.body.style.overflowY = "hidden";
+          setLoginModal(!loginModal);
+          setSignupModal(false);
+          e.stopPropagation();
+        }}>Log In
+        </button>
+        <button className='global-button-style' onClick={(e) => {
+          if (signupModal) document.body.style.overflowY = "scroll";
+          else document.body.style.overflowY = "hidden";
+          setSignupModal(!signupModal);
+          setLoginModal(false);
+          e.stopPropagation();
+        }}>Sign Up
+        </button>
       </>
     );
   }
@@ -45,8 +59,9 @@ function Navigation({ isLoaded }) {
       <div
         className='nav-container'
         onClick={() => {
-          if (loginModal) setLoginModal(false);
-          if (signupModal) setSignupModal(false);
+          setLoginModal(false);
+          setSignupModal(false);
+          document.body.style.overflowY = 'scroll';
         }}>
         <div className='nav-bar'>
           <div className='nav-home'>

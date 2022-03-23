@@ -11,9 +11,12 @@ function LoginFormPage(props) {
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState([]);
 
-  // if (sessionUser) return (
-  //   <Redirect to="/" />
-  // );
+  // if (sessionUser) return <Redirect to="/" />;
+
+  if (sessionUser) {
+    props.setLoginModal(false);
+    document.body.style.overflowY='scroll';
+  }
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -45,7 +48,10 @@ function LoginFormPage(props) {
   return (
     <div
       className='login-container'
-      onClick={() => props.setLoginModal(false)}
+      onClick={() => {
+        props.setLoginModal(false);
+        document.body.style.overflowY = 'scroll';
+      }}
     >
       <div onClick={(e) => e.stopPropagation()} className='login-form-container'>
         <form className='login-form' onSubmit={handleSubmit}>
