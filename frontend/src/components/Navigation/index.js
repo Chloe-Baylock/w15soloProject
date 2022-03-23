@@ -6,6 +6,7 @@ import ProfileButton from './ProfileButton';
 import './Navigation.css';
 import { postSearch } from '../../store/searchReducer';
 import LoginFormPage from '../LoginFormPage';
+import SignUpFormPage from '../SignupFormPage';
 
 function Navigation({ isLoaded }) {
   const history = useHistory();
@@ -17,6 +18,7 @@ function Navigation({ isLoaded }) {
   const [searchVal, setSearchVal] = useState('');
   const [hideResults, setHideResults] = useState(false);
   const [loginModal, setLoginModal] = useState(false);
+  const [signUpModal, setSignUpModal] = useState(false);
 
   const submitSearch = async e => {
     e.preventDefault();
@@ -32,8 +34,8 @@ function Navigation({ isLoaded }) {
   } else {
     sessionLinks = (
       <>
-        <button className='global-button-style' onClick={() => setLoginModal(!loginModal)}>Log In</button>
-        <button className='global-button-style' onClick={() => history.push('/signup')}>Sign Un</button>
+        <button className='global-button-style nav-login-button' onClick={() => setLoginModal(true)}>Log In</button>
+        <button className='global-button-style' onClick={() => setSignUpModal(true)}>Sign Up</button>
       </>
     );
   }
@@ -106,9 +108,8 @@ function Navigation({ isLoaded }) {
           </form>
         </div>
       )}
-      {loginModal && (
-        <LoginFormPage setLoginModal={setLoginModal} />
-      )}
+      {loginModal && (<LoginFormPage setLoginModal={setLoginModal} />)}
+      {signUpModal && (<SignUpFormPage setSignUpModal={setSignUpModal} />)}
     </div>
   );
 }
