@@ -23,6 +23,11 @@
   background-color: rgba(0, 0, 0, 0.7);
 }
 
+.login-form {
+  border: 10px solid aqua;
+  border-radius: .75rem;
+}
+
 .login-eleBelow {
     background-color: aqua;
     padding: 10px;
@@ -38,5 +43,6 @@
 }
 
 .login-submit {
-  margin-right: 5px;
+  margin-left: 5px;
+  margin-right: 15px;
 }

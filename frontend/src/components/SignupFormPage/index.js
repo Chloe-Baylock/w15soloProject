@@ -110,8 +110,8 @@ function SignupFormPage(props) {
             </label>
           </div>
           <div className='signup-eleBelow'>
-            <button className="signup-submit" type="submit">Sign Up</button>
-            <button onClick={e => demoLogin(e)}>Demo Login</button>
+            <button className="global-button-style signup-submit" type="submit">Sign Up</button>
+            <button className="global-button-style" onClick={e => demoLogin(e)}>Demo Login</button>
           </div>
         </form>
       </div>

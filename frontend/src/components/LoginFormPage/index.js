@@ -83,8 +83,8 @@ function LoginFormPage(props) {
             </label>
           </div>
           <div className='login-eleBelow' id='but'>
-            <button className='login-submit' type="submit">Log In</button>
-            <button onClick={e => demoLogin(e)}>Demo Login</button>
+            <button className='global-button-style login-submit' type="submit">Log In</button>
+            <button className='global-button-style' onClick={e => demoLogin(e)}>Demo Login</button>
           </div>
         </form>
       </div>

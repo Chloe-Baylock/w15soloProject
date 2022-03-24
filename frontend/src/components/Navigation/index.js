@@ -77,23 +77,27 @@ function Navigation({ isLoaded }) {
             >search
             </button>
           </div>
-          <div className='nav-bookings'>
-            <button
-              className='global-button-style'
-              onClick={async () => {
-                await history.push('/')
-                let eleToScrollTo = document.getElementById('home-bookings-scroll');
-                if (eleToScrollTo) eleToScrollTo.scrollIntoView({ behavior: "smooth" });
-              }}
-            >View Your Bookings
-            </button>
-          </div>
-          <div className='nav-new-location'>
-            <button
-              className='global-button-style'
-              onClick={() => history.push('/locations/new')}
-            >Create New Location</button>
-          </div>
+          {sessionUser && (
+            <>
+              <div className='nav-bookings'>
+                <button
+                  className='global-button-style'
+                  onClick={async () => {
+                    await history.push('/')
+                    let eleToScrollTo = document.getElementById('home-bookings-scroll');
+                    if (eleToScrollTo) eleToScrollTo.scrollIntoView({ behavior: "smooth" });
+                  }}
+                >View Your Bookings
+                </button>
+              </div>
+              <div className='nav-new-location'>
+                <button
+                  className='global-button-style'
+                  onClick={() => history.push('/locations/new')}
+                >Create New Location</button>
+              </div>
+            </>
+          )}
           <div className='nav-user-op'>
             <div>{isLoaded && sessionLinks}</div>
           </div>
