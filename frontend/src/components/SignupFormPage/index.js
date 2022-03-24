@@ -5,7 +5,7 @@ import * as sessionActions from "../../store/session";
 
 import './SignupForm.css';
 
-function SignupFormPage() {
+function SignupFormPage(props) {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
   const [email, setEmail] = useState("");
@@ -14,7 +14,12 @@ function SignupFormPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState([]);
 
-  if (sessionUser) return <Redirect to="/" />;
+  // if (sessionUser) return <Redirect to="/" />;
+
+  if (sessionUser) {
+    props.setSignupModal(false);
+    document.body.style.overflowY='scroll';
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -47,64 +52,69 @@ function SignupFormPage() {
   }
 
   return (
-    <div className='signup-container'>
-      <form onSubmit={handleSubmit}>
-        <ul>
-          {errors.map((error, idx) => <li key={idx}>{error}</li>)}
-        </ul>
-        <div className='signup-eleBelow'>
-          <label className="signup-label">
-            Email
-            <input
-              className="signup-input"
-              type="text"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </label>
-        </div>
-        <div className='signup-eleBelow'>
-          <label className="signup-label">
-            Username
-            <input
-              className="signup-input"
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-            />
-          </label>
-        </div>
-        <div className='signup-eleBelow'>
-          <label className="signup-label">
-            Password
-            <input
-              className="signup-input"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </label>
-        </div>
-        <div className='signup-eleBelow'>
-          <label className="signup-label">
-            Confirm Password
-            <input
-              className="signup-input"
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
-            />
-          </label>
-        </div>
-        <div className='signup-eleBelow'>
-          <button type="submit">Sign Up</button>
-          <button onClick={e => demoLogin(e)}>Demo Login</button>
-        </div>
-      </form>
+    <div className='signup-container' onClick={() => {
+      props.setSignupModal(false);
+      document.body.style.overflowY = 'scroll';
+    }}>
+      <div className="signup-container-form" onClick={e => e.stopPropagation()}>
+        <form onSubmit={handleSubmit}>
+          <ul>
+            {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+          </ul>
+          <div className='signup-eleBelow'>
+            <label className="signup-label">
+              Email:
+              <input
+                className="signup-input"
+                type="text"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </label>
+          </div>
+          <div className='signup-eleBelow'>
+            <label className="signup-label">
+              Username:
+              <input
+                className="signup-input"
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+              />
+            </label>
+          </div>
+          <div className='signup-eleBelow'>
+            <label className="signup-label">
+              Password:
+              <input
+                className="signup-input"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </label>
+          </div>
+          <div className='signup-eleBelow'>
+            <label className="signup-label">
+              Confirm Password:
+              <input
+                className="signup-input"
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+              />
+            </label>
+          </div>
+          <div className='signup-eleBelow'>
+            <button className="global-button-style signup-submit" type="submit">Sign Up</button>
+            <button className="global-button-style" onClick={e => demoLogin(e)}>Demo Login</button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

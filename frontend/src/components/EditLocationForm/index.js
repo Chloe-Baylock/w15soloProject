@@ -78,7 +78,6 @@ function EditLocationForm() {
             <input
               id='location'
               type='text'
-              placeholder='address'
               value={location}
               onChange={e => setLocation(e.target.value)}
             >

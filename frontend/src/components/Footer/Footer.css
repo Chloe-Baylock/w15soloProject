@@ -9,6 +9,7 @@
 
 .footer-text {
   margin: 0;
+  margin-right: 16px;
   padding: 1px 5px;
   font-weight: bold;
 }

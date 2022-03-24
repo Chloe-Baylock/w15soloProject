@@ -67,7 +67,7 @@ function LocationPage() {
     else if (da1.slice(0, 4) === today.slice(0, 4) && parseInt(da1.slice(5, 7)) < parseInt(today.slice(5, 7))) errArr.push('The booking should be today or later.');
     else if (da1.slice(0, 4) === today.slice(0, 4) && da1.slice(5, 7) === today.slice(5, 7) && da1.slice(8, 10) < today.slice(8, 10)) errArr.push('The booking should be today or later.');
 
-    
+
     // check booking date2 is made in the future
     if (parseInt(da2.slice(0, 4)) < parseInt(today.slice(0, 4))) errArr.push('The booking should be today or later!');
     else if (da2.slice(0, 4) === today.slice(0, 4) && parseInt(da2.slice(5, 7)) < parseInt(today.slice(5, 7))) errArr.push('The booking should be today or later!');
@@ -192,26 +192,10 @@ function LocationPage() {
     <>
       <div className='location-page-top'>
         <div className='location-page-info-container'>
-          {sessionUser ? (
-            <button
-              className={'global-button-style'}
-              onClick={() => triggerBookModal()}
-            >book
-            </button>
-          ) : (
-            <>
-              <button
-                className={'global-button-style'}
-                disabled
-              >book
-              </button>
-              <p>You must be logged in to book places!</p>
-            </>
-          )}
-          <h1>{location?.locationName}</h1>
+          <h1 className='location-page-h1'>{location?.locationName}</h1>
           <div>
             <div className='location-page-div'>
-              <p>location: {location?.location}</p>
+              <p className='location-page-desc'>{location?.location}</p>
               <p>description: {location?.description}</p>
               <p>host: {users?.filter(user => user.id === location?.userId)[0]?.username}</p>
             </div>
@@ -272,70 +256,86 @@ function LocationPage() {
             </form>
           </div>
         )}
-      </div>
-      <div className='location-page-reviews-container'>
-        <h1>Reviews</h1>
-        <ul>
-          {reviews?.filter(review => review.locationId === +params.id).map(review => (
-            <div key={review.id}>
-              <li>{review.reviewContent}, by {users?.filter(user => user.id === review.userId)[0].username}</li>
-              {review.userId === sessionUser?.id && (
-                <div>
-                  <button onClick={() => setShowUpdateReview(review.id)}>Edit</button>
-                  <button onClick={() => handleDeleteReview(review.id)}>Delete</button>
-                </div>
-              )}
-              {showUpdateReview === review.id && (
-                <>
-                  <form onSubmit={e => changeReview(e, review.id)}>
-                    <textarea
-                      name='reviewContent'
-                      value={reviewContent}
-                      onChange={e => setReviewContent(e.target.value)}
-                    />
-                    <button>Submit Review</button>
-                  </form>
-                </>
-              )}
-            </div>
-          ))}
-        </ul>
-        {reviews?.filter(review => review.userId === sessionUser?.id && review.locationId === +params.id).length === 0 && sessionUser && (
-          <button
-            className='global-button-style'
-            onClick={() => showRevModal()}
-          >
-            {revModal === true ? (
-              <>Cancel</>
-            ) : (
-              <>Add Review</>
-            )}
-          </button>
-        )}
-        {revModal && (
-          <div>
-            <form onSubmit={submitReview}>
-              <textarea
-                name='reviewContent'
-                value={reviewContent}
-                onChange={e => {
-                  if (e.target.value.length >= 500) setShowError(true);
-                  else {
-                    setShowError(false);
-                    setReviewContent(e.target.value);
-                  }
-                }}
-              />
-              {showError ? (
-                <p>Review Must Be Under 500 Characters.</p>
+        <div className='location-page-info-container'>
+          {sessionUser ? (
+            <button
+              className={'global-button-style'}
+              onClick={() => triggerBookModal()}
+            >book
+            </button>
+          ) : (
+            <>
+              <button
+                className={'global-button-style'}
+                disabled
+              >book
+              </button>
+              <p>You must be logged in to book places!</p>
+            </>
+          )}
+          <h1>Reviews</h1>
+          <ul>
+            {reviews?.filter(review => review.locationId === +params.id).map(review => (
+              <div key={review.id}>
+                <li>{review.reviewContent}, by {users?.filter(user => user.id === review.userId)[0].username}</li>
+                {review.userId === sessionUser?.id && (
+                  <div>
+                    <button onClick={() => setShowUpdateReview(review.id)}>Edit</button>
+                    <button onClick={() => handleDeleteReview(review.id)}>Delete</button>
+                  </div>
+                )}
+                {showUpdateReview === review.id && (
+                  <>
+                    <form onSubmit={e => changeReview(e, review.id)}>
+                      <textarea
+                        name='reviewContent'
+                        value={reviewContent}
+                        onChange={e => setReviewContent(e.target.value)}
+                      />
+                      <button>Submit Review</button>
+                    </form>
+                  </>
+                )}
+              </div>
+            ))}
+          </ul>
+          {reviews?.filter(review => review.userId === sessionUser?.id && review.locationId === +params.id).length === 0 && sessionUser && (
+            <button
+              className='global-button-style'
+              onClick={() => showRevModal()}
+            >
+              {revModal === true ? (
+                <>Cancel</>
               ) : (
-                <button>Submit Review</button>
+                <>Add Review</>
               )}
-            </form>
-          </div>
-        )}
+            </button>
+          )}
+          {revModal && (
+            <div>
+              <form onSubmit={submitReview}>
+                <textarea
+                  name='reviewContent'
+                  value={reviewContent}
+                  onChange={e => {
+                    if (e.target.value.length >= 500) setShowError(true);
+                    else {
+                      setShowError(false);
+                      setReviewContent(e.target.value);
+                    }
+                  }}
+                />
+                {showError ? (
+                  <p>Review Must Be Under 500 Characters.</p>
+                ) : (
+                  <button>Submit Review</button>
+                )}
+              </form>
+            </div>
+          )}
+        </div>
+        <div className='global-margin-bottom' />
       </div>
-      <div className='global-margin-bottom' />
     </>
   )
 }

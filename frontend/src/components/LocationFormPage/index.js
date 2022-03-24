@@ -74,7 +74,6 @@ function LocationFormPage() {
               className='new-location-input-type'
               id='location'
               type='text'
-              placeholder='address'
               value={location}
               onChange={e => setLocation(e.target.value)}
             >

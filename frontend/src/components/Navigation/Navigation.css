@@ -60,6 +60,10 @@
     font-size: 40px;
 }
 
+.nav-login-button {
+  margin-right: 5px;
+}
+
 .nav-user-op {
   position: relative;
 }

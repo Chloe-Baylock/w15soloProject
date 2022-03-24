@@ -31,8 +31,10 @@ function HomePage() {
 
   return (
     <>
-      <div className='home-main-bg'>
-        <h1>Scroll To Find Places To Stay</h1>
+      <div className='home-main-black-bg'>
+        <div className='home-main-bg'>
+          <h1>Scroll To Find Places To Stay</h1>
+        </div>
       </div>
 
       <div className='home-below-main'>
@@ -60,7 +62,7 @@ function HomePage() {
             <div
               key={booking.id}
               className='home-bookings-div'
-              >
+            >
               <li
                 className='home-bookings-list'
                 onClick={() => history.push(`/locations/${booking.locationId}`)}
