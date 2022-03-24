@@ -106,7 +106,7 @@
   margin-right: 10px;
   display: flex;
   align-items: center;
-  color: blue;
+  color: rgb(255, 168, 183);
 }
 
 .home-bookings-list:hover {
