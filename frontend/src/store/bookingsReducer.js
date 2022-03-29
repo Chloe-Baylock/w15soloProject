@@ -76,7 +76,10 @@ const bookingsReducer = (state = {}, action) => {
     case LOAD_BOOKINGS:
       return { "entries": action.bookings };
     case ADD_BOOKING:
-      return { "entries": action.booking, ...state }
+      if (state.entries) {
+        state.entries.push(action.booking)
+        return { "entries": state.entries };
+      } else return { "entries": [action.booking] };
     case UPDATE_BOOKING:
       for (let i = 0; i < state.entries.length; i++) {
         if (state.entries[i].id === action.booking.id) state.entries[i] = action.booking;

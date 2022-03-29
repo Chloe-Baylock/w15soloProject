@@ -20,7 +20,7 @@ function HomePage() {
 
   useEffect(() => {
     dispatch(getLocations());
-    dispatch(loadBookings())
+    dispatch(loadBookings());
   }, [dispatch])
 
   const handleDeleteBooking = async id => {
@@ -58,7 +58,7 @@ function HomePage() {
         </div>
         <div className='home-map-bookings' id='home-bookings-scroll'>
           <h1 className='home-your-bookings'>Your Bookings:</h1>
-          {bookings && bookings.map(booking => booking.userId === sessionUserId && (
+          {bookings?.map(booking => booking.userId === sessionUserId && (
             <div
               key={booking.id}
               className='home-bookings-div'
