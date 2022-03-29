@@ -29,9 +29,18 @@
   /* flex-direction:column; */
 
   background-color: lightgray;
-  width: 600px;
+  width: 800px;
   height: 600px;
   border-radius: .5rem;
+}
+
+.location-page-start {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.location-page-end {
+  margin-right: 5px;
 }
 
 .location-page-booking-form {
@@ -40,7 +49,50 @@
   margin-top: 25px;
 }
 
+.location-page-book {
+  margin-left: 15px;
+}
+
+.location-page-cancel {
+  margin-left: 15px;
+  margin-right: 5px;
+}
+
 /* .location-page-reviews-container { */
   /* margin-left: 10px; */
   /* margin-top: 5px; */
 /* } */
+
+.location-page-check {
+  position: absolute;
+  top: 80;
+  left: 0;
+  margin-top: 0px;
+  opacity: 0;
+  cursor: default;
+}
+
+.location-page-div-animation {
+  position: absolute;
+  top: 83;
+  left: 3;
+
+  padding-top: 5px;
+  text-align: center;
+
+  opacity: 0;
+  cursor: default;
+  height: 25px;
+  width: 100px;
+  border-radius: .25rem;
+  background-color: lime;
+}
+
+.location-page-book:hover {
+  animation: booked-confirmation 3s;
+}
+
+@keyframes booked-confirmation {
+  from {opacity: 1;}
+  to {opacity: 0;}
+} 

@@ -96,9 +96,14 @@
   padding-bottom: 25px;
 }
 
+.home-your-bookings {
+  margin-left: 20px;
+}
+
 .home-bookings-div {
   display: flex;
   align-items: center;
+  margin-left: 10px;
 }
 
 .home-bookings-list {
@@ -115,8 +120,14 @@
   color: rgb(0, 0, 224);
 }
 
+.home-booking-info {
+  list-style-type: none;
+  margin-right: 15px;
+}
+
 .home-edit-booking-button {
   height: 22px;
+  margin-right: 10px;
 }
 
 .home-delete-booking-button {

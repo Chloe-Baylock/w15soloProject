@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { createElement, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import './LocationPage.css';
@@ -29,6 +29,7 @@ function LocationPage() {
   const [date1, setDate1] = useState('');
   const [date2, setDate2] = useState('');
 
+
   useEffect(() => {
     const fetchData = async () => {
       await dispatch(getLocations());
@@ -46,6 +47,21 @@ function LocationPage() {
 
   const showRevModal = () => {
     setRevModal(!revModal);
+  }
+
+  const showAnimation = () => {
+    let divAnim = document.createElement('div');
+    divAnim.className='location-page-div-animation';
+
+    divAnim.innerText='Booked';
+    // divAnim.style.position=`absolute`;
+    // divAnim.style.top=`80px`;
+    // divAnim.style.left=`0px`;
+    // divAnim.style.height=`50px`;
+    // divAnim.style.width=`100px`;
+    // divAnim.style.backgroundColor=`lime`;
+    divAnim.style.animation=`booked-confirmation 5s ease-in-out forwards`;
+    document.body.appendChild(divAnim);    
   }
 
   const todayFn = () => {
@@ -215,7 +231,7 @@ function LocationPage() {
           <div className='location-page-booking-modal'>
             <form onSubmit={submitDates} className='location-page-booking-form'>
               <div className='location-page-form-div'>
-                <label>
+                <label className='location-page-start'>
                   start date
                 </label>
                 <input
@@ -229,7 +245,7 @@ function LocationPage() {
               </div>
               <br />
               <div className='location-page-form-div'>
-                <label>
+                <label className='location-page-end'>
                   end date
                 </label>
                 <input
@@ -249,8 +265,20 @@ function LocationPage() {
                 </ul>
               </div>
               <div>
-                <button className='global-button-style' disabled={errors.length > 0}>
-                  Book
+                <button
+                  id='location-page-b1'
+                  className='location-page-book global-button-style'
+                  onClick={() => showAnimation()}
+                  disabled={errors.length > 0}
+                >Book
+                </button>
+                <button
+                  className='location-page-cancel global-button-style'
+                  onClick={e => {
+                    e.preventDefault();
+                    setBooking(false);
+                  }}
+                >Cancel
                 </button>
               </div>
             </form>
@@ -335,6 +363,7 @@ function LocationPage() {
           )}
         </div>
         <div className='global-margin-bottom' />
+        {/* <p className='location-page-check'>Booked</p> */}
       </div>
     </>
   )

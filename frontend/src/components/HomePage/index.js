@@ -57,8 +57,8 @@ function HomePage() {
           </ul>
         </div>
         <div className='home-map-bookings' id='home-bookings-scroll'>
-          <h1>Your Bookings:</h1>
-          {bookings?.map(booking => booking.userId === sessionUserId && (
+          <h1 className='home-your-bookings'>Your Bookings:</h1>
+          {bookings && bookings.map(booking => booking.userId === sessionUserId && (
             <div
               key={booking.id}
               className='home-bookings-div'
@@ -68,8 +68,8 @@ function HomePage() {
                 onClick={() => history.push(`/locations/${booking.locationId}`)}
               >{locations?.filter(location => location.id === booking?.locationId)[0].locationName}
               </li>
-              <li>
-                {' from ' + booking.timespan.slice(0, 10) + ' to ' + booking.timespan.slice(11, 21)}
+              <li className='home-booking-info'>
+                {'from ' + booking.timespan.slice(0, 10) + ' to ' + booking.timespan.slice(11, 21)}
               </li>
               {bookModal === booking.id && (
                 <BookingForm
