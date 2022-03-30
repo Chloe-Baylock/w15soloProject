@@ -33,13 +33,20 @@ function HomePage() {
     <>
       <div className='home-main-black-bg'>
         <div className='home-main-bg'>
-          <h1>Scroll To Find Places To Stay</h1>
+          <h1 className='home-h1'>Scroll To Find Places To Stay</h1>
         </div>
       </div>
 
       <div className='home-below-main'>
         <div className='home-card-area'>
-          <ul className='home-card-container'>
+          <ul
+            className='home-card-container'
+            onMouseEnter={(e) => {
+              document.body.style.overflowY = "hidden"
+              e.currentTarget.style.overflowY="scroll"
+            }}
+            onMouseLeave={() => document.body.style.overflowY = "scroll"}
+          >
             {locations?.map(location => (
               <div
                 className='home-card' key={location.id}

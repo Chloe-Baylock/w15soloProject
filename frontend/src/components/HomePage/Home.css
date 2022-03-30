@@ -20,7 +20,7 @@
   align-items: flex-end;
 }
 
-.home-main-bg h1 {
+/* .home-main-bg {
   margin: 0;
   font-size: 5rem;
   color: rgb(238, 238, 238);
@@ -28,8 +28,18 @@
   padding: 0px 5px 2px 5px;
   font-family:Arial, Helvetica, sans-serif;
   border-radius: 1rem;
-}
+} */
 
+.home-h1 {
+  margin: 0;
+  margin-bottom: 20px;
+  font-size: 5rem;
+  color: rgb(238, 238, 238);
+  background-color: rgb(39, 39, 255);
+  padding: 0px 5px 6px 5px;
+  font-family:Arial, Helvetica, sans-serif;
+  border-radius: 1rem;
+}
 
 
 
@@ -47,15 +57,23 @@
 .home-card-container {
   display: flex;
   flex-wrap: wrap;
-  width: 1000px;
-  margin: 0;
+  width: 800px;
+  height: 780px;
+  margin-top: 10px;
+  padding-left: 15px;
+  overflow-y: scroll;
+  background-color: black;
+  border-radius: 1rem
+}
 
+.home-card-container:hover {
+  overflow-y: hidden;
 }
 
 .home-card {
   margin: 20px 10px;
-  width: 300px;
-  height: 400px;
+  width: 240px;
+  height: 320px;
   border-radius: .5rem;
   background-color: rgb(224, 152, 16);
 
