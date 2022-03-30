@@ -25,6 +25,10 @@ ul {
   background-color: rgb(211, 211, 211);
   border-radius: .5rem;
   box-shadow: 0px 0 3px rgb(39, 39, 39);
+
+  padding-left: 8px;
+  padding-top: 3px;
+  padding-bottom: 3px;
 }
 
 .global-button-style:hover {

@@ -104,6 +104,7 @@
   display: flex;
   align-items: center;
   margin-left: 10px;
+  margin-top: 10px;
 }
 
 .home-bookings-list {
@@ -126,11 +127,5 @@
 }
 
 .home-edit-booking-button {
-  height: 22px;
   margin-right: 10px;
-}
-
-.home-delete-booking-button {
-  margin: 5px;
-  height: 22px;
 }
