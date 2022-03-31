@@ -20,7 +20,7 @@ function HomePage() {
 
   useEffect(() => {
     dispatch(getLocations());
-    dispatch(loadBookings())
+    dispatch(loadBookings());
   }, [dispatch])
 
   const handleDeleteBooking = async id => {
@@ -33,13 +33,20 @@ function HomePage() {
     <>
       <div className='home-main-black-bg'>
         <div className='home-main-bg'>
-          <h1>Scroll To Find Places To Stay</h1>
+          <h1 className='home-h1'>Scroll To Find Places To Stay</h1>
         </div>
       </div>
 
       <div className='home-below-main'>
         <div className='home-card-area'>
-          <ul className='home-card-container'>
+          <ul
+            className='home-card-container'
+            onMouseEnter={(e) => {
+              document.body.style.overflowY = "hidden"
+              e.currentTarget.style.overflowY="scroll"
+            }}
+            onMouseLeave={() => document.body.style.overflowY = "scroll"}
+          >
             {locations?.map(location => (
               <div
                 className='home-card' key={location.id}
@@ -57,7 +64,7 @@ function HomePage() {
           </ul>
         </div>
         <div className='home-map-bookings' id='home-bookings-scroll'>
-          <h1>Your Bookings:</h1>
+          <h1 className='home-your-bookings'>Your Bookings:</h1>
           {bookings?.map(booking => booking.userId === sessionUserId && (
             <div
               key={booking.id}
@@ -68,8 +75,8 @@ function HomePage() {
                 onClick={() => history.push(`/locations/${booking.locationId}`)}
               >{locations?.filter(location => location.id === booking?.locationId)[0].locationName}
               </li>
-              <li>
-                {' from ' + booking.timespan.slice(0, 10) + ' to ' + booking.timespan.slice(11, 21)}
+              <li className='home-booking-info'>
+                {'from ' + booking.timespan.slice(0, 10) + ' to ' + booking.timespan.slice(11, 21)}
               </li>
               {bookModal === booking.id && (
                 <BookingForm
