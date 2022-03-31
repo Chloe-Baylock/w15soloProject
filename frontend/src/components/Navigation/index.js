@@ -14,16 +14,22 @@ function Navigation({ isLoaded }) {
   const searchResults = useSelector(state => state.search.entries);
   const dispatch = useDispatch();
 
-  const [searchModal, setSearchModal] = useState(false);
+  // const [searchModal, setSearchModal] = useState(false);
   const [searchVal, setSearchVal] = useState('');
   const [hideResults, setHideResults] = useState(false);
   const [loginModal, setLoginModal] = useState(false);
   const [signupModal, setSignupModal] = useState(false);
 
-  const submitSearch = async e => {
+  // const submitSearch = async e => {
+  //   e.preventDefault();
+  //   await dispatch(postSearch(searchVal));
+  //   setHideResults(false);
+  // }
+
+  const submitSearchFormA = async e => {
     e.preventDefault();
-    await dispatch(postSearch(searchVal));
-    setHideResults(false);
+    let searchInput = document.getElementById('nav-search-input');
+    history.push(`/search/${searchInput.value}`)
   }
 
   let sessionLinks;
@@ -67,16 +73,25 @@ function Navigation({ isLoaded }) {
           <div className='nav-home'>
             <NavLink className='nav-navlink' exact to="/"><i className="fas fa-bread-slice" />BreadnB</NavLink>
           </div>
-          <div className='nav-search'>
-            <button
-              className='global-button-style'
-              onClick={() => {
-                setSearchModal(!searchModal);
-                setHideResults(true);
-              }}
-            >search
-            </button>
-          </div>
+          <form onSubmit={e => submitSearchFormA(e)}>
+            <div className='nav-search'>
+              <input
+                className='nav-search-input'
+                id='nav-search-input'
+                placeholder='Search'
+              ></input>
+              <div className='nav-search-buttonAAA'>
+                <SearchIcon
+                  className='nav-search-icon'
+                  onClick={e => submitSearchFormA(e)}
+                // onClick={() => {
+                //   setSearchModal(!searchModal);
+                //   setHideResults(true);
+                // }}
+                />
+              </div>
+            </div>
+          </form>
           {sessionUser && (
             <>
               <div className='nav-bookings'>
@@ -103,7 +118,7 @@ function Navigation({ isLoaded }) {
           </div>
         </div>
       </div>
-      {searchModal && (
+      {/* {searchModal && (
         <div className='nav-search-modal-div'>
           <form onSubmit={e => submitSearch(e)}>
             <label>Search</label>
@@ -131,7 +146,7 @@ function Navigation({ isLoaded }) {
             </ul>
           </form>
         </div>
-      )}
+      )} */}
       {loginModal && (<LoginFormPage setLoginModal={setLoginModal} />)}
       {signupModal && (<SignUpFormPage setSignupModal={setSignupModal} />)}
     </div>

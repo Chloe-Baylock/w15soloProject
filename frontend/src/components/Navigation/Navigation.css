@@ -36,6 +36,34 @@
   padding: 10px;
 }
 
+.nav-search {
+  display: flex;
+  align-items: center;
+}
+
+.nav-search-input {
+  height: 30px;
+  box-sizing: border-box;
+}
+
+.nav-search-buttonAAA {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 28px;
+  width: 29px;
+  background-color: rgb(112, 210, 255);
+}
+
+.nav-search-buttonAAA:hover {
+  animation: lightenA .25s forwards;
+}
+
+@keyframes lightenA {
+  from {background-color: rgb(112, 210, 255);}
+  to {background-color: rgb(160, 225, 255);}
+}
+
 .nav-search-icon {
   width: 24px;
 }
