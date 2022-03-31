@@ -66,10 +66,6 @@
   border-radius: 1rem
 }
 
-.home-card-container:hover {
-  overflow-y: hidden;
-}
-
 .home-card {
   margin: 20px 10px;
   width: 240px;
