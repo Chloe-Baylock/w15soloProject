@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
-import { postSearch } from '../../store/searchReducer';
+import { loadSearch } from '../../store/searchReducer';
 import './SearchPage.css';
 
 function SearchPage() {
@@ -14,7 +14,7 @@ function SearchPage() {
 
   useEffect(() => {
     let loadAsync = async () => {
-      await dispatch(postSearch(params.searchVal));
+      await dispatch(loadSearch(params.searchVal));
     }
     loadAsync();
   }, [])
