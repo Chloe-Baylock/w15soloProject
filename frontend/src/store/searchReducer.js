@@ -24,15 +24,30 @@ export const post = search => ({
 // }
 
     
+// export const postSearch = (data) => async dispatch => {
+//   console.log('DATA IS', data);
+//   const response = await csrfFetch(`/api/search=${data}`, {
+//     method: "POST",
+//     headers: { 'Content-Type': 'application/json' },
+//     body: JSON.stringify({data}),
+//   });
+//   console.log('RESPONSE IS', response.ok)
+//   if (response.ok) {
+//     const results = await response.json();
+//     await dispatch(post(results.results));
+//     return results.results;
+//   }
+// }
+
 export const postSearch = (data) => async dispatch => {
-  const response = await csrfFetch('/api/search', {
-    method: "POST",
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({data}),
+  const response = await csrfFetch(`/api/search/${data}`, {
+    method: "GET",
   });
-  const results = await response.json();
-  await dispatch(post(results.results));
-  return results.results;
+  if (response.ok) {
+    const results = await response.json();
+    await dispatch(post(results.results));
+    return results.results;
+  }
 }
 
 export const searchReducer = (state = {}, action) => {
