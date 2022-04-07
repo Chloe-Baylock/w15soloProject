@@ -29,13 +29,16 @@ function Navigation({ isLoaded }) {
   } else {
     sessionLinks = (
       <>
-        <button className='global-button-style nav-login-button' onClick={(e) => {
-          if (loginModal) document.body.style.overflowY = "scroll";
-          else document.body.style.overflowY = "hidden";
-          setLoginModal(!loginModal);
-          setSignupModal(false);
-          e.stopPropagation();
-        }}>Log In
+        <button
+          id='login'
+          className='global-button-style nav-login-button'
+          onClick={(e) => {
+            if (loginModal) document.body.style.overflowY = "scroll";
+            else document.body.style.overflowY = "hidden";
+            setLoginModal(!loginModal);
+            setSignupModal(false);
+            e.stopPropagation();
+          }}>Log In
         </button>
         <button className='global-button-style' onClick={(e) => {
           if (signupModal) document.body.style.overflowY = "scroll";

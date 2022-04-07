@@ -43,7 +43,7 @@ function HomePage() {
             className='home-card-container'
             onMouseEnter={(e) => {
               document.body.style.overflowY = "hidden"
-              e.currentTarget.style.overflowY="scroll"
+              e.currentTarget.style.overflowY = "scroll"
             }}
             onMouseLeave={() => document.body.style.overflowY = "scroll"}
           >
@@ -64,7 +64,9 @@ function HomePage() {
           </ul>
         </div>
         <div className='home-map-bookings' id='home-bookings-scroll'>
-          <h1 className='home-your-bookings'>Your Bookings:</h1>
+          {sessionUserId && (
+            <h1 className='home-your-bookings'>Your Bookings:</h1>
+          )}
           {bookings?.map(booking => booking.userId === sessionUserId && (
             <div
               key={booking.id}
@@ -76,7 +78,11 @@ function HomePage() {
               >{locations?.filter(location => location.id === booking?.locationId)[0].locationName}
               </li>
               <li className='home-booking-info'>
-                {'from ' + booking.timespan.slice(0, 10) + ' to ' + booking.timespan.slice(11, 21)}
+                {
+                  `from ${booking.timespan.slice(5, 7)}/${booking.timespan.slice(8, 9)}/${booking.timespan.slice(0, 4)}
+                  to
+                  ${booking.timespan.slice(16, 18)}/${booking.timespan.slice(19, 21)}/${booking.timespan.slice(11, 15)}`
+                }
               </li>
               {bookModal === booking.id && (
                 <BookingForm

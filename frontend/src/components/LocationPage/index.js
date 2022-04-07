@@ -3,10 +3,11 @@ import { useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import './LocationPage.css';
 import { getLocations, removeLocation } from '../../store/locationsReducer'
-import { addBooking } from '../../store/bookingsReducer';
+import { addBooking, loadBookings, removeBooking } from '../../store/bookingsReducer';
 import { addReview, destroyReview, editReview, loadReviews } from '../../store/reviewsReducer';
 import { getUsers } from '../../store/session';
 import { useState } from 'react';
+import BookingForm from '../BookingForm';
 function LocationPage() {
 
   // const sessionUserId = useSelector(state => state.session.user.id)
@@ -17,6 +18,7 @@ function LocationPage() {
   const locations = useSelector(state => state.locations.entries);
   const reviews = useSelector(state => state.reviews.entries);
   const users = useSelector(state => state.session.users);
+  const bookings = useSelector(state => state.bookings.entries);
 
   const params = useParams();
 
@@ -28,12 +30,14 @@ function LocationPage() {
   const [errors, setErrors] = useState([]);
   const [date1, setDate1] = useState('');
   const [date2, setDate2] = useState('');
+  const [bookModal, setBookModal] = useState(-2);
 
 
   useEffect(() => {
     const fetchData = async () => {
       await dispatch(getLocations());
       await dispatch(loadReviews());
+      await dispatch(loadBookings());
       await dispatch(getUsers());
     }
     fetchData();
@@ -49,19 +53,17 @@ function LocationPage() {
     setRevModal(!revModal);
   }
 
+  const handleDeleteBooking = async id => {
+    await dispatch(removeBooking(id));
+  }
+
   const showAnimation = () => {
     let divAnim = document.createElement('div');
-    divAnim.className='location-page-div-animation';
+    divAnim.className = 'location-page-div-animation';
 
-    divAnim.innerText='Booked';
-    // divAnim.style.position=`absolute`;
-    // divAnim.style.top=`80px`;
-    // divAnim.style.left=`0px`;
-    // divAnim.style.height=`50px`;
-    // divAnim.style.width=`100px`;
-    // divAnim.style.backgroundColor=`lime`;
-    divAnim.style.animation=`booked-confirmation 5s ease-in-out forwards`;
-    document.body.appendChild(divAnim);    
+    divAnim.innerText = 'Booked';
+    divAnim.style.animation = `booked-confirmation 5s ease-in-out forwards`;
+    document.body.appendChild(divAnim);
   }
 
   const todayFn = () => {
@@ -294,14 +296,73 @@ function LocationPage() {
           ) : (
             <>
               <button
-                className={'global-button-style'}
-                disabled
+                className={'global-button-style location-page-disabled'}
+                onClick={() => {
+                  console.log('hi')
+                  let login = document.getElementById('login');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                  login.click();
+                }}
+
               >book
               </button>
               <p>You must be logged in to book places!</p>
             </>
           )}
-          <h1>Reviews</h1>
+          <div className='location-page-bookings-div'>
+
+            <p>Your bookings at {location?.locationName}:</p>
+            <ul className='location-page-bookings-list'>
+              {bookings?.map(booking => booking.userId === sessionUser.id && booking.locationId === location.id && (
+                <div
+                  key={booking.id}
+                  className='home-bookings-div'
+                >
+                  <li
+                    className='home-bookings-list'
+                    onClick={() => history.push(`/locations/${booking.locationId}`)}
+                  >{locations?.filter(location => location.id === booking?.locationId)[0].locationName}
+                  </li>
+                  <li className='home-booking-info'>
+                    {
+                      `from ${booking.timespan.slice(5, 7)}/${booking.timespan.slice(8, 9)}/${booking.timespan.slice(0, 4)}
+                      to
+                      ${booking.timespan.slice(16, 18)}/${booking.timespan.slice(19, 21)}/${booking.timespan.slice(11, 15)}`
+                    }
+                  </li>
+                  {bookModal === booking.id && (
+                    <BookingForm
+                      bookingLocation={booking.locationId}
+                      bookingStart={booking.timespan.split('X')[0]}
+                      bookingEnd={booking.timespan.split('X')[1]}
+                      bookingId={booking.id}
+                    />
+                  )}
+                  <button
+                    className='global-button-style location-page-edit-booking-button'
+                    onClick={() => {
+                      if (bookModal === booking.id) setBookModal(-3);
+                      else setBookModal(booking.id)
+                    }}
+                  >
+                    {bookModal === booking.id ? (
+                      <>Cancel Edit</>
+                    ) : (
+                      <>Edit Booking</>
+                    )
+                    }
+                  </button>
+                  <button
+                    className='global-button-style home-delete-booking-button'
+                    onClick={() => handleDeleteBooking(booking.id)}
+                  >
+                    Delete Booking
+                  </button>
+                </div>
+              ))}
+            </ul>
+          </div>
+          <h1>Reviews:</h1>
           <ul>
             {reviews?.filter(review => review.locationId === +params.id).map(review => (
               <div key={review.id}>
@@ -363,7 +424,6 @@ function LocationPage() {
           )}
         </div>
         <div className='global-margin-bottom' />
-        {/* <p className='location-page-check'>Booked</p> */}
       </div>
     </>
   )
