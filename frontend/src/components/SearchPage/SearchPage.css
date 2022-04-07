@@ -8,6 +8,8 @@
   background-color: rgb(199, 199, 199);
   width: fit-content;
   height: fit-content;
+
+  border-radius: .5rem;
 }
 
 .search-page-header {

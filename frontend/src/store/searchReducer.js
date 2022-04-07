@@ -9,6 +9,9 @@ export const load = search => ({
 
 
 export const loadSearch = (data) => async dispatch => {
+  console.log('data is', data, 'a')
+  console.log('data is', 'a', 'a')
+  console.log('datalen is', data.length);
   const response = await csrfFetch(`/api/search/${data}`, {
     method: "GET",
   });

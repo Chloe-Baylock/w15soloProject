@@ -17,7 +17,7 @@ function Navigation({ isLoaded }) {
   const submitSearchFormA = async e => {
     e.preventDefault();
     let searchInput = document.getElementById('nav-search-input');
-    history.push(`/search=${searchInput.value}`)
+    history.push(`/search/${searchInput.value}`)
     window.location.reload();
   }
 
