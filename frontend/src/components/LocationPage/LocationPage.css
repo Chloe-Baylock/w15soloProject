@@ -4,16 +4,31 @@
   align-items: center;
 }
 
+#location-page-top-container {
+  margin-top: 15px;
+  border-top-left-radius: 1.25rem;
+  border-top-right-radius: 1.25rem;
+}
+
+#location-page-bottom-container {
+  border-bottom-left-radius: 1.25rem;
+  border-bottom-right-radius: 1.25rem;
+}
+
 .location-page-info-container {
   /* margin-left: 30px;  */
   /* margin-top: 30px; */
   width: 500px;
   padding: 50px;
   /* width: fit-content; */
+  /* background-color: rgb(165, 165, 165); */
+  background-color: lightslategray;
+
 }
 
 .location-page-h1 {
-  margin-bottom: 0px;
+  margin-top:0;
+  margin-bottom: 10px;
 }
 
 .location-page-desc {

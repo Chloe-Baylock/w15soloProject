@@ -187,8 +187,6 @@ function LocationPage() {
       timespan: booking,
     }
     if (editBooking)  {
-      // booking = bookings.filter(b1 => b1.id === bookingId).timespan[0];
-      // data.timespan = booking;
       await dispatch(updateBooking(bookingId, data));
     }
     else await dispatch(addBooking(data));
@@ -239,7 +237,7 @@ function LocationPage() {
     <>
       <div className='location-page-top'>
         {booking || (
-          <div className='location-page-info-container'>
+          <div id='location-page-top-container' className='location-page-info-container'>
             <h1 className='location-page-h1'>{location?.locationName}</h1>
             <div>
               <div className='location-page-div'>
@@ -323,7 +321,7 @@ function LocationPage() {
         )}
         {booking || (
 
-          <div className='location-page-info-container'>
+          <div id='location-page-bottom-container' className='location-page-info-container'>
             {sessionUser ? (
               <button
                 id='locatoin-page-b0'
@@ -339,7 +337,6 @@ function LocationPage() {
                 <button
                   className={'global-button-style location-page-disabled'}
                   onClick={() => {
-                    console.log('hi')
                     let login = document.getElementById('login');
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                     login.click();
@@ -354,7 +351,7 @@ function LocationPage() {
 
               <p>Your bookings at {location?.locationName}:</p>
               <ul className='location-page-bookings-list'>
-                {bookings?.map(booking => booking.userId === sessionUser.id && booking.locationId === location.id && (
+                {bookings?.map(booking => booking.userId === sessionUser?.id && booking?.locationId === location?.id && (
                   <div
                     key={booking.id}
                     className='home-bookings-div'
@@ -386,7 +383,6 @@ function LocationPage() {
                         setEditBooking(true);
                         setDate1(`${booking.timespan.slice(0, 4)}-${booking.timespan.slice(5, 7)}-${booking.timespan.slice(8, 10)}`)
                         setDate2(`${booking.timespan.slice(11, 15)}-${booking.timespan.slice(16, 18)}-${booking.timespan.slice(19, 21)}`)
-                        console.log('ele.slice(22) id is', e.currentTarget.id.slice(22))
                         setBookingId(+e.currentTarget.id.slice(22))
                         setBooking(true);
                       }}

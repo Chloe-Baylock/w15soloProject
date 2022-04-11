@@ -50,7 +50,10 @@ function HomePage() {
             {locations?.map(location => (
               <div
                 className='home-card' key={location.id}
-                onClick={() => history.push(`/locations/${location.id}`)}
+                onClick={() => {
+                  history.push(`/locations/${location.id}`)
+                  document.body.style.overflowY = "scroll"
+                }}
               >
                 <div className='home-card-title-area'>
                   <li
