@@ -35,6 +35,7 @@ function LocationPage() {
   const [date2, setDate2] = useState('');
   const [bookModal, setBookModal] = useState(-2);
   const [bookingId, setBookingId] = useState(-1);
+  const [hasBookings, setHasBookings] = useState(false);
 
   const [flicker, setFlicker] = useState(false);
 
@@ -186,7 +187,7 @@ function LocationPage() {
       locationId: params.id,
       timespan: booking,
     }
-    if (editBooking)  {
+    if (editBooking) {
       await dispatch(updateBooking(bookingId, data));
     }
     else await dispatch(addBooking(data));
@@ -246,14 +247,14 @@ function LocationPage() {
                 <p>host: {users?.filter(user => user.id === location?.userId)[0]?.username}</p>
               </div>
               {sessionUser?.id === location?.userId && (
-                <>
+                <div className='location-page-location-buttons-div'>
                   <form onSubmit={editPage}>
-                    <button type='edit'>Edit</button>
+                    <button className='global-button-style location-page-location-edit' type='edit'>Edit</button>
                   </form>
                   <form onSubmit={deletePage}>
-                    <button type='submit'>Delete</button>
+                    <button className='global-button-style' type='submit'>Delete</button>
                   </form>
-                </>
+                </div>
               )}
             </div>
           </div>
@@ -348,8 +349,12 @@ function LocationPage() {
               </>
             )}
             <div className='location-page-bookings-div'>
+              {bookings?.filter(booking => booking.userId === sessionUser?.id && booking?.locationId === location?.id).length ? (
 
-              <p>Your bookings at {location?.locationName}:</p>
+                <p>Your bookings at {location?.locationName}:</p>
+              ) : (
+                <></>
+              )}
               <ul className='location-page-bookings-list'>
                 {bookings?.map(booking => booking.userId === sessionUser?.id && booking?.locationId === location?.id && (
                   <div
