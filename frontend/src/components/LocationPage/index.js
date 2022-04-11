@@ -1,3 +1,5 @@
+//set date 1 and date2 to be the edit thing initially when you click the edit button.
+
 import { createElement, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -178,15 +180,17 @@ function LocationPage() {
 
   const submitOrEditDates = async e => {
     e.preventDefault();
-    console.log('editBooking is', editBooking);
-    console.log('booking id is', bookingId);
     let booking = `${date1 || todayFn()}X${date2 || todayFn()}X${totalDays()}`;
     let data = {
       userId: sessionUser.id,
       locationId: params.id,
       timespan: booking,
     }
-    if (editBooking)  await dispatch(updateBooking(bookingId, data));
+    if (editBooking)  {
+      // booking = bookings.filter(b1 => b1.id === bookingId).timespan[0];
+      // data.timespan = booking;
+      await dispatch(updateBooking(bookingId, data));
+    }
     else await dispatch(addBooking(data));
     setBooking(false);
     setFlicker(!flicker);
@@ -380,6 +384,8 @@ function LocationPage() {
                       className='global-button-style location-page-edit-booking-button'
                       onClick={e => {
                         setEditBooking(true);
+                        setDate1(`${booking.timespan.slice(0, 4)}-${booking.timespan.slice(5, 7)}-${booking.timespan.slice(8, 10)}`)
+                        setDate2(`${booking.timespan.slice(11, 15)}-${booking.timespan.slice(16, 18)}-${booking.timespan.slice(19, 21)}`)
                         console.log('ele.slice(22) id is', e.currentTarget.id.slice(22))
                         setBookingId(+e.currentTarget.id.slice(22))
                         setBooking(true);
