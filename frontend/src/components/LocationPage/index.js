@@ -1,5 +1,3 @@
-//set date 1 and date2 to be the edit thing initially when you click the edit button.
-
 import { createElement, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
