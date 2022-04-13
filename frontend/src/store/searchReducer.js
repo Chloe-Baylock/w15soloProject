@@ -1,43 +1,30 @@
 import { csrfFetch } from "./csrf";
 
-// const LOAD_SEARCH = 'search/LOAD_SEARCH';
-const POST_SEARCH = 'search/POST_SEARCH';
+const LOAD_SEARCH = 'search/POST_SEARCH';
 
-// export const load = results => ({
-//   type: LOAD_SEARCH,
-//   results,
-// })
-
-export const post = search => ({
-  type: POST_SEARCH,
+export const load = search => ({
+  type: LOAD_SEARCH,
   search,
 })
 
 
-
-
-// export const loadSearch = () => async dispatch => {
-//   const response = await fetch('/api/search');
-//   const results = await response.json();
-//   await dispatch(load(results.results));
-//   return results.results;
-// }
-
-    
-export const postSearch = (data) => async dispatch => {
-  const response = await csrfFetch('/api/search', {
-    method: "POST",
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({data}),
+export const loadSearch = (data) => async dispatch => {
+  console.log('data is', data, 'a')
+  console.log('data is', 'a', 'a')
+  console.log('datalen is', data.length);
+  const response = await csrfFetch(`/api/search/${data}`, {
+    method: "GET",
   });
-  const results = await response.json();
-  await dispatch(post(results.results));
-  return results.results;
+  if (response.ok) {
+    const results = await response.json();
+    await dispatch(load(results.results));
+    return results.results;
+  }
 }
 
 export const searchReducer = (state = {}, action) => {
   switch (action.type) {
-    case POST_SEARCH:
+    case LOAD_SEARCH:
       return { "entries": action.search };
     default:
       return state;

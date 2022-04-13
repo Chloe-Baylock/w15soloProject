@@ -1,0 +1,25 @@
+
+
+.search-page-results-container {
+  margin-left: 10px;
+  margin-top: 10px;
+  padding: 20px 50px 50px 20px;
+
+  background-color: rgb(199, 199, 199);
+  width: fit-content;
+  height: fit-content;
+
+  border-radius: .5rem;
+}
+
+.search-page-header {
+  margin: 0;
+}
+
+.search-page-ul {
+  margin-left: 40px;
+}
+
+.search-page-li {
+  font-size: 20px;
+}

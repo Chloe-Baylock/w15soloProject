@@ -5,6 +5,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import HomePage from "./components/HomePage";
 import LoginFormPage from "./components/LoginFormPage";
 import SignupFormPage from "./components/SignupFormPage";
+import SearchPage from "./components/SearchPage";
 import LocationPage from "./components/LocationPage";
 import LocationFormPage from "./components/LocationFormPage";
 import EditLocationForm from "./components/EditLocationForm";
@@ -34,6 +35,9 @@ function App() {
           </Route>
           <Route path='/signup'>
             <SignupFormPage />
+          </Route>
+          <Route path='/search/:searchVal(.*)'>
+            <SearchPage />
           </Route>
           <Route exact path='/locations/:id(\d+)'>
             <LocationPage />

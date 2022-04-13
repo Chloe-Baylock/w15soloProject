@@ -20,16 +20,6 @@
   align-items: flex-end;
 }
 
-/* .home-main-bg {
-  margin: 0;
-  font-size: 5rem;
-  color: rgb(238, 238, 238);
-  background-color: rgb(39, 39, 255);
-  padding: 0px 5px 2px 5px;
-  font-family:Arial, Helvetica, sans-serif;
-  border-radius: 1rem;
-} */
-
 .home-h1 {
   margin: 0;
   margin-bottom: 20px;
@@ -104,6 +94,13 @@
   list-style-type: none;
   font-weight: bold;
   font-size: 2rem;
+}
+
+.home-card-image-area {
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
 }
 
 .home-map-bookings {

@@ -4,20 +4,49 @@
   align-items: center;
 }
 
+#location-page-top-container {
+  margin-top: 15px;
+  border-top-left-radius: 1.25rem;
+  border-top-right-radius: 1.25rem;
+  border-top: 3px solid brown;
+  border-left: 3px solid brown;
+  border-right: 3px solid brown;
+}
+
+#location-page-bottom-container {
+  border-bottom-left-radius: 1.25rem;
+  border-bottom-right-radius: 1.25rem;
+  border-bottom: 3px solid brown;
+  border-left: 3px solid brown;
+  border-right: 3px solid brown;
+}
+
 .location-page-info-container {
   /* margin-left: 30px;  */
   /* margin-top: 30px; */
-  width: 500px;
+  width: 600px;
   padding: 50px;
   /* width: fit-content; */
+  /* background-color: rgb(165, 165, 165); */
+  background-color: lightslategray;
+
 }
 
 .location-page-h1 {
-  margin-bottom: 0px;
+  margin-top:0;
+  margin-bottom: 10px;
 }
 
 .location-page-desc {
   margin-top: 0;
+}
+
+.location-page-location-buttons-div {
+  display: flex;
+}
+
+.location-page-location-edit {
+  margin-right: 10px;
 }
 
 .location-page-booking-modal {
@@ -58,6 +87,11 @@
 
 .location-page-book {
   margin-left: 15px;
+}
+
+.location-page-disable {
+  color: -internal-light-dark(rgba(16, 16, 16, 0.3), rgba(255, 255, 255, 0.3));
+  border-color: -internal-light-dark(rgba(118, 118, 118, 0.3), rgba(195, 195, 195, 0.3));
 }
 
 .location-page-cancel {
@@ -103,3 +137,7 @@
   from {opacity: 1;}
   to {opacity: 0;}
 } 
+
+.location-page-edit-booking-button {
+  margin-right: 10px;
+}
