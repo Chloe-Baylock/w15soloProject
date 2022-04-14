@@ -14,6 +14,7 @@ function LocationFormPage() {
   const [locationName, setLocationName] = useState('');
   const [description, setDescription] = useState('');
   const [location, setLocation] = useState('');
+  const [image, setImage] = useState('');
   const [errors, setErrors] = useState([]);
 
 
@@ -35,6 +36,7 @@ function LocationFormPage() {
       locationName,
       description,
       location,
+      image,
       userId: sessionUser.id
     }
     let createdLocation = await dispatch(addLocation(data));
@@ -87,6 +89,15 @@ function LocationFormPage() {
               value={description}
               onChange={e => setDescription(e.target.value)}
             ></textarea>
+          </div>
+          <div className='new-location-image-div'>
+            <label className='new-location-form-label' htmlFor='image'>Image url (optional). </label>
+            <input
+              className='new-location-input-image'
+              id='image'
+              value={image}
+              onChange={e => setImage(e.target.value)}
+            ></input>
           </div>
           <div>
             <button
