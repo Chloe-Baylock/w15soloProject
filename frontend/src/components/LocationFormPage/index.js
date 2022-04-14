@@ -90,7 +90,7 @@ function LocationFormPage() {
               onChange={e => setDescription(e.target.value)}
             ></textarea>
           </div>
-          <div className='new-location-image-div'>
+          <div className='new-location-form-div'>
             <label className='new-location-form-label' htmlFor='image'>Image url (optional). </label>
             <input
               className='new-location-input-image'
@@ -101,7 +101,7 @@ function LocationFormPage() {
           </div>
           <div>
             <button
-              className='global-button-style'
+              className='global-button-style new-location-submit-button'
               type='submit'
               disabled={errors.length > 0}
             >Submit</button>
