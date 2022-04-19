@@ -27,6 +27,13 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         len: [1, 2000]
       }
+    },
+    image: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      validate: {
+        len: [1, 2000]
+      }
     }
   }, {});
   Location.associate = function (models) {

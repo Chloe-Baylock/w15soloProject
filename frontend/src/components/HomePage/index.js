@@ -61,12 +61,8 @@ function HomePage() {
                   >
                     {location.locationName}
                   </li>
-                  <iframe
-                    className='home-card-image-area'
-                    width='200'
-                    title='First Inline Frame'
-                    src="https://www.openstreetmap.org/export/embed.html?bbox=-0.004017949104309083%2C51.47612752641776%2C0.00030577182769775396%2C51.478569861898606&layer=mapnik"
-                  >
+                  <iframe src={location.image}
+                    width="100%" height="500" allowfullscreen sandbox>
                   </iframe>
                 </div>
               </div>
@@ -74,8 +70,10 @@ function HomePage() {
           </ul>
         </div>
         <div className='home-map-bookings' id='home-bookings-scroll'>
-          {sessionUserId && (
+          {bookings?.filter(book => book.userId === sessionUserId).length > 0 ? (
             <h1 className='home-your-bookings'>Your Bookings:</h1>
+          ) : (
+            <h1 className='home-your-bookings'>You have no bookings to display yet!</h1>
           )}
           {bookings?.map(booking => booking.userId === sessionUserId && (
             <div
