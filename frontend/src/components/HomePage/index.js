@@ -61,9 +61,9 @@ function HomePage() {
                   >
                     {location.locationName}
                   </li>
-                  <iframe src={location.image}
+                  <img src={location.image}
                     width="100%" height="500" allowfullscreen sandbox>
-                  </iframe>
+                  </img>
                 </div>
               </div>
             ))}
