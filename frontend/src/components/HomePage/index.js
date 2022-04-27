@@ -61,10 +61,8 @@ function HomePage() {
                   >
                     {location.locationName}
                   </li>
-                  <img src={location.image}
-                    width="100%" height="500" allowfullscreen sandbox>
-                  </img>
                 </div>
+                <img className='home-card-image' src={location.image} />
               </div>
             ))}
           </ul>
