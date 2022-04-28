@@ -61,9 +61,11 @@ function HomePage() {
                   >
                     {location.locationName}
                   </li>
-                  <iframe src={location.image}
-                    width="100%" height="500" allowfullscreen sandbox>
-                  </iframe>
+                </div>
+                <div className='home-card-image-div'>
+                  {location.image.length > 3 && (
+                    <img className='home-card-image' src={location.image} />
+                  )}
                 </div>
               </div>
             ))}

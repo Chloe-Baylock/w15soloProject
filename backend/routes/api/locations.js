@@ -19,6 +19,7 @@ router.get(
 router.post(
     '/',
     asyncHandler(async (req, res) => {
+      console.log('************************************ REQ.BODY.IMAGE', req.body.image)
         const newLocation = await Location.build({
             locationName: req.body.locationName,
             description: req.body.description,

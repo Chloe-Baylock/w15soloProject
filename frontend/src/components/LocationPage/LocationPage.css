@@ -79,6 +79,12 @@
   margin-right: 5px;
 }
 
+.location-page-image {
+  margin-top: 10px;
+  max-height: 400px;
+  max-width: 600px;
+}
+
 .location-page-booking-form {
   display: flex;
   justify-content: space-around;

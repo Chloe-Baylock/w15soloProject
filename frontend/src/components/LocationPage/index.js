@@ -38,6 +38,7 @@ function LocationPage() {
   const [flicker, setFlicker] = useState(false);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     const fetchData = async () => {
       await dispatch(getLocations());
       await dispatch(loadReviews());
@@ -236,26 +237,31 @@ function LocationPage() {
     <>
       <div className='location-page-top'>
         {booking || (
-          <div id='location-page-top-container' className='location-page-info-container'>
-            <h1 className='location-page-h1'>{location?.locationName}</h1>
-            <div>
-              <div className='location-page-div'>
-                <p className='location-page-desc'>{location?.location}</p>
-                <p>description: {location?.description}</p>
-                <p>host: {users?.filter(user => user.id === location?.userId)[0]?.username}</p>
-              </div>
-              {sessionUser?.id === location?.userId && (
-                <div className='location-page-location-buttons-div'>
-                  <form onSubmit={editPage}>
-                    <button className='global-button-style location-page-location-edit' type='edit'>Edit</button>
-                  </form>
-                  <form onSubmit={deletePage}>
-                    <button className='global-button-style' type='submit'>Delete</button>
-                  </form>
+          <>
+            <div id='location-page-top-container' className='location-page-info-container'>
+              <h1 className='location-page-h1'>{location?.locationName}</h1>
+              <div>
+                <div className='location-page-div'>
+                  <p className='location-page-desc'>{location?.location}</p>
+                  <p>description: {location?.description}</p>
+                  <p>host: {users?.filter(user => user.id === location?.userId)[0]?.username}</p>
                 </div>
-              )}
+                {sessionUser?.id === location?.userId && (
+                  <div className='location-page-location-buttons-div'>
+                    <form onSubmit={editPage}>
+                      <button className='global-button-style location-page-location-edit' type='edit'>Edit</button>
+                    </form>
+                    <form onSubmit={deletePage}>
+                      <button className='global-button-style' type='submit'>Delete</button>
+                    </form>
+                  </div>
+                )}
+              </div>
+              <div className='location-page-image-div'>
+                <img className='location-page-image' src={location?.image} />
+              </div>
             </div>
-          </div>
+          </>
         )}
         {booking && (
           <div className='location-page-booking-modal'>
