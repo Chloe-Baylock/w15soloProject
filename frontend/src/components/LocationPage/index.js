@@ -38,6 +38,7 @@ function LocationPage() {
   const [flicker, setFlicker] = useState(false);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     const fetchData = async () => {
       await dispatch(getLocations());
       await dispatch(loadReviews());

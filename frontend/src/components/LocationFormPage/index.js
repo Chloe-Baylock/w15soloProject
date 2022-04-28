@@ -14,7 +14,7 @@ function LocationFormPage() {
   const [locationName, setLocationName] = useState('');
   const [description, setDescription] = useState('');
   const [location, setLocation] = useState('');
-  const [image, setImage] = useState('');
+  const [image, setImage] = useState(null);
   const [errors, setErrors] = useState([]);
 
 
