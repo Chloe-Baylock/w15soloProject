@@ -62,7 +62,11 @@ function HomePage() {
                     {location.locationName}
                   </li>
                 </div>
-                <img className='home-card-image' src={location.image} />
+                <div className='home-card-image-div'>
+                  {location.image.length > 3 && (
+                    <img className='home-card-image' src={location.image} />
+                  )}
+                </div>
               </div>
             ))}
           </ul>
