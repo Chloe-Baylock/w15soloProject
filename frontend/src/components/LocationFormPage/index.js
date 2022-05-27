@@ -29,6 +29,10 @@ function LocationFormPage() {
     setErrors(vErr);
   }, [location, description, locationName])
 
+  const updateFile = (e) => {
+    const file = e.target.files[0];
+    if (file) setImage(file);
+  };
 
   async function submitForm(e) {
     e.preventDefault();
@@ -95,8 +99,9 @@ function LocationFormPage() {
             <input
               className='new-location-input-image'
               id='image'
+              type='file'
               value={image}
-              onChange={e => setImage(e.target.value)}
+              onChange={e => updateFile(e)}
             ></input>
           </div>
           <div>

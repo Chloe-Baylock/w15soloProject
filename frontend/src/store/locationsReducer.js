@@ -33,17 +33,28 @@ export const getLocations = () => async (dispatch) => {
 }
 
 export const addLocation = data => async (dispatch) => {
+  const { locationName, description, location, userId, image } = locationDetails;
+  const formData = new FormData();
+  formData.append('locationName', locationName);
+  formData.append('description', description);
+  formData.append('location', location);
+  formData.append('userId', userId);
+
+  if (image) {
+    formData.append('image', image);
+  }
+
   const response = await csrfFetch('/api/locations', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'multipart/form-data',
     },
-    body: JSON.stringify(data)
+    body: formData,
   });
-  const location = await response.json();
+  const newLocation = await response.json();
   if (response.ok) {
-    await dispatch(add(data));
-    return location;
+    await dispatch(add(newLocation.locationDetails));
+    return newLocation;
   }
 }
 

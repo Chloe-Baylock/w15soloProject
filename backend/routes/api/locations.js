@@ -40,13 +40,13 @@ router.post(
   '/',
   singleMulterUpload("image"),
   asyncHandler(async (req, res) => {
-    const imageUrl = await singlePublicFileUpload(req.file);
+    const image = await singlePublicFileUpload(req.file);
     const newLocation = await Location.build({
       locationName: req.body.locationName,
       description: req.body.description,
       location: req.body.location,
       userId: req.body.userId,
-      image: imageUrl,
+      image,
     })
     await newLocation.save();
 
