@@ -95,12 +95,11 @@ function LocationFormPage() {
             ></textarea>
           </div>
           <div className='new-location-form-div'>
-            <label className='new-location-form-label' htmlFor='image'>Image url (optional). </label>
+            <label className='new-location-form-label' htmlFor='image'>Image upload (optional). </label>
             <input
               className='new-location-input-image'
               id='image'
               type='file'
-              value={image}
               onChange={e => updateFile(e)}
             ></input>
           </div>

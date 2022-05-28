@@ -1,4 +1,4 @@
-import { singlePublicFileUpload, singleMulterUpload } from '../../awsS3';
+const { singlePublicFileUpload, singleMulterUpload } = require('../../awsS3');
 const express = require('express');
 const asyncHandler = require('express-async-handler');
 const { Location, sequelize } = require('../../db/models');
@@ -17,30 +17,12 @@ router.get(
   })
 )
 
-// router.post(
-//     '/',
-//     asyncHandler(async (req, res) => {
-//       console.log('************************************ REQ.BODY.IMAGE', req.body.image)
-//         const newLocation = await Location.build({
-//             locationName: req.body.locationName,
-//             description: req.body.description,
-//             location: req.body.location,
-//             image: req.body.image,
-//             userId: req.body.userId
-//         })
-//         await newLocation.save();
-
-//         return res.json({
-//             newLocation
-//         })
-//     })
-// )
-
 router.post(
   '/',
   singleMulterUpload("image"),
   asyncHandler(async (req, res) => {
-    const image = await singlePublicFileUpload(req.file);
+    let image = null
+    if (req.file) image = await singlePublicFileUpload(req.file);
     const newLocation = await Location.build({
       locationName: req.body.locationName,
       description: req.body.description,
@@ -58,15 +40,19 @@ router.post(
 
 router.put(
   '/:id(\\d+)',
+  singleMulterUpload("image"),
   asyncHandler(async (req, res) => {
     const id = req.params.id;
     const oldLocation = await Location.findByPk(id);
-
+    
     oldLocation.locationName = req.body.locationName;
     oldLocation.description = req.body.description;
     oldLocation.location = req.body.location;
-    oldLocation.image = req.body.image;
     oldLocation.userId = req.body.userId;
+    
+    let image = oldLocation.image;
+    if (req.file) image = await singlePublicFileUpload(req.file);
+    oldLocation.image = image;
 
     await oldLocation.save();
 

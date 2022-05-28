@@ -54,7 +54,7 @@ function LocationPage() {
     fetchData();
   }, [dispatch, flicker])
 
-  let location = locations?.find(loc => loc.id === +params.id)
+  let location = locations?.find(loc => loc?.id === +params.id)
 
   const triggerBookModal = () => {
     setBooking(!booking);
