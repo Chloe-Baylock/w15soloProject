@@ -65,9 +65,7 @@ export const updateLocation = obj => async (dispatch) => {
   const location = obj.data.location;
   const userId = obj.data.userId;
   const image = obj.data.image;
-  console.log('image is', image)
 
-  console.log('locationName is', locationName)
   const formData = new FormData();
   formData.append('locationName', locationName);
   formData.append('description', description);
