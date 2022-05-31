@@ -33,33 +33,60 @@ export const getLocations = () => async (dispatch) => {
 }
 
 export const addLocation = data => async (dispatch) => {
+  const { locationName, description, location, userId, image } = data;
+  const formData = new FormData();
+  formData.append('locationName', locationName);
+  formData.append('description', description);
+  formData.append('location', location);
+  formData.append('userId', userId);
+
+  if (image) {
+    formData.append('image', image);
+  }
+
   const response = await csrfFetch('/api/locations', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'multipart/form-data',
     },
-    body: JSON.stringify(data)
+    body: formData,
   });
-  const location = await response.json();
+  const newLocation = await response.json();
   if (response.ok) {
-    await dispatch(add(data));
-    return location;
+    await dispatch(add(newLocation.data));
+    return newLocation;
   }
 }
 
 
 export const updateLocation = obj => async (dispatch) => {
+  const locationName = obj.data.locationName;
+  const description = obj.data.description;
+  const location = obj.data.location;
+  const userId = obj.data.userId;
+  const image = obj.data.image;
+
+  const formData = new FormData();
+  formData.append('locationName', locationName);
+  formData.append('description', description);
+  formData.append('location', location);
+  formData.append('userId', userId);
+
+  if (image) {
+    formData.append('image', image);
+  }
+
   const response = await csrfFetch(`/api/locations/${obj.id}`, {
     method: 'PUT',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'multipart/form-data',
     },
-    body: JSON.stringify(obj.data)
+    body: formData,
   });
-  const location = await response.json();
+  const editLocation = await response.json();
   if (response.ok) {
-    dispatch(update(obj.data));
-    return location;
+    dispatch(update(editLocation.data));
+    return editLocation;
   }
 
 }
@@ -90,7 +117,7 @@ const locationsReducer = (state = initialState, action) => {
         entries: [...action.locations]
       }
     case ADD_LOCATION:
-      return { ...state, entries: [...state.entries, action.newLocation] }
+      return { ...state, entries: [...state?.entries, action.newLocation] }
     case REMOVE_LOCATION:
       const x = state.entries.find(one => one.id === action.locationId);
       const newState = state.entries.filter(ele => {

@@ -1,1 +1,1 @@
-To launch the project visit https://soloprojectbychloe.herokuapp.com/
+To launch the project visit https://breadnb.herokuapp.com/

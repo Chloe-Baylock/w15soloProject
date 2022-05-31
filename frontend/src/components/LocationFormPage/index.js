@@ -29,6 +29,10 @@ function LocationFormPage() {
     setErrors(vErr);
   }, [location, description, locationName])
 
+  const updateFile = (e) => {
+    const file = e.target.files[0];
+    if (file) setImage(file);
+  };
 
   async function submitForm(e) {
     e.preventDefault();
@@ -91,12 +95,12 @@ function LocationFormPage() {
             ></textarea>
           </div>
           <div className='new-location-form-div'>
-            <label className='new-location-form-label' htmlFor='image'>Image url (optional). </label>
+            <label className='new-location-form-label' htmlFor='image'>Image upload (optional). </label>
             <input
               className='new-location-input-image'
               id='image'
-              value={image}
-              onChange={e => setImage(e.target.value)}
+              type='file'
+              onChange={e => updateFile(e)}
             ></input>
           </div>
           <div>
